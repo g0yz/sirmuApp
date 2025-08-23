@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-use App\Models\Usuario;
+use App\Models\User;
 
 
 class Persona extends Model
@@ -17,12 +17,12 @@ class Persona extends Model
         protected $fillable = [
         'nombre',
         'apellido',
-        'usuario_id',
+        'user_id',
     ];
 
 
     public function usuario(){
-        return $this->belongsTo(Usuario::class, 'usuario_id');
+        return $this->belongsTo(Usuario::class, 'user_id');
 
     }
 
