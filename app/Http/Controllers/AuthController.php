@@ -41,7 +41,7 @@ class AuthController extends Controller
         }
 
         throw ValidationException::withMessages([
-            'email' => ['Las credenciales proporcionadas no coinciden con nuestros registros.'],
+            'email' => ['Error al Iniciar Sesion. Volver a ingresar los datos'],
         ]);
     }
 
