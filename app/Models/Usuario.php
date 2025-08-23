@@ -33,12 +33,12 @@ class Usuario extends Authenticatable
         return $this->password;
     }
 
-    public function setPasswordAttribute($value){
-        $this->attributes['password']=bcrypt($value);
+        public function setPasswordAttribute($value){
+     $this->attributes['password']=bcrypt($value);
 
-    }
+   }
 
-    public $timestamps = false;
+    public $timestamps = true;
 
     public function persona(){
         return $this->hasOne(Persona::class, 'usuario_id');
