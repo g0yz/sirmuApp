@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -16,8 +17,8 @@ Route::post('/register', [AuthController::class, 'register'])->middleware('guest
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');  // Cerrar sesión
 
 //ROLES RUTAS PRINCIPALES
-    Route::get('/admin', function(){ return view('admin.dashboard'); })->name('admin.dashboard');
-    Route::get('/tecnico', function(){ return view('tecnico.dashboard'); })->name('tecnico.dashboard');
-    Route::get('/encargado', function(){ return view('encargado.dashboard'); })->name('encargado.dashboard');
-    Route::get('/auditor', function(){ return view('auditor.dashboard'); })->name('auditor.dashboard');
+    Route::get('/admin', [DashboardController::class, 'admin'])->name('admin.dashboard');
+    Route::get('/tecnico', [DashboardController::class, 'tecnico'])->name('tecnico.dashboard');
+    Route::get('/encargado', [DashboardController::class, 'encargado'])->name('encargado.dashboard');
+    Route::get('/auditor', [DashboardController::class, 'auditor'])->name('auditor.dashboard');
 
