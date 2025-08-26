@@ -27,12 +27,12 @@
     <div class="collapse navbar-collapse" id="navbarContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" href="#">Inicio</a>
+          <a class="nav-link active" href="{{ route('tecnico.dashboard') }}">Inicio</a>
         <li class="nav-item">
-          <a class="nav-link" href="#">Configuración</a>
+          <a class="nav-link active" href="#">Configuración</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Soporte Tecnico</a>
+          <a class="nav-link active" href="{{ route('soporteTecnico') }}">Soporte Tecnico</a>
         </li>
       </ul>
 

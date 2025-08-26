@@ -30,16 +30,16 @@
           <a class="nav-link active" href="#">Inicio</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Tareas</a>
+          <a class="nav-link active" href="#">Tareas</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Calendario</a>
+          <a class="nav-link active" href="#">Calendario</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Configuración</a>
+          <a class="nav-link active" href="#">Configuración</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Soporte Tecnico</a>
+          <a class="nav-link active" href="#">Soporte Tecnico</a>
         </li>
       </ul>
 

@@ -17,7 +17,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
     <!-- Logo / marca -->
-    <a class="navbar-brand">Administrador</a>
+    <a class="navbar-brand">{{ucfirst(Auth::user()->rol)}}</a>
     <!-- Botón colapsable en móviles -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
             aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,7 +27,16 @@
             <div class="collapse navbar-collapse" id="navbarContent">
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                  <a class="nav-link disabled">Inicio</a>        </li>
+                  @if(Auth::user()->rol === 'administrador')
+                    <a class="nav-link active" href="{{ route('admin.dashboard') }}">Inicio</a>
+                  @elseif(Auth::user()->rol === 'auditor')
+                    <a class="nav-link active" href="{{ route('auditor.dashboard') }}">Inicio</a>
+                  @elseif(Auth::user()->rol === 'encargado')
+                    <a class="nav-link active" href="{{ route('encargado.dashboard') }}">Inicio</a>
+                  @elseif(Auth::user()->rol === 'tecnico')
+                    <a class="nav-link active" href="{{ route('tecnico.dashboard') }}">Inicio</a>
+                  @endif
+                </li>
                 <li class="nav-item">
                   <a class="nav-link active" href="#">Sedes</a>
                 </li>
@@ -41,7 +50,7 @@
                   <a class="nav-link active" href="#">Configuración</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link active" href="{{ route('soporteTecnico') }}">Soporte Técnico</a>
+                  <a class="nav-link disabled">Soporte Técnico</a>
                 </li>
               </ul>     
       <!-- Botón de logout a la derecha -->
@@ -53,8 +62,6 @@
   </div>
 </nav>
 
-<div class="cont">
-<p>holamundo</p>
 </div>
 <body>     
 </html>

@@ -32,10 +32,10 @@
           <a class="nav-link active" href="#">Inicio</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Sedes</a>
+          <a class="nav-link active" href="#">Sedes</a>
         </li>
         <li>
-          <a class="nav-link" href="#">Soporte Tecnico</a>
+          <a class="nav-link active" href="#">Soporte Tecnico</a>
         </li>
       </ul>
 

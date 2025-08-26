@@ -22,3 +22,6 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middl
     Route::get('/encargado', [DashboardController::class, 'encargado'])->name('encargado.dashboard');
     Route::get('/auditor', [DashboardController::class, 'auditor'])->name('auditor.dashboard');
 
+
+
+Route::get('/soporte-tecnico', [DashboardController::class, 'soporteTecnico'])->name('soporteTecnico')->middleware('auth');
