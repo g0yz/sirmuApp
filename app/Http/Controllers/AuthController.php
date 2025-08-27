@@ -11,8 +11,7 @@ use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
-    public function login(Request $request)
-    {
+    public function login(Request $request){
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
@@ -45,8 +44,7 @@ class AuthController extends Controller
         ]);
     }
 
-    public function register(Request $request)
-    {
+    public function register(Request $request){
         $request->validate([
             'email' => 'required|string|email|max:255|unique:users,email',
             'rol' => 'required',
@@ -83,8 +81,7 @@ class AuthController extends Controller
         }
     }
 
-    public function logout(Request $request)
-    {
+    public function logout(Request $request){
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
@@ -92,8 +89,7 @@ class AuthController extends Controller
         return redirect()->route('login')->with('success', 'Sesión cerrada correctamente.');
     }
 
-    public function showLoginForm()
-    {
+    public function showLoginForm(){
         // Si ya está logueado, redirigir a su dashboard
         if (auth()->check()) {
             return $this->redirectToDashboard();
@@ -101,8 +97,7 @@ class AuthController extends Controller
         return view('login');
     }
 
-    public function showRegisterForm()
-    {
+    public function showRegisterForm(){
         // Si ya está logueado, redirigir a su dashboard
         if (auth()->check()) {
             return $this->redirectToDashboard();
@@ -110,8 +105,7 @@ class AuthController extends Controller
         return view('register');
     }
 
-    protected function redirectToDashboard()
-    {
+    protected function redirectToDashboard(){
         $user = auth()->user();
 
         switch ($user->rol) {
@@ -127,4 +121,14 @@ class AuthController extends Controller
                 return redirect()->route('login'); // fallback seguro
         }
     }
+
+    public function index(){
+    // Trae todos los usuarios con su relación persona
+    $usuarios = User::with('persona')->get();
+    // Retorna la vista y pasa los usuarios
+    return view('admin.usuarios', compact('usuarios'));
+}
+
+
+
 }

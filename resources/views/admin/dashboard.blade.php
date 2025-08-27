@@ -35,7 +35,7 @@
                   <a class="nav-link active" href="#">Tareas</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link active" href="#">Usuarios</a>
+                  <a class="nav-link active" href="{{ route('usuarios') }}">Usuarios</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link active" href="#">Configuración</a>

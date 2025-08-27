@@ -46,4 +46,12 @@ class DashboardController extends Controller
 
 
 
+    public function soporteTecnico(){
+
+
+        return view('soporteTecnico');
+    }
+
+
+
 }

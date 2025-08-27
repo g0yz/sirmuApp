@@ -11,6 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
+        //agregue un if porque siempre molesta que existe la tabla sessions
+       if (!Schema::hasTable('sessions')) {
         Schema::create('sessions', function (Blueprint $table) {
             $table->string('id')->primary();
             $table->foreignId('user_id')->nullable()->index();
@@ -20,6 +22,7 @@ return new class extends Migration
             $table->integer('last_activity')->index();
         });
     }
+}
 
     /**
      * Reverse the migrations.
