@@ -32,7 +32,7 @@
           <a class="nav-link active" href="#">Configuración</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="{{ route('soporteTecnico') }}">Soporte Tecnico</a>
+          <a class="nav-link active" href="#">Soporte Tecnico</a>
         </li>
       </ul>
 

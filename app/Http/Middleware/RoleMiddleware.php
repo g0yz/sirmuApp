@@ -10,29 +10,19 @@ use Symfony\Component\HttpFoundation\Response;
 class RoleMiddleware
 {
 
-    public function handle(Request $request, Closure $next): Response
-    {
-        if(!Auth::check()){
-            return redirect('/login');
-        }
-
-        if(Auth::user()->rol !== 'administrador'){
-            abort(403,'acceso denegado');
-        }
-
-        if(Auth::user()->rol !== 'tecnico'){
-            abort(403,'acceso denegado');
-        }
-        
-        if(Auth::user()->rol != 'encargado'){
-            abort(403,'acceso denegado');
-        }
-
-        if(Auth::user()->rol != 'auditor'){
-            abort(403,'acceso denegado');
-        }
-
-        return $next($request);
+public function handle(Request $request, Closure $next, ...$roles)
+{
+    if(!Auth::check()){
+        return redirect('/login');
     }
+
+    // Verifica si el rol del usuario está en los permitidos
+    if(!in_array(Auth::user()->rol, $roles)){
+        abort(403, 'Acceso denegado');
+    }
+
+    return $next($request);
+}
+
 
 }

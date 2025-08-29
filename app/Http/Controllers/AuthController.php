@@ -122,13 +122,7 @@ class AuthController extends Controller
         }
     }
 
-    public function index(){
-    // Trae todos los usuarios con su relación persona
-    $usuarios = User::with('persona')->get();
-    // Retorna la vista y pasa los usuarios
-    return view('admin.usuarios', compact('usuarios'));
-}
-
-
 
 }
+
+

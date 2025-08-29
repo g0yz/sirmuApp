@@ -15,35 +15,36 @@ Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');//
 Route::post('/login', [AuthController::class, 'login'])->middleware('guest'); // Procesar login
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register'); // Mostrar formulario registro
 Route::post('/register', [AuthController::class, 'register'])->middleware('guest');  // Procesar registro
-
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
 //ROLES Dashboards
 //Administrador
-Route::get('/admin', [DashboardController::class, 'admin'])->name('admin.dashboard');
+Route::get('/admin', [DashboardController::class, 'admin'])->name('admin.dashboard')->middleware('rol:administrador');
 //Tecnico
-Route::get('/tecnico', [DashboardController::class, 'tecnico'])->name('tecnico.dashboard');
+Route::get('/tecnico', [DashboardController::class, 'tecnico'])->name('tecnico.dashboard')->middleware('rol:tecnico');
 //Encargado
-Route::get('/encargado', [DashboardController::class, 'encargado'])->name('encargado.dashboard');
+Route::get('/encargado', [DashboardController::class, 'encargado'])->name('encargado.dashboard')->middleware('rol:encargado');
 //Auditor
-Route::get('/auditor', [DashboardController::class, 'auditor'])->name('auditor.dashboard');
+Route::get('/auditor', [DashboardController::class, 'auditor'])->name('auditor.dashboard')->middleware('rol:auditor');
 
 
-//Ruta Usuarios
+
+//Ruta Admin
 //Listar todos los usuarios
-Route::get('/usuarios', [UserController::class, 'index'])->name('usuarios.index');
+Route::get('/admin/usuarios', [UserController::class, 'index'])->name('usuarios.index')->middleware('rol:administrador');
 //formulario para crear un nuevo usuario
-Route::get('/usuarios/create', [UserController::class, 'create'])->name('usuarios.create');
+Route::get('/admin/usuarios/create', [UserController::class, 'create'])->name('usuarios.create')->middleware('rol:administrador');
 // Guardar nuevo usuario
-Route::post('/usuarios', [UserController::class, 'store'])->name('usuarios.store');
+Route::post('/admin/usuarios', [UserController::class, 'store'])->name('usuarios.store')->middleware('rol:administrador');
 // Mostrar detalles de un usuaurio
-Route::get('/usuarios/{usuario}', [UserController::class, 'show'])->name('usuarios.show');
+Route::get('/admin/usuarios/{usuario}', [UserController::class, 'show'])->name('usuarios.show')->middleware('rol:administrador');
 //formulario para editar un usuario
-Route::get('/usuarios/{usuario}/edit', [UserController::class, 'edit'])->name('usuarios.edit');
+Route::get('/admin/usuarios/{usuario}/edit', [UserController::class, 'edit'])->name('usuarios.edit')->middleware('rol:administrador');
 // Actualizar un usuario
-Route::put('/usuarios/{usuario}', [UserController::class, 'update'])->name('usuarios.update');
+Route::put('/admin/usuarios/{usuario}', [UserController::class, 'update'])->name('usuarios.update')->middleware('rol:administrador');
 // Eliminar un usuario
-Route::delete('/usuarios/{usuario}', [UserController::class, 'destroy'])->name('usuarios.destroy');
+Route::delete('/admin/usuarios/{usuario}', [UserController::class, 'destroy'])->name('usuarios.destroy')->middleware('rol:administrador');
 
 //Rutas Sedes
 // Listar todas las sedes

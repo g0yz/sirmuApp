@@ -12,8 +12,9 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <!-- Estilos personalizados -->
   <link rel="stylesheet" href="{{ asset('css\dashboard.css') }}">
+</head>
 
-
+<body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
     <!-- Logo / marca -->
@@ -24,39 +25,37 @@
               <span class="navbar-toggler-icon"></span>
           </button>
     <!-- Contenido horizontal -->
-            <div class="collapse navbar-collapse" id="navbarContent">
+            <div class="collapse navbar-collapse" id="navbarContent">@yield('nav')
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                  <a class="nav-link disabled">Inicio</a>        </li>
-                <li class="nav-item">
-                  <a class="nav-link active" href="#">Sedes</a>
+                <li class="nav-item navSelect">
+                  <a class="nav-link active" href="{{route('admin.dashboard')}}" >Inicio</a>        
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link active" href="#">Tareas</a>
+                <li class="nav-item navSelect">
+                  <a class="nav-link " href="#">Sedes</a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link active" href="{{ route('usuarios') }}">Usuarios</a>
+                <li class="nav-item navSelect">
+                  <a class="nav-link " href="#">Tareas</a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link active" href="#">Configuración</a>
+                <li class="nav-item navSelect">
+                  <a class="nav-link " href="{{route('usuarios.index')}}">Usuarios</a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link active" href="{{ route('soporteTecnico') }}">Soporte Técnico</a>
+                <li class="nav-item navSelect">
+                  <a class="nav-link " href="#">Configuración</a>
+                </li>
+                <li class="nav-item navSelect">
+                  <a class="nav-link " href="#">Soporte Técnico</a>
                 </li>
               </ul>     
       <!-- Botón de logout a la derecha -->
-      <form action="{{ route('logout') }}" method="POST" class="d-flex">
+      <form action="{{ route('logout') }}" method="POST" class="cerrarSesion">
         @csrf
         <button type="submit" class="btn btn-danger">Cerrar sesión</button>
       </form>
     </div>
   </div>
 </nav>
-
-<div class="cont">
-<p>holamundo</p>
-</div>
-<body>     
+@yield('content')
+</body>     
 </html>
 
 

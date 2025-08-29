@@ -1,3 +1,23 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
 body {
   background-color: #a9a3a3; /* gris de fondo */
+}
+
+.navSelect{
+  text-align: center;
+}
+
+.navSelect:hover{
+  background-color: #828181; 
+  border-radius: 2rem;
+  transition: .5s;
+}
+
+.cerrarSesion{
+  display: flex;
+  justify-content: center;
 }

@@ -5,7 +5,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\DashboardController;
 
-
 class DashboardController extends Controller
 {
     public function admin()
@@ -47,8 +46,6 @@ class DashboardController extends Controller
 
 
     public function soporteTecnico(){
-
-
         return view('soporteTecnico');
     }
 
