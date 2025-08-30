@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('encargado_id')->nullable()->constrained('users')->onDelete('set null');
             $table->integer('capacidad_estudiantes');
             $table->string('carreras_ofrecidas');
-            $table->timestamps();
+            //$table->timestamps();
         });
     }
 

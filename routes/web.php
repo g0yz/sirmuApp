@@ -30,7 +30,7 @@ Route::get('/auditor', [DashboardController::class, 'auditor'])->name('auditor.d
 
 
 
-//Ruta Admin
+//Rutas Admin
 //Listar todos los usuarios
 Route::get('/admin/gestionar-usuarios', [UserController::class, 'index'])->name('usuarios.index')->middleware('rol:administrador');
 //formulario para crear un nuevo usuario
@@ -42,25 +42,24 @@ Route::get('/admin/detallar-usuario/{usuario}', [UserController::class, 'show'])
 //formulario para editar un usuario
 Route::get('/admin/usuarios/{usuario}/editar-usuario', [UserController::class, 'edit'])->name('usuarios.edit')->middleware('rol:administrador');
 // Actualizar un usuario
-Route::put('/admin/actualizar-usuarios/{usuario}', [UserController::class, 'update'])->name('usuarios.update')->middleware('rol:administrador');
+Route::put('/admin/actualizar-usuario/{usuario}', [UserController::class, 'update'])->name('usuarios.update')->middleware('rol:administrador');
 // Eliminar un usuario
-Route::delete('/admin/eliminar-usuarios/{usuario}', [UserController::class, 'destroy'])->name('usuarios.destroy')->middleware('rol:administrador');
+Route::delete('/admin/eliminar-usuario/{usuario}', [UserController::class, 'destroy'])->name('usuarios.destroy')->middleware('rol:administrador');
 
-//Rutas Sedes
 // Listar todas las sedes
-Route::get('/sedes', [SedeController::class, 'index'])->name('sedes.index');
+Route::get('/admin/gestionar-sedes', [SedeController::class, 'index'])->name('sedes.index')->middleware('rol:administrador');
 //formulario para crear una nueva sede
-Route::get('/sedes/create', [SedeController::class, 'create'])->name('sedes.create');
+Route::get('/admin/sedes/crear-sede', [SedeController::class, 'create'])->name('sedes.create')->middleware('rol:administrador');
 // Guardar nueva sede
-Route::post('/sedes', [SedeController::class, 'store'])->name('sedes.store');
+Route::post('/admin/guardar-sede', [SedeController::class, 'store'])->name('sedes.store')->middleware('rol:administrador');
 // Mostrar detalles de una sede
-Route::get('/sedes/{sede}', [SedeController::class, 'show'])->name('sedes.show');
+Route::get('/admin/detallar-sede/{sede}', [SedeController::class, 'show'])->name('sedes.show')->middleware('rol:administrador');
 //formulario para editar una sede
-Route::get('/sedes/{sede}/edit', [SedeController::class, 'edit'])->name('sedes.edit');
+Route::get('/admin/sedes/{sede}/editar-sede', [SedeController::class, 'edit'])->name('sedes.edit')->middleware('rol:administrador');
 // Actualizar una sede
-Route::put('/sedes/{sede}', [SedeController::class, 'update'])->name('sedes.update');
+Route::put('/admin/actualizar-sede/{sede}', [SedeController::class, 'update'])->name('sedes.update')->middleware('rol:administrador');
 // Eliminar una sede
-Route::delete('/sedes/{sede}', [SedeController::class, 'destroy'])->name('sedes.destroy');
+Route::delete('/admin/eliminar-sede/{sede}', [SedeController::class, 'destroy'])->name('sedes.destroy')->middleware('rol:administrador');
 
 //Rutas Tareas
 // Listar todas las tareas

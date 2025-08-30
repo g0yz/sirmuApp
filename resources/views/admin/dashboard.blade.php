@@ -35,7 +35,7 @@
 
                 <li class="nav-item navSelect">
                   <a class="nav-link @if(request()->routeIs('sedes.index')) active @endif" 
-                  href="#">Sedes</a>
+                  href="{{ route('sedes.index')}}">Sedes</a>
                 </li>
 
                 <li class="nav-item navSelect">

@@ -80,6 +80,9 @@ public function show(Sede $sede){
         return redirect()->route('sedes.index')->with('success', 'Sede eliminada correctamente');
     }
 
+
+        public $timestamps = false;
+
     /**
      * Remove the specified resource from storage.
      */
