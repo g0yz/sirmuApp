@@ -20,6 +20,8 @@ class Persona extends Model
         'user_id',
     ];
 
+        public $timestamps = false;
+
 
     public function usuario(){
         return $this->belongsTo(User::class, 'user_id');

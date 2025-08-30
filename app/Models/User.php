@@ -34,7 +34,7 @@ class User extends Authenticatable
         return $this->password;
     }
 
-    public $timestamps = true;
+    public $timestamps = false;
 
     public function persona(){
         return $this->hasOne(Persona::class, 'user_id');
