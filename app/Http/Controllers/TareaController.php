@@ -7,4 +7,13 @@ use Illuminate\Http\Request;
 class TareaController extends Controller
 {
     //
+
+
+
+
+
+
+
+
+    
 }

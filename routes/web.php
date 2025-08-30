@@ -30,7 +30,8 @@ Route::get('/auditor', [DashboardController::class, 'auditor'])->name('auditor.d
 
 
 
-//Rutas Admin
+//Rutas Admin//
+
 //Listar todos los usuarios
 Route::get('/admin/gestionar-usuarios', [UserController::class, 'index'])->name('usuarios.index')->middleware('rol:administrador');
 //formulario para crear un nuevo usuario
@@ -63,17 +64,23 @@ Route::delete('/admin/eliminar-sede/{sede}', [SedeController::class, 'destroy'])
 
 //Rutas Tareas
 // Listar todas las tareas
-Route::get('/tareas', [TareaController::class, 'index'])->name('tareas.index');
+Route::get('/admin/gestionar-tareas', [TareaController::class, 'index'])->name('tareas.index');
 //formulario para crear una nueva tarea
-Route::get('/tareas/create', [TareaController::class, 'create'])->name('tareas.create');
+Route::get('/admin/tareas/crear-tarea', [TareaController::class, 'create'])->name('tareas.create');
 // Guardar nueva sede
-Route::post('/tareas', [TareaController::class, 'store'])->name('tareas.store');
+Route::post('/admin/guardar-tarea', [TareaController::class, 'store'])->name('tareas.store');
 // Mostrar detalles de una tarea
-Route::get('/tareas/{tarea}', [TareaController::class, 'show'])->name('tareas.show');
+Route::get('/admin/detallar-tarea/{tarea}', [TareaController::class, 'show'])->name('tareas.show');
 //formulario para editar una tarea
-Route::get('/tareas/{tarea}/edit', [TareaController::class, 'edit'])->name('tareas.edit');
+Route::get('/admin/tareas/{tarea}/editar-tarea', [TareaController::class, 'edit'])->name('tareas.edit');
 // Actualizar un tarea
-Route::put('/tareas/{tarea}', [TareaController::class, 'update'])->name('tareas.update');
+Route::put('/admin/actualizar-tarea/{tarea}', [TareaController::class, 'update'])->name('tareas.update');
 // Eliminar una tarea
-Route::delete('/tareas/{tarea}', [TareaController::class, 'destroy'])->name('tareas.destroy');
+Route::delete('/admin/eliminar-tarea/{tarea}', [TareaController::class, 'destroy'])->name('tareas.destroy');
+
+
+//Rutas Tecnico//
+
+
+
 
