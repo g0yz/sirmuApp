@@ -27,25 +27,40 @@
     <!-- Contenido horizontal -->
             <div class="collapse navbar-collapse" id="navbarContent">@yield('nav')
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
                 <li class="nav-item navSelect">
-                  <a class="nav-link active" href="{{route('admin.dashboard')}}" >Inicio</a>        
+                  <a class="nav-link @if(request()->routeIs('admin.dashboard')) active @endif" 
+                  href="{{ route('admin.dashboard') }}">Inicio</a>
                 </li>
+
                 <li class="nav-item navSelect">
-                  <a class="nav-link " href="#">Sedes</a>
+                  <a class="nav-link @if(request()->routeIs('sedes.index')) active @endif" 
+                  href="#">Sedes</a>
                 </li>
+
                 <li class="nav-item navSelect">
-                  <a class="nav-link " href="#">Tareas</a>
+                  <a class="nav-link @if(request()->routeIs('tareas.index')) active @endif" 
+                  href="#">Tareas</a>
                 </li>
+
                 <li class="nav-item navSelect">
-                  <a class="nav-link " href="{{route('usuarios.index')}}">Usuarios</a>
+                  <a class="nav-link @if(request()->routeIs('usuarios.index')) active @endif" 
+                  href="{{ route('usuarios.index') }}">Usuarios</a>
                 </li>
+
+
                 <li class="nav-item navSelect">
-                  <a class="nav-link " href="#">Configuración</a>
+                  <a class="nav-link @if(request()->routeIs('configuracion')) active @endif" 
+                  href="#">Configuracion</a>
                 </li>
+
+
                 <li class="nav-item navSelect">
-                  <a class="nav-link " href="#">Soporte Técnico</a>
+                  <a class="nav-link @if(request()->routeIs('soporteTecnico')) active @endif" 
+                  href="#">Soporte Tecnico</a>
                 </li>
-              </ul>     
+              </ul>
+
       <!-- Botón de logout a la derecha -->
       <form action="{{ route('logout') }}" method="POST" class="cerrarSesion">
         @csrf

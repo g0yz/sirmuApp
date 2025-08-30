@@ -28,8 +28,8 @@ class UserController extends Controller
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6|confirmed',
             'rol' => 'required|in:tecnico,encargado,auditor',
-            'persona.nombre' => 'nullable|string|max:255',
-            'persona.apellido' => 'nullable|string|max:255',
+            'nombre' => 'nullable|string|max:255',
+            'apellido' => 'nullable|string|max:255',
         ]);
 
         $user = User::create([
@@ -38,10 +38,10 @@ class UserController extends Controller
             'rol' => $request->rol,
         ]);
 
-        if ($request->filled('persona.nombre') || $request->filled('persona.apellido')) {
+        if ($request->filled('nombre') || $request->filled('apellido')) {
             $user->persona()->create([
-                'nombre' => $request->persona['nombre'] ?? null,
-                'apellido' => $request->persona['apellido'] ?? null,
+                'nombre' => $request->nombre,
+                'apellido' => $request->apellido,
             ]);
         }
 
@@ -77,8 +77,8 @@ class UserController extends Controller
             'email' => 'required|email|unique:users,email,' . $user->id,
             'password' => 'nullable|min:6|confirmed',
             'rol' => 'required|in:tecnico,encargado,auditor',
-            'persona.nombre' => 'nullable|string|max:255',
-            'persona.apellido' => 'nullable|string|max:255',
+            'nombre' => 'nullable|string|max:255',
+            'apellido' => 'nullable|string|max:255',
         ]);
 
         $user->email = $request->email;
@@ -88,16 +88,16 @@ class UserController extends Controller
         }
         $user->save();
 
-        if ($request->filled('persona.nombre') || $request->filled('persona.apellido')) {
+        if ($request->filled('nombre') || $request->filled('apellido')) {
             if ($user->persona) {
                 $user->persona->update([
-                    'nombre' => $request->persona['nombre'] ?? null,
-                    'apellido' => $request->persona['apellido'] ?? null,
+                    'nombre' => $request->nombre,
+                    'apellido' => $request->apellido,
                 ]);
             } else {
                 $user->persona()->create([
-                    'nombre' => $request->persona['nombre'] ?? null,
-                    'apellido' => $request->persona['apellido'] ?? null,
+                    'nombre' => $request->nombre,
+                    'apellido' => $request->apellido,
                 ]);
             }
         }
@@ -106,13 +106,13 @@ class UserController extends Controller
     }
 
     // Eliminar usuario
-    public function destroy(User $user)
+    public function destroy(User $usuario)
     {
-        if ($user->rol === User::ROL_ADMIN) {
+        if ($usuario->rol === User::ROL_ADMIN) {
             abort(403);
         }
 
-        $user->delete();
+        $usuario->delete();
         return redirect()->route('usuarios.index')->with('success', 'Usuario eliminado correctamente.');
     }
 }
