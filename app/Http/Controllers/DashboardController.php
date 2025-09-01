@@ -5,6 +5,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\DashboardController;
 
+use App\Models\Sede;
+use App\Models\Tarea;
+use App\Models\User;
+
 class DashboardController extends Controller
 {
     public function admin()
@@ -13,7 +17,9 @@ class DashboardController extends Controller
             abort(403, 'Acceso denegado');
         }
 
-        return view('admin.dashboard');
+        $cantidadSedes = Sede::count();
+
+            return view('admin.dashboard', compact('cantidadSedes'));
     }
 
     public function tecnico()
