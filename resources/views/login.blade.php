@@ -27,6 +27,9 @@
         @csrf
         <input type="email" class="form-control" placeholder="Correo Electronico" required name="email">
         <input type="password" class="form-control" placeholder="Contraseña" required name="password">
+        <label>
+        <input type="checkbox" name="remember"> Recordarme
+        </label>
         <a href="#" class="forgot">¿Olvidaste tu contraseña?</a>
         <button type="submit" class="login-btn">Iniciar Sesion</button>
       </form>
