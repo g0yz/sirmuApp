@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\SoporteTecnicoController;
+use App\Http\Controllers\ConfiguracionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SedeController;
 use App\Http\Controllers\TareaController;
@@ -20,18 +22,42 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 //ROLES Dashboards
 //Administrador
-Route::get('/admin', [DashboardController::class, 'admin'])->name('admin.dashboard')->middleware('rol:administrador');
+Route::get('/admin/inicio', [DashboardController::class, 'admin'])->name('admin.dashboard')->middleware('rol:administrador');
 //Tecnico
-Route::get('/tecnico', [DashboardController::class, 'tecnico'])->name('tecnico.dashboard')->middleware('rol:tecnico');
+Route::get('/tecnico/inicio', [DashboardController::class, 'tecnico'])->name('tecnico.dashboard')->middleware('rol:tecnico');
 //Encargado
-Route::get('/encargado', [DashboardController::class, 'encargado'])->name('encargado.dashboard')->middleware('rol:encargado');
+Route::get('/encargado/inicio', [DashboardController::class, 'encargado'])->name('encargado.dashboard')->middleware('rol:encargado');
 //Auditor
-Route::get('/auditor', [DashboardController::class, 'auditor'])->name('auditor.dashboard')->middleware('rol:auditor');
+Route::get('/auditor/inicio', [DashboardController::class, 'auditor'])->name('auditor.dashboard')->middleware('rol:auditor');
+
+//ROLES SoporteTecnico
+//Administrador
+Route::get('/admin/soporte-tecnico', [SoporteTecnicoController::class, 'index'])->name('admin.soporteTecnico')->middleware('rol:administrador');
+//Tecnico
+Route::get('/tecnico/soporte-tecnico', [SoporteTecnicoController::class, 'index'])->name('tecnico.soporteTecnico')->middleware('rol:tecnico');
+//Encargado
+Route::get('/encargado/soporte-tecnico', [SoporteTecnicoController::class, 'index'])->name('encargado.soporteTecnico')->middleware('rol:encargado');
+//Auditor
+Route::get('/auditor/soporte-tecnico', [SoporteTecnicoController::class, 'index'])->name('auditor.soporteTecnico')->middleware('rol:auditor');
+
+//ROLES Configuracion
+//Administrador
+Route::get('/admin/configuracion', [ConfiguracionController::class, 'index'])->name('admin.configuracion')->middleware('rol:administrador');
+//Tecnico
+Route::get('/tecnico/configuracion', [ConfiguracionController::class, 'index'])->name('tecnico.configuracion')->middleware('rol:tecnico');
+//Encargado
+Route::get('/encargado/configuracion', [ConfiguracionController::class, 'index'])->name('encargado.configuracion')->middleware('rol:encargado');
+//Auditor
+Route::get('/auditor/configuracion', [ConfiguracionController::class, 'index'])->name('auditor.configuracion')->middleware('rol:auditor');
 
 
 
-//Rutas Admin//
 
+
+
+
+
+//Rutas Administrador//
 //Listar todos los usuarios
 Route::get('/admin/gestionar-usuarios', [UserController::class, 'index'])->name('usuarios.index')->middleware('rol:administrador');
 //formulario para crear un nuevo usuario
@@ -62,21 +88,21 @@ Route::put('/admin/actualizar-sede/{sede}', [SedeController::class, 'update'])->
 // Eliminar una sede
 Route::delete('/admin/eliminar-sede/{sede}', [SedeController::class, 'destroy'])->name('sedes.destroy')->middleware('rol:administrador');
 
-//Rutas Tareas
+
 // Listar todas las tareas
-Route::get('/admin/gestionar-tareas', [TareaController::class, 'index'])->name('tareas.index');
+Route::get('/admin/gestionar-tareas', [TareaController::class, 'index'])->name('tareas.index')->middleware('rol:administrador');
 //formulario para crear una nueva tarea
-Route::get('/admin/tareas/crear-tarea', [TareaController::class, 'create'])->name('tareas.create');
+Route::get('/admin/tareas/crear-tarea', [TareaController::class, 'create'])->name('tareas.create')->middleware('rol:administrador');
 // Guardar nueva sede
-Route::post('/admin/guardar-tarea', [TareaController::class, 'store'])->name('tareas.store');
+Route::post('/admin/guardar-tarea', [TareaController::class, 'store'])->name('tareas.store')->middleware('rol:administrador');
 // Mostrar detalles de una tarea
-Route::get('/admin/detallar-tarea/{tarea}', [TareaController::class, 'show'])->name('tareas.show');
+Route::get('/admin/detallar-tarea/{tarea}', [TareaController::class, 'show'])->name('tareas.show')->middleware('rol:administrador');
 //formulario para editar una tarea
-Route::get('/admin/tareas/{tarea}/editar-tarea', [TareaController::class, 'edit'])->name('tareas.edit');
+Route::get('/admin/tareas/{tarea}/editar-tarea', [TareaController::class, 'edit'])->name('tareas.edit')->middleware('rol:administrador');
 // Actualizar un tarea
-Route::put('/admin/actualizar-tarea/{tarea}', [TareaController::class, 'update'])->name('tareas.update');
+Route::put('/admin/actualizar-tarea/{tarea}', [TareaController::class, 'update'])->name('tareas.update')->middleware('rol:administrador');
 // Eliminar una tarea
-Route::delete('/admin/eliminar-tarea/{tarea}', [TareaController::class, 'destroy'])->name('tareas.destroy');
+Route::delete('/admin/eliminar-tarea/{tarea}', [TareaController::class, 'destroy'])->name('tareas.destroy')->middleware('rol:administrador');
 
 
 //Rutas Tecnico//

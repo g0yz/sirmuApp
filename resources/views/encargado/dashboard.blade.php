@@ -26,34 +26,37 @@
     <!-- Contenido horizontal -->
     <div class="collapse navbar-collapse" id="navbarContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" href="#">Inicio</a>
+        <li class="nav-item navSelect">
+          <a class="nav-link @if(request()->routeIs('encargado.dashboard')) active @endif" 
+          href="{{ route('encargado.dashboard') }}">Inicio</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="#">Tareas</a>
+        <li class="nav-item navSelect">
+          <a class="nav-link @if(request()->routeIs('')) active @endif" 
+          href="#">Tareas</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="#">Calendario</a>
+        <li class="nav-item navSelect">
+          <a class="nav-link @if(request()->routeIs('')) active @endif" 
+          href="#">Calendario</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="#">Configuración</a>
+        <li class="nav-item navSelect">
+          <a class="nav-link @if(request()->routeIs('tecnico.configuracion')) active @endif" 
+          href="{{ route('tecnico.configuracion') }}">Configuracion</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="#">Soporte Tecnico</a>
+        <li class="nav-item navSelect">
+          <a class="nav-link @if(request()->routeIs('encargado.soporteTecnico')) active @endif" 
+          href="{{ route('encargado.soporteTecnico') }}">Soporte Tecnico</a>
         </li>
       </ul>
-
       <!-- Botón de logout a la derecha -->
-      <form action="{{ route('logout') }}" method="POST" class="d-flex">
+      <form action="{{ route('logout') }}" method="POST" class="cerrarSesion">
         @csrf
         <button type="submit" class="btn btn-danger">Cerrar sesión</button>
       </form>
     </div>
   </div>
-
 </nav>
-</body>
+@yield('content')
+</body>     
 </html>
-
 
 

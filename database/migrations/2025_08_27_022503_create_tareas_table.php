@@ -9,11 +9,21 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
+    public function up(): void {
         Schema::create('tareas', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->foreignId('sede_id')->constrained('sedes')->cascadeOnDelete();
+            $table->foreignId('encargado_id')->nullable()->constrained('users')->nullOnDelete();
+            $table->string('titulo');
+            $table->enum('prioridad', ['alta', 'media', 'baja']);
+            $table->enum('tipo', ['mantenimiento', 'presupuesto', 'instalacion']);
+            $table->enum('estado', ['pendiente','finalizada','validada','rechazada']);
+            $table->text('descripcion');
+            $table->date('fecha_creacion')->nullable();
+            $table->date('fecha_estimada')->nullable();
+            $table->date('fecha_finalizacion')->nullable();
+            $table->foreignId('tecnico_id')->nullable()->constrained('users')->nullOnDelete();
+
         });
     }
 

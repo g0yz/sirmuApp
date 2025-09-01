@@ -35,10 +35,17 @@ class Sede extends Model
     ];
 
 
+    // Relación: una sede tiene muchas tareas
+    public function tareas()
+    {
+        return $this->hasMany(Tarea::class, 'sede_id', 'id_sede');
+    }
+
+    // Relación Sede con el encargado
     public function encargado(){
         return $this->belongsTo(User::class, 'encargado_id');
     }
 
-
+    public $timestamps = false;
 
 }

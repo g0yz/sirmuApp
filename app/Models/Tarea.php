@@ -45,6 +45,7 @@ class Tarea extends Model
         protected $fillable = [
             'sede_id',
             'encargado_id',
+            'tecnico_id',
             'titulo',
             'prioridad',
             'tipo',
@@ -55,6 +56,21 @@ class Tarea extends Model
             'fecha_finalizacion',
     ];
 
+    public function sede()
+    {
+        return $this->belongsTo(Sede::class, 'sede_id');
+    }
 
+    public function encargado()
+    {
+        return $this->belongsTo(User::class, 'encargado_id');
+    }
+
+    public function tecnico()
+    {
+        return $this->belongsTo(User::class, 'tecnico_id');
+    }
+
+    public $timestamps = false;
 
 }

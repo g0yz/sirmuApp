@@ -11,7 +11,8 @@ class UserController extends Controller
     // Mostrar todos los usuarios (excepto admin)
     public function index()
     {
-        $users = User::where('rol', '!=', User::ROL_ADMIN)->get();
+        //$users = User::where('rol', '!=', User::ROL_ADMIN)->get();
+        $users= User::all();
         return view('usuarios.index', compact('users'));
     }
 

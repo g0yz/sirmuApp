@@ -24,43 +24,35 @@
             aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
           </button>
+          
     <!-- Contenido horizontal -->
             <div class="collapse navbar-collapse" id="navbarContent">@yield('nav')
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
                 <li class="nav-item navSelect">
                   <a class="nav-link @if(request()->routeIs('admin.dashboard')) active @endif" 
                   href="{{ route('admin.dashboard') }}">Inicio</a>
                 </li>
-
                 <li class="nav-item navSelect">
                   <a class="nav-link @if(request()->routeIs('sedes.index')) active @endif" 
                   href="{{ route('sedes.index')}}">Sedes</a>
                 </li>
-
                 <li class="nav-item navSelect">
                   <a class="nav-link @if(request()->routeIs('tareas.index')) active @endif" 
-                  href="#">Tareas</a>
+                  href="{{ route('tareas.index')}}">Tareas</a>
                 </li>
-
                 <li class="nav-item navSelect">
                   <a class="nav-link @if(request()->routeIs('usuarios.index')) active @endif" 
                   href="{{ route('usuarios.index') }}">Usuarios</a>
                 </li>
-
-
                 <li class="nav-item navSelect">
-                  <a class="nav-link @if(request()->routeIs('configuracion')) active @endif" 
-                  href="#">Configuracion</a>
+                  <a class="nav-link @if(request()->routeIs('admin.configuracion')) active @endif" 
+                  href="{{ route('admin.configuracion') }}">Configuracion</a>
                 </li>
-
-
                 <li class="nav-item navSelect">
-                  <a class="nav-link @if(request()->routeIs('soporteTecnico')) active @endif" 
-                  href="#">Soporte Tecnico</a>
+                  <a class="nav-link @if(request()->routeIs('admin.soporteTecnico')) active @endif" 
+                  href="{{ route('admin.soporteTecnico') }}">Soporte Tecnico</a>
                 </li>
               </ul>
-
       <!-- Botón de logout a la derecha -->
       <form action="{{ route('logout') }}" method="POST" class="cerrarSesion">
         @csrf

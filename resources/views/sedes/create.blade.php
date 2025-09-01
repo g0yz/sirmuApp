@@ -1,8 +1,8 @@
- <link rel="stylesheet" href="{{ asset('css/register.css') }}">
 
 
 @extends('admin.dashboard')
 
+ <link rel="stylesheet" href="{{ asset('css/register.css') }}">
 
 @section('content')
 
@@ -16,9 +16,9 @@
       <input type="text" name="direccion" class="form-control mb-2" placeholder="Direccion" required>
 
       <select name="encargado_id" class="form-select mb-2">
-      <option value="">-- Seleccione encargado --</option>
+      <option value="">-- Seleccione al encargado --</option>
             @foreach($encargados as $encargado)
-      <option value="{{ $encargado->id }}">{{ $encargado->name }}</option>
+      <option value="{{ $encargado->id }}">{{ $encargado->id }}</option>
             @endforeach
       </select>
       <input type="text" name="capacidad_estudiantes" class="form-control mb-2" placeholder="Capacidad de Estudiantes" required>

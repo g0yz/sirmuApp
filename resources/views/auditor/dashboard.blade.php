@@ -26,29 +26,41 @@
     </button>
 
     <!-- Contenido horizontal -->
-    <div class="collapse navbar-collapse" id="navbarContent">
+    <div class="collapse navbar-collapse" id="navbarContent">@yield('nav')
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" href="#">Inicio</a>
+
+        <li class="nav-item navSelect">
+          <a class="nav-link @if(request()->routeIs('auditor.dashboard')) active @endif" 
+          href="{{ route('auditor.dashboard') }}">Inicio</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="#">Sedes</a>
+
+
+        <li class="nav-item navSelect">
+          <a class="nav-link @if(request()->routeIs('')) active @endif" 
+          href="#">Sedes</a>
         </li>
-        <li>
-          <a class="nav-link active" href="#">Soporte Tecnico</a>
+
+        <li class="nav-item navSelect">
+          <a class="nav-link @if(request()->routeIs('auditor.configuracion')) active @endif" 
+          href="{{ route('auditor.configuracion') }}">Configuracion</a>
+        </li>
+
+        <li class="nav-item navSelect">
+          <a class="nav-link @if(request()->routeIs('auditor.soporteTecnico')) active @endif" 
+          href="{{ route('auditor.soporteTecnico') }}">Soporte Tecnico</a>
         </li>
       </ul>
 
       <!-- Botón de logout a la derecha -->
-      <form action="{{ route('logout') }}" method="POST" class="d-flex">
+      <form action="{{ route('logout') }}" method="POST" class="cerrarSesion">
         @csrf
         <button type="submit" class="btn btn-danger">Cerrar sesión</button>
       </form>
     </div>
   </div>
 </nav>
-
-</body>
+@yield('content')
+</body>     
 </html>
 
 

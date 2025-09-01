@@ -26,26 +26,36 @@
     <!-- Contenido horizontal -->
     <div class="collapse navbar-collapse" id="navbarContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" href="{{ route('tecnico.dashboard') }}">Inicio</a>
-        <li class="nav-item">
-          <a class="nav-link active" href="#">Configuración</a>
+
+        <li class="nav-item navSelect">
+          <a class="nav-link @if(request()->routeIs('tecnico.dashboard')) active @endif" 
+          href="{{ route('tecnico.dashboard') }}">Inicio</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="#">Soporte Tecnico</a>
+
+        <li class="nav-item navSelect">
+          <a class="nav-link @if(request()->routeIs('tecnico.configuracion')) active @endif" 
+          href="{{ route('tecnico.configuracion') }}">Configuracion</a>
         </li>
+
+
+        <li class="nav-item navSelect">
+          <a class="nav-link @if(request()->routeIs('tecnico.soporteTecnico')) active @endif" 
+          href="{{ route('tecnico.soporteTecnico') }}">Soporte Tecnico</a>
+        </li>
+
       </ul>
 
       <!-- Botón de logout a la derecha -->
-      <form action="{{ route('logout') }}" method="POST" class="d-flex">
+      <form action="{{ route('logout') }}" method="POST" class="cerrarSesion">
         @csrf
         <button type="submit" class="btn btn-danger">Cerrar sesión</button>
       </form>
     </div>
   </div>
 </nav>
-</head>
-<body>
+@yield('content')
+</body>     
+</html>
 
 
 
