@@ -6,23 +6,60 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
-class UserController extends Controller
-{
+class UserController extends Controller{
     // Mostrar todos los usuarios (excepto admin)
+    /**
+     * @OA\Get(
+     *     path="/api/usuarios",
+     *     tags={"Usuarios"},
+     *     summary="Listar usuarios",
+     *     description="Obtiene todos los usuarios del sistema",
+     *     @OA\Response(
+     *         response=200,
+     *         description="Lista de usuarios obtenida correctamente"
+     *     )
+     * )
+     */
     public function index()
     {
         //$users = User::where('rol', '!=', User::ROL_ADMIN)->get();
         $users= User::all();
         return view('usuarios.index', compact('users'));
     }
-
-    // Mostrar formulario de creación
+     /**
+     * @OA\Get(
+     *     path="/api/usuarios/create",
+     *     tags={"Usuarios"},
+     *     summary="Mostrar formulario de creación de usuario",
+     *     @OA\Response(response=200, description="Formulario de creación")
+     * )
+     */
     public function create()
     {
         return view('usuarios.create');
     }
-
-    // Guardar nuevo usuario y persona
+    /**
+     * @OA\Post(
+     *     path="/api/usuarios",
+     *     tags={"Usuarios"},
+     *     summary="Crear usuario",
+     *     description="Crea un nuevo usuario y su persona asociada",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"email","password","rol"},
+     *             @OA\Property(property="email", type="string", format="email"),
+     *             @OA\Property(property="password", type="string", format="password"),
+     *             @OA\Property(property="password_confirmation", type="string", format="password"),
+     *             @OA\Property(property="rol", type="string", enum={"tecnico","encargado","auditor"}),
+     *             @OA\Property(property="nombre", type="string"),
+     *             @OA\Property(property="apellido", type="string")
+     *         )
+     *     ),
+     *     @OA\Response(response=201, description="Usuario creado"),
+     *     @OA\Response(response=422, description="Error de validación")
+     * )
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -48,31 +85,76 @@ class UserController extends Controller
 
         return redirect()->route('usuarios.index')->with('success', 'Usuario creado correctamente.');
     }
-
-    // Mostrar detalle de usuario
+    /**
+     * @OA\Get(
+     *     path="/api/usuarios/{id}",
+     *     tags={"Usuarios"},
+     *     summary="Mostrar usuario",
+     *     description="Muestra un usuario por su ID",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(response=200, description="Detalle del usuario"),
+     *     @OA\Response(response=403, description="Acceso denegado"),
+     *     @OA\Response(response=404, description="Usuario no encontrado")
+     * )
+     */
     public function show(User $user)
     {
-        if ($user->rol === User::ROL_ADMIN) {
-            abort(403);
-        }
         return view('usuarios.show', compact('user'));
     }
-
-    // Mostrar formulario de edición
+    /**
+     * @OA\Get(
+     *     path="/api/usuarios/{id}/edit",
+     *     tags={"Usuarios"},
+     *     summary="Mostrar formulario de edición de usuario",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(response=200, description="Formulario de edición")
+     * )
+     */
     public function edit(User $user)
     {
-        if ($user->rol === User::ROL_ADMIN) {
-            abort(403);
-        }
         return view('usuarios.edit', compact('user'));
     }
 
-    // Actualizar usuario y persona
+    /**
+     * @OA\Put(
+     *     path="/api/usuarios/{id}",
+     *     tags={"Usuarios"},
+     *     summary="Actualizar usuario",
+     *     description="Actualiza los datos de un usuario existente",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="email", type="string", format="email"),
+     *             @OA\Property(property="password", type="string", format="password"),
+     *             @OA\Property(property="password_confirmation", type="string", format="password"),
+     *             @OA\Property(property="rol", type="string", enum={"tecnico","encargado","auditor"}),
+     *             @OA\Property(property="nombre", type="string"),
+     *             @OA\Property(property="apellido", type="string")
+     *         )
+     *     ),
+     *     @OA\Response(response=200, description="Usuario actualizado"),
+     *     @OA\Response(response=403, description="Acceso denegado"),
+     *     @OA\Response(response=422, description="Error de validación")
+     * )
+     */
     public function update(Request $request, User $user)
     {
-        if ($user->rol === User::ROL_ADMIN) {
-            abort(403);
-        }
 
         $request->validate([
             'email' => 'required|email|unique:users,email,' . $user->id,
@@ -106,14 +188,27 @@ class UserController extends Controller
         return redirect()->route('usuarios.index')->with('success', 'Usuario actualizado correctamente.');
     }
 
-    // Eliminar usuario
-    public function destroy(User $usuario)
+        /**
+     * @OA\Delete(
+     *     path="/api/usuarios/{id}",
+     *     tags={"Usuarios"},
+     *     summary="Eliminar usuario",
+     *     description="Elimina un usuario por su ID",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(response=200, description="Usuario eliminado"),
+     *     @OA\Response(response=403, description="Acceso denegado"),
+     *     @OA\Response(response=404, description="Usuario no encontrado")
+     * )
+     */
+    public function destroy(User $user)
     {
-        if ($usuario->rol === User::ROL_ADMIN) {
-            abort(403);
-        }
 
-        $usuario->delete();
+        $user->delete();
         return redirect()->route('usuarios.index')->with('success', 'Usuario eliminado correctamente.');
     }
 }

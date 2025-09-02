@@ -4,22 +4,40 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class ConfiguracionController extends Controller
-{
-    public function index()
-{
-    $user = auth()->user();
+class ConfiguracionController extends Controller{
+    /**
+    * @OA\Get(
+    *   path="/configuracion",
+    *   summary="Ver configuración según rol del usuario",
+    *   tags={"Configuración"},
+    *   security={{"sanctum":{}}},
+    *   @OA\Response(
+    *     response=200,
+    *     description="Vista de configuración renderizada según el rol del usuario",
+    *     @OA\JsonContent(
+    *       @OA\Property(property="layout", type="string", example="admin.dashboard")
+    *     )
+    *   ),
+    *   @OA\Response(
+    *     response=401,
+    *     description="No autenticado"
+    *   )
+    * )
+    */
+    public function index(){
 
-    $layouts = [
-        'administrador' => 'admin.dashboard',
-        'tecnico'       => 'tecnico.dashboard',
-        'encargado'     => 'encargado.dashboard',
-        'auditor'       => 'auditor.dashboard',
-    ];
+        $user = auth()->user();
 
-    $layout = $layouts[$user->rol] ?? 'guest.dashboard';
+        $layouts = [
+            'administrador' => 'admin.dashboard',
+            'tecnico'       => 'tecnico.dashboard',
+            'encargado'     => 'encargado.dashboard',
+            'auditor'       => 'auditor.dashboard',
+        ];
 
-    return view('configuracion', compact('layout'));
-}
+        $layout = $layouts[$user->rol] ?? 'guest.dashboard';
+
+        return view('configuracion', compact('layout'));
+    }
 
 }

@@ -1,0 +1,712 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Sede",
+        "description": "Listado de las URL de la Api Sede",
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "http://127.0.0.1:8000"
+        }
+    ],
+    "paths": {
+        "/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Iniciar sesión",
+                "operationId": "2dd578ff7aba2721293dac66833b27d1",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "user@mail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "password123"
+                                    },
+                                    "remember": {
+                                        "type": "boolean",
+                                        "example": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login exitoso, redirige según rol"
+                    },
+                    "422": {
+                        "description": "Credenciales incorrectas"
+                    }
+                }
+            }
+        },
+        "/register": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Registrar nuevo usuario",
+                "operationId": "0903f2e0df1a8857bee538fc055417f0",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password",
+                                    "password_confirmation",
+                                    "rol",
+                                    "nombre",
+                                    "apellido"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "nuevo@mail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "example": "password123"
+                                    },
+                                    "password_confirmation": {
+                                        "type": "string",
+                                        "example": "password123"
+                                    },
+                                    "rol": {
+                                        "type": "string",
+                                        "example": "administrador"
+                                    },
+                                    "nombre": {
+                                        "type": "string",
+                                        "example": "Juan"
+                                    },
+                                    "apellido": {
+                                        "type": "string",
+                                        "example": "Pérez"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Registro exitoso y redirección"
+                    },
+                    "422": {
+                        "description": "Datos inválidos"
+                    }
+                }
+            }
+        },
+        "/logout": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Cerrar sesión",
+                "operationId": "68a6108af04af5e3bc1ea68a6c6f1299",
+                "responses": {
+                    "200": {
+                        "description": "Sesión cerrada correctamente"
+                    }
+                }
+            }
+        },
+        "/configuracion": {
+            "get": {
+                "tags": [
+                    "Configuración"
+                ],
+                "summary": "Ver configuración según rol del usuario",
+                "operationId": "f534fcb4ddb627f4580c3dbc7eb71213",
+                "responses": {
+                    "200": {
+                        "description": "Vista de configuración renderizada según el rol del usuario",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "layout": {
+                                            "type": "string",
+                                            "example": "admin.dashboard"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "No autenticado"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/dashboard/admin": {
+            "get": {
+                "tags": [
+                    "Dashboard"
+                ],
+                "summary": "Dashboard del administrador",
+                "operationId": "1b19b7906ce3cd3a3b914b44e0a4d52f",
+                "responses": {
+                    "200": {
+                        "description": "Vista del dashboard del administrador"
+                    },
+                    "403": {
+                        "description": "Acceso denegado"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/sedes": {
+            "get": {
+                "tags": [
+                    "Sede"
+                ],
+                "summary": "Listar todas las sedes",
+                "operationId": "2c1ea09725b25fcd2420322790f36162",
+                "responses": {
+                    "200": {
+                        "description": "Vista con listado de sedes"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Sede"
+                ],
+                "summary": "Guardar una nueva sede",
+                "operationId": "2387d1d5c64447fd136d89893bab3201",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nombre",
+                                    "direccion",
+                                    "tipo",
+                                    "capacidad_estudiantes",
+                                    "carreras_ofrecidas"
+                                ],
+                                "properties": {
+                                    "nombre": {
+                                        "type": "string",
+                                        "example": "Sede Norte"
+                                    },
+                                    "direccion": {
+                                        "type": "string",
+                                        "example": "Calle Falsa 123"
+                                    },
+                                    "tipo": {
+                                        "type": "string",
+                                        "example": "instituto"
+                                    },
+                                    "capacidad_estudiantes": {
+                                        "type": "integer",
+                                        "example": 200
+                                    },
+                                    "carreras_ofrecidas": {
+                                        "type": "string",
+                                        "example": "Ingeniería, Medicina"
+                                    },
+                                    "encargado_id": {
+                                        "type": "integer",
+                                        "example": 5
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "302": {
+                        "description": "Redirección al listado de sedes"
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            }
+        },
+        "/sedes/create": {
+            "get": {
+                "tags": [
+                    "Sede"
+                ],
+                "summary": "Formulario para crear sede",
+                "operationId": "011665dcb8a6a96144b53b0174b1b641",
+                "responses": {
+                    "200": {
+                        "description": "Vista con formulario de creación de sede"
+                    }
+                }
+            }
+        },
+        "/sedes/{id}": {
+            "get": {
+                "tags": [
+                    "Sede"
+                ],
+                "summary": "Mostrar detalle de una sede",
+                "operationId": "7c18207c51ff825ed001960ae413741e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la sede",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Vista con detalle de la sede"
+                    },
+                    "404": {
+                        "description": "Sede no encontrada"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Sede"
+                ],
+                "summary": "Actualizar sede",
+                "operationId": "7ede1848e7f1f0cb5a4396128f6916ff",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la sede",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nombre",
+                                    "direccion",
+                                    "tipo",
+                                    "capacidad_estudiantes",
+                                    "carreras_ofrecidas"
+                                ],
+                                "properties": {
+                                    "nombre": {
+                                        "type": "string",
+                                        "example": "Sede Sur"
+                                    },
+                                    "direccion": {
+                                        "type": "string",
+                                        "example": "Av. Siempre Viva 742"
+                                    },
+                                    "tipo": {
+                                        "type": "string",
+                                        "example": "universidad"
+                                    },
+                                    "capacidad_estudiantes": {
+                                        "type": "integer",
+                                        "example": 300
+                                    },
+                                    "carreras_ofrecidas": {
+                                        "type": "string",
+                                        "example": "Contabilidad, Derecho"
+                                    },
+                                    "encargado_id": {
+                                        "type": "integer",
+                                        "example": 8
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "302": {
+                        "description": "Redirección al listado de sedes"
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Sede"
+                ],
+                "summary": "Eliminar sede",
+                "operationId": "da7fc323aed54526c521d1fa4573a618",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la sede",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "302": {
+                        "description": "Redirección al listado de sedes con mensaje de éxito"
+                    },
+                    "404": {
+                        "description": "Sede no encontrada"
+                    }
+                }
+            }
+        },
+        "/sedes/{id}/edit": {
+            "get": {
+                "tags": [
+                    "Sede"
+                ],
+                "summary": "Formulario de edición de una sede",
+                "operationId": "8eebbc8a1f3ea1161381a57852b8474e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la sede",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Vista con formulario de edición de sede"
+                    },
+                    "404": {
+                        "description": "Sede no encontrada"
+                    }
+                }
+            }
+        },
+        "/api/soporte": {
+            "get": {
+                "tags": [
+                    "Soporte"
+                ],
+                "summary": "Vista de soporte técnico",
+                "description": "Obtiene la vista de soporte técnico según el rol del usuario",
+                "operationId": "88f90bd1a7eb05270bb58d847b7b33c6",
+                "responses": {
+                    "200": {
+                        "description": "Vista cargada correctamente"
+                    },
+                    "403": {
+                        "description": "Acceso denegado"
+                    }
+                }
+            }
+        },
+        "/api/usuarios": {
+            "get": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "Listar usuarios",
+                "description": "Obtiene todos los usuarios del sistema",
+                "operationId": "def965050e08426437080b9f93650872",
+                "responses": {
+                    "200": {
+                        "description": "Lista de usuarios obtenida correctamente"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "Crear usuario",
+                "description": "Crea un nuevo usuario y su persona asociada",
+                "operationId": "88700e31d86fba96458ff6d229350cfc",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password",
+                                    "rol"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password"
+                                    },
+                                    "password_confirmation": {
+                                        "type": "string",
+                                        "format": "password"
+                                    },
+                                    "rol": {
+                                        "type": "string",
+                                        "enum": [
+                                            "tecnico",
+                                            "encargado",
+                                            "auditor"
+                                        ]
+                                    },
+                                    "nombre": {
+                                        "type": "string"
+                                    },
+                                    "apellido": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Usuario creado"
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            }
+        },
+        "/api/usuarios/create": {
+            "get": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "Mostrar formulario de creación de usuario",
+                "operationId": "3eabcabd0d7b7f81b8c3d93772fdbfbf",
+                "responses": {
+                    "200": {
+                        "description": "Formulario de creación"
+                    }
+                }
+            }
+        },
+        "/api/usuarios/{id}": {
+            "get": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "Mostrar usuario",
+                "description": "Muestra un usuario por su ID",
+                "operationId": "1220ee9ad695ce2a275465b8876ff829",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Detalle del usuario"
+                    },
+                    "403": {
+                        "description": "Acceso denegado"
+                    },
+                    "404": {
+                        "description": "Usuario no encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "Actualizar usuario",
+                "description": "Actualiza los datos de un usuario existente",
+                "operationId": "7bc446ec56fee5b08c575b930697a5f9",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password"
+                                    },
+                                    "password_confirmation": {
+                                        "type": "string",
+                                        "format": "password"
+                                    },
+                                    "rol": {
+                                        "type": "string",
+                                        "enum": [
+                                            "tecnico",
+                                            "encargado",
+                                            "auditor"
+                                        ]
+                                    },
+                                    "nombre": {
+                                        "type": "string"
+                                    },
+                                    "apellido": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Usuario actualizado"
+                    },
+                    "403": {
+                        "description": "Acceso denegado"
+                    },
+                    "422": {
+                        "description": "Error de validación"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "Eliminar usuario",
+                "description": "Elimina un usuario por su ID",
+                "operationId": "7fa713aab598a149659eb2db9703636d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Usuario eliminado"
+                    },
+                    "403": {
+                        "description": "Acceso denegado"
+                    },
+                    "404": {
+                        "description": "Usuario no encontrado"
+                    }
+                }
+            }
+        },
+        "/api/usuarios/{id}/edit": {
+            "get": {
+                "tags": [
+                    "Usuarios"
+                ],
+                "summary": "Mostrar formulario de edición de usuario",
+                "operationId": "8c51c052211d38ebf11d763d9f000555",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Formulario de edición"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Auth",
+            "description": "Auth"
+        },
+        {
+            "name": "Configuración",
+            "description": "Configuración"
+        },
+        {
+            "name": "Dashboard",
+            "description": "Dashboard"
+        },
+        {
+            "name": "Sede",
+            "description": "Sede"
+        },
+        {
+            "name": "Soporte",
+            "description": "Soporte"
+        },
+        {
+            "name": "Usuarios",
+            "description": "Usuarios"
+        }
+    ]
+}

@@ -9,8 +9,25 @@ use App\Models\Sede;
 use App\Models\Tarea;
 use App\Models\User;
 
-class DashboardController extends Controller
-{
+
+
+class DashboardController extends Controller{
+    /**
+     * @OA\Get(
+     *   path="/dashboard/admin",
+     *   summary="Dashboard del administrador",
+     *   tags={"Dashboard"},
+     *   security={{"sanctum":{}}},
+     *   @OA\Response(
+     *     response=200,
+     *     description="Vista del dashboard del administrador"
+     *   ),
+     *   @OA\Response(
+     *     response=403,
+     *     description="Acceso denegado"
+     *   )
+     * )
+     */
     public function admin()
     {
         if (Auth::user()->rol !== 'administrador') {
@@ -49,12 +66,8 @@ class DashboardController extends Controller
         return view('auditor.dashboard');
     }
 
-
-
     public function soporteTecnico(){
         return view('soporteTecnico');
     }
-
-
 
 }

@@ -17,9 +17,16 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'rol' => RoleMiddleware::class,
         ]);
-
-
     })
+
+
+
     ->withExceptions(function (Exceptions $exceptions): void {
         //
-    })->create();
+    })
+    
+    ->withProviders([
+        \L5Swagger\L5SwaggerServiceProvider::class,
+    ])
+    
+    ->create();
