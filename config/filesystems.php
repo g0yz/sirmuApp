@@ -32,7 +32,7 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root' => storage_path('app/private'),
+            'root' => storage_path('app'),
             'serve' => true,
             'throw' => false,
             'report' => false,
@@ -45,6 +45,22 @@ return [
             'visibility' => 'public',
             'throw' => false,
             'report' => false,
+        ],
+
+        'tareas' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/tareas'),
+            'url' => env('APP_URL').'/storage/tareas',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
+        'tareas_media' => [
+            'driver' => 'local',
+            'root' => public_path('uploads/tareas'),
+            'url' => env('APP_URL').'/uploads/tareas',
+            'visibility' => 'public',
+            'throw' => false,
         ],
 
         's3' => [

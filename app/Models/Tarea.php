@@ -3,9 +3,17 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Tarea extends Model
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+
+
+
+class Tarea extends Model implements HasMedia
 {
+    use HasFactory;
+    use InteractsWithMedia;
     //
 
         const tipo_Mantenimiento = 'mantenimiento';
@@ -72,5 +80,52 @@ class Tarea extends Model
     }
 
     public $timestamps = false;
+
+
+
+    //Definimos las collecciones de los archivos
+    public function registerMediaCollections():void{
+
+        $this->addMediaCollection('imagenes')
+        ->acceptsMimeTypes(['image/jpeg','image/png'])
+        ->useDisk('tareas_media');
+
+         $this->addMediaCollection('documentos')
+        ->acceptsMimeTypes(['application/pdf','application/docx'])
+        ->useDisk('tareas_media');
+    }
+
+        // Subir archivo a una colección
+    public function agregarArchivo($archivo, string $coleccion){
+        return $this->addMedia($archivo)
+                    ->toMediaCollection($coleccion, 'tareas_media');
+    }
+
+       // Listar archivos de una colección
+    public function listarArchivos(string $coleccion)
+    {
+        return $this->getMedia($coleccion);
+    }
+
+    // Obtener URLs de los archivos de una colección
+    public function urlsArchivos(string $coleccion)
+    {
+        return $this->getMedia($coleccion)->map(fn($media) => $media->getUrl());
+    }
+
+    // Eliminar un archivo específico
+    public function eliminarArchivo(Media $media)
+    {
+        if ($media->model_id == $this->id && $media->model_type == self::class) {
+            return $media->delete();
+        }
+        return false;
+    }
+
+    // Eliminar todos los archivos de una colección
+    public function eliminarArchivosColeccion(string $coleccion)
+    {
+        $this->clearMediaCollection($coleccion);
+    }
 
 }
