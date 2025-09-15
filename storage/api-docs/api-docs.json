@@ -1,8 +1,8 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "API Sede",
-        "description": "Listado de las URL de la Api Sede",
+        "title": "API Sirmu",
+        "description": "Listado de las URL de la Api para el proyecto Sirmu para la materia de Desarollo de Software",
         "version": "1.0"
     },
     "servers": [
