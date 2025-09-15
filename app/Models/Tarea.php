@@ -25,9 +25,9 @@ class Tarea extends Model implements HasMedia
         const prioridad_Baja = 'baja';
 
         const estado_Pendiente = 'pendiente';
-        const estado_Finalizado = 'finalizado';
-        const estado_Validado = 'validado';
-        const estado_Rechazado = 'rechazado';
+        const estado_Finalizado = 'finalizada';
+        const estado_Validado = 'validada';
+        const estado_Rechazado = 'rechazada';
 
         public static $tipos = [
             self::tipo_Mantenimiento,
@@ -63,6 +63,15 @@ class Tarea extends Model implements HasMedia
             'fecha_estimada',
             'fecha_finalizacion',
     ];
+
+
+    protected static function booted()
+    {
+        static::creating(function ($tarea) {
+            $tarea->fecha_creacion = now()->toDateString(); // YYYY-MM-DD
+        });
+    }
+
 
     public function sede()
     {

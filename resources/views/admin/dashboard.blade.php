@@ -69,6 +69,8 @@
 @if(request()->routeIs('admin.dashboard'))
 <div class="container mt-4">
     <div class="row">
+
+
         <div class="col-md-4">
             <div class="card text-white bg-dark mb-3">
                 <div class="card-body">
@@ -78,7 +80,17 @@
             </div>
         </div>
 
-         
+
+        <div class="col-md-4">
+            <div class="card text-white bg-dark mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Tareas Pendientes</h5>
+                    <p class="card-text" style="font-size: 2rem;">{{ $tareasPendientes }}</p>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 </div>
 @endif

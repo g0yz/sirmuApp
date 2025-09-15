@@ -56,7 +56,7 @@ class SedeController extends Controller{
      *     )
      *   ),
      *   @OA\Response(
-     *     response=302,
+     *     response=202,
      *     description="Redirección al listado de sedes"
      *   ),
      *   @OA\Response(

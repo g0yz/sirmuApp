@@ -20,6 +20,7 @@
                 <th>Técnico</th>
                 <th>Prioridad</th>
                 <th>Tipo</th>
+                <th>Estado</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -30,8 +31,9 @@
                 <td>{{ $tarea->sede ? $tarea->sede->nombre : '-' }}</td>
                 <td>{{ $tarea->encargado ? $tarea->encargado->email : '-' }}</td>
                 <td>{{ $tarea->tecnico ? $tarea->tecnico->email : '-' }}</td>
-                <td>{{ ucfirst($tarea->prioridad) }}</td>
                 <td>{{ ucfirst($tarea->tipo) }}</td>
+                <td>{{ ucfirst($tarea->prioridad) }}</td>
+                <td>{{ ucfirst($tarea->estado) }}</td>
                 <td>
                     <a href="{{ route('tareas.show', $tarea) }}" class="btn btn-info btn-sm">Ver</a>
                     <a href="{{ route('tareas.edit', $tarea) }}" class="btn btn-warning btn-sm">Editar</a>

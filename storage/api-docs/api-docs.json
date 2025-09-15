@@ -251,7 +251,7 @@
                     }
                 },
                 "responses": {
-                    "302": {
+                    "202": {
                         "description": "Redirección al listado de sedes"
                     },
                     "422": {
@@ -439,6 +439,139 @@
                     },
                     "403": {
                         "description": "Acceso denegado"
+                    }
+                }
+            }
+        },
+        "/tareas": {
+            "get": {
+                "tags": [
+                    "Tarea"
+                ],
+                "summary": "Listar todas las tareas",
+                "operationId": "52009680eb26b02127be9ebfb44a061c",
+                "responses": {
+                    "200": {
+                        "description": "Vista con listado de tareas"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Tarea"
+                ],
+                "summary": "Crear una nueva tarea",
+                "description": "Crea una nueva tarea y permite subir imágenes y documentos asociados",
+                "operationId": "e0342625de01f5962370bf24e4e63256",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "sede_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "encargado_id": {
+                                        "type": "integer",
+                                        "example": 3
+                                    },
+                                    "tecnico_id": {
+                                        "type": "integer",
+                                        "example": 5
+                                    },
+                                    "titulo": {
+                                        "type": "string",
+                                        "example": "Revisión de mantenimiento"
+                                    },
+                                    "prioridad": {
+                                        "type": "string",
+                                        "enum": [
+                                            "alta",
+                                            "media",
+                                            "baja"
+                                        ],
+                                        "example": "alta"
+                                    },
+                                    "tipo": {
+                                        "type": "string",
+                                        "enum": [
+                                            "mantenimiento",
+                                            "presupuesto",
+                                            "instalacion"
+                                        ],
+                                        "example": "mantenimiento"
+                                    },
+                                    "estado": {
+                                        "type": "string",
+                                        "enum": [
+                                            "pendiente",
+                                            "finalizado",
+                                            "validado",
+                                            "rechazado"
+                                        ],
+                                        "example": "pendiente"
+                                    },
+                                    "descripcion": {
+                                        "type": "string",
+                                        "example": "Se realizará mantenimiento de equipos"
+                                    },
+                                    "fecha_creacion": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2025-09-15"
+                                    },
+                                    "fecha_estimada": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2025-09-20"
+                                    },
+                                    "fecha_finalizacion": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2025-09-25"
+                                    },
+                                    "imagenes": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "format": "binary"
+                                        }
+                                    },
+                                    "documentos": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "format": "binary"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Tarea creada exitosamente"
+                    },
+                    "400": {
+                        "description": "Datos inválidos"
+                    }
+                }
+            }
+        },
+        "/tareas/create": {
+            "get": {
+                "tags": [
+                    "Tarea"
+                ],
+                "summary": "Formulario para crear tarea",
+                "operationId": "dc6ff8abf069b497f103840e5a9987a4",
+                "responses": {
+                    "200": {
+                        "description": "Vista con formulario de creación de tarea"
                     }
                 }
             }
@@ -703,6 +836,10 @@
         {
             "name": "Soporte",
             "description": "Soporte"
+        },
+        {
+            "name": "Tarea",
+            "description": "Tarea"
         },
         {
             "name": "Usuarios",

@@ -35,8 +35,14 @@ class DashboardController extends Controller{
         }
 
         $cantidadSedes = Sede::count();
+        $tareasPendientes = Tarea::where('estado', 'pendiente')->count();
 
-            return view('admin.dashboard', compact('cantidadSedes'));
+
+            return view('admin.dashboard', compact('cantidadSedes','tareasPendientes'));
+
+
+
+
     }
 
     public function tecnico()
