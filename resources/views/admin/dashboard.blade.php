@@ -65,7 +65,6 @@
 </body>     
 </html>
 
-
 @if(request()->routeIs('admin.dashboard'))
 <div class="container mt-4">
     <div class="row">
@@ -89,6 +88,27 @@
                 </div>
             </div>
         </div>
+
+
+        <div class="col-md-4">
+    <div class="card text-dark bg-light mb-3">
+        <div class="card-body">
+            <h5 class="card-title">Próximas Tareas</h5>
+            <ul class="list-group list-group-flush">
+                @forelse($proximasTareas as $tarea)
+                    <li class="list-group-item">
+                        <strong>{{ $tarea->titulo }}</strong><br>
+                        <strong>{{ $tarea->sede_id}}</strong><br>
+                        <small>Fecha Estimada: {{ \Carbon\Carbon::parse($tarea->fecha_estimada)->format('d/m/Y') }}</small>
+                    </li>
+                @empty
+                    <li class="list-group-item">No hay tareas próximas</li>
+                @endforelse
+            </ul>
+        </div>
+    </div>
+</div>
+
 
 
     </div>

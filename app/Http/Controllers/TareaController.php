@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Tarea;
 use App\Models\Sede;
+use Illuminate\Support\Facades\Auth;
+
+
 
 class TareaController extends Controller{
     
@@ -131,15 +134,32 @@ class TareaController extends Controller{
     }
 
 
-
-
-
+        public function show(Tarea $tarea){
+        return view('tareas.show', compact('tarea'));
+    }
         public function destroy(Tarea $tarea)
     {
 
         $tarea->delete();
-        return redirect()->route('tareas.index')->with('success', 'tarea eliminada correctamente.');
+        return redirect()->route('tecnico.tareas.index')->with('success', 'tarea eliminada correctamente.');
     }
 
     
+
+public function verTarea(Tarea $tarea)
+{
+    $user = Auth::user();
+
+    // Verificar que la tarea esté asignada a este técnico
+    if ($tarea->tecnico_id !== $user->id) {
+        abort(403, 'Acceso denegado');
+    }
+
+    // Cargar la relación con la sede
+    $tarea->load('sede');
+
+    return view('tareas.show', compact('tarea'));
+}
+
+
 }

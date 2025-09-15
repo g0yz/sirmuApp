@@ -96,7 +96,7 @@ Route::get('/admin/tareas/crear-tarea', [TareaController::class, 'create'])->nam
 // Guardar nueva sede
 Route::post('/admin/guardar-tarea', [TareaController::class, 'store'])->name('tareas.store')->middleware('rol:administrador');
 // Mostrar detalles de una tarea
-Route::get('/admin/detallar-tarea/{tarea}', [TareaController::class, 'show'])->name('tareas.show')->middleware('rol:administrador');
+Route::get('/admin/detallar-tarea/{tarea}', [TareaController::class, 'show'])->name('tareas.show')->middleware('rol:administrador',);
 //formulario para editar una tarea
 Route::get('/admin/tareas/{tarea}/editar-tarea', [TareaController::class, 'edit'])->name('tareas.edit')->middleware('rol:administrador');
 // Actualizar un tarea
@@ -107,6 +107,8 @@ Route::delete('/admin/eliminar-tarea/{tarea}', [TareaController::class, 'destroy
 
 //Rutas Tecnico//
 
-
-
+// Visualizar tarea asignadas
+Route::get('/tecnico/visualizar-tarea/{tarea}', [TareaController::class,'verTarea'])
+    ->name('tecnico.tareas.show')
+    ->middleware('rol:tecnico');
 
