@@ -12,8 +12,8 @@
             @method('PUT')
 
             <input type="email" name="email" class="form-control mb-2" placeholder="Correo electrónico" required value="{{ $user->email }}">
-            <input type="text" name="nombre" class="form-control mb-2" placeholder="Nombre" required value="{{ $user->nombre }}">
-            <input type="text" name="apellido" class="form-control mb-2" placeholder="Apellido" required value="{{ $user->apellido }}">
+            <input type="text" name="nombre" class="form-control mb-2" placeholder="Nombre" required value="{{ $user->persona->nombre }}">
+            <input type="text" name="apellido" class="form-control mb-2" placeholder="Apellido" required value="{{ $user->persona->apellido }}">
 
             <input type="password" name="password" class="form-control mb-2" placeholder="Nueva Contraseña (opcional)">
             <input type="password" name="password_confirmation" class="form-control mb-2" placeholder="Confirmar Nueva Contraseña">
