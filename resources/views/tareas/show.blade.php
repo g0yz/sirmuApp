@@ -6,25 +6,40 @@
 
     <div class="card shadow-sm">
         <div class="card-body">
-            <h5 class="card-title text-primary">{{ $tarea->titulo }}</h5>
-            
+
             <div class="row mb-2">
-                <div class="col-12 col-md-6"><strong>Sede:</strong> {{ $tarea->sede->nombre ?? 'Sin sede' }}</div>
-                <div class="col-12 col-md-6"><strong>Tipo:</strong> {{ ucfirst($tarea->tipo) }}</div>
+                <div class="col-12 col-md-6"><strong>Titulo:</strong> {{ $tarea->titulo ?? 'Sin nombre' }}</div>
             </div>
             
             <div class="row mb-2">
+                <div class="col-12 col-md-6"><strong>Sede:</strong> {{ $tarea->sede->nombre ?? 'Sin sede' }}</div>
+            </div>
+
+             <div class="row mb-2">
+                <div class="col-12 col-md-6"><strong>Tipo:</strong> {{ ucfirst($tarea->tipo) }}</div>
+            </div>
+
+            <div class="row mb-2">
                 <div class="col-12 col-md-6"><strong>Prioridad:</strong> {{ ucfirst($tarea->prioridad) }}</div>
+            </div>
+
+            <div class="row mb-2">
                 <div class="col-12 col-md-6"><strong>Estado:</strong> {{ ucfirst($tarea->estado) }}</div>
             </div>
             
             <div class="row mb-2">
                 <div class="col-12 col-md-6"><strong>Encargado:</strong> {{ $tarea->encargado->name ?? 'No asignado' }}</div>
+            </div>
+
+            <div class="row mb-2">
                 <div class="col-12 col-md-6"><strong>Fecha estimada:</strong> {{ $tarea->fecha_estimada }}</div>
             </div>
 
             <div class="row mb-2">
                 <div class="col-12 col-md-6"><strong>Fecha creación:</strong> {{ $tarea->fecha_creacion }}</div>
+            </div>
+
+            <div class="row mb-2">
                 <div class="col-12 col-md-6"><strong>Fecha finalización:</strong> {{ $tarea->fecha_finalizacion ?? 'Pendiente' }}</div>
             </div>
 

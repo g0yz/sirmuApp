@@ -18,6 +18,8 @@ return new class extends Migration
             // Nombre de la colección: 'imagenes' o 'documentos'
             $table->string('collection_name');
             
+            $table->string('conversions_disk')->nullable();
+            $table->uuid('uuid')->nullable();
             $table->string('name');        // nombre original
             $table->string('file_name');   // nombre en disco
             $table->string('mime_type')->nullable();

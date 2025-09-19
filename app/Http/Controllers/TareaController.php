@@ -162,4 +162,18 @@ public function verTarea(Tarea $tarea)
 }
 
 
+
+public function indexTecnico() {
+    $user = Auth::user();
+
+    // Obtener solo las tareas asignadas a este técnico
+    $tareasAsignadas = Tarea::with('sede')
+                            ->where('tecnico_id', $user->id)
+                            ->get();
+
+    return view('tecnico.tareas.index', compact('tareasAsignadas'));
+}
+
+
+
 }

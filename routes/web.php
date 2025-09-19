@@ -108,7 +108,6 @@ Route::delete('/admin/eliminar-tarea/{tarea}', [TareaController::class, 'destroy
 //Rutas Tecnico//
 
 // Visualizar tarea asignadas
-Route::get('/tecnico/visualizar-tarea/{tarea}', [TareaController::class,'verTarea'])
-    ->name('tecnico.tareas.show')
-    ->middleware('rol:tecnico');
+Route::get('/tecnico/gestionar-tareas', [TareaController::class, 'indexTecnico'])->name('tecnico.tareas.index')->middleware('rol:tecnico');
+Route::get('/tecnico/visualizar-tarea/{tarea}', [TareaController::class,'verTarea'])->name('tecnico.tareas.show') ->middleware('rol:tecnico');
 

@@ -73,9 +73,17 @@ class SedeController extends Controller{
             'encargado_id' => 'nullable|exists:users,id',
             'capacidad_estudiantes' => 'required|integer|min:1',
             'carreras_ofrecidas' => 'required|string',
+            'imagen' => 'nullable|mimes:jpg,jpeg,png',
+
         ]);
 
-        Sede::create($request->all());
+        $sede=Sede::create($request->except('imagen'));
+
+            if ($request->hasFile('imagen')) {
+                $sede->addMediaFromRequest('imagen')
+                ->toMediaCollection('imagenes');
+}
+
             return redirect()->route('sedes.index')->with('success', 'Sede creada correctamente');
     }
     /**
@@ -171,10 +179,15 @@ class SedeController extends Controller{
             'encargado_id' => 'nullable|exists:users,id',
             'capacidad_estudiantes' => 'required|integer|min:1',
             'carreras_ofrecidas' => 'required|string',
+            'imagen' => 'nullable|mimes:jpg,jpeg,png',
         ]);
 
         $sede->update($request->all());
-
+        
+        if ($request->hasFile('imagen')) {
+            $sede->addMediaFromRequest('imagen')
+             ->toMediaCollection('imagenes');
+}
         return redirect()->route('sedes.index')->with('success', 'Sede actualizada correctamente');
     }
     /**

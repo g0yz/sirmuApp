@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Sede extends Model
+class Sede extends Model implements HasMedia
 {
-    use HasFactory;
+    use HasFactory, InteractsWithMedia;
 
     const tipo_Campus = 'campus';
     const tipo_Virtual = 'virtual';
@@ -47,5 +49,12 @@ class Sede extends Model
     }
 
     public $timestamps = false;
+
+
+        public function registerMediaCollections(): void{
+        $this->addMediaCollection('imagenes')
+            ->useDisk('sedes_media')
+            ->singleFile(); // solo se agrega una imagen por sede
+    }
 
 }

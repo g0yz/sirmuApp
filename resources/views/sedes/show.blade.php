@@ -20,7 +20,7 @@
 
         <div class="row mb-2">
                 <div class="col-12 col-md-6">
-                    <strong>Tipo:</strong> {{ $sede->tipo}}
+                    <strong>Tipo de Sede:</strong> {{ $sede->tipo}}
                 </div>
         </div>
 
@@ -41,14 +41,16 @@
                     <strong>Carreras:</strong> {{ $sede->carreras_ofrecidas}}
                 </div>
         </div>
+        
+        <img src="{{ $sede->getFirstMediaUrl('imagenes') }}" 
+         alt="Imagen de la sede" 
+         class="img-fluid rounded" 
+         style="max-width: 300px;">
 
-                <div class="row mb-2">
-                <div class="col-12 col-md-6">
-                    <strong>Descripcion:</strong> {{ $sede->Descripcion ?? 'sin Descripcion '}}
-                </div>
-        </div>
-
-
+             <div class="mt-3 text-center">
+                <a href="{{ url()->previous() }}" class="btn btn-secondary">Volver</a>
+            </div>
 
 </div>
+
 @endsection

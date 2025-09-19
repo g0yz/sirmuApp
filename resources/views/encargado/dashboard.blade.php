@@ -39,8 +39,8 @@
           href="#">Calendario</a>
         </li>
         <li class="nav-item navSelect">
-          <a class="nav-link @if(request()->routeIs('tecnico.configuracion')) active @endif" 
-          href="{{ route('tecnico.configuracion') }}">Configuracion</a>
+          <a class="nav-link @if(request()->routeIs('encargado.configuracion')) active @endif" 
+          href="{{ route('encargado.configuracion') }}">Configuracion</a>
         </li>
         <li class="nav-item navSelect">
           <a class="nav-link @if(request()->routeIs('encargado.soporteTecnico')) active @endif" 

@@ -22,7 +22,7 @@
       <option value="encargado">Encargado</option>
       <option value="auditor">Auditor</option>
       </select>
-      <button type="submit" class="registration-btn">Registrarse</button>
+      <button type="submit" class="registration-btn">Registrar</button>
     </form>
   </div>
 </div>

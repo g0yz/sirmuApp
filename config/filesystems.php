@@ -57,11 +57,18 @@ return [
 
         'tareas_media' => [
             'driver' => 'local',
-            'root' => public_path('uploads/tareas'),
-            'url' => env('APP_URL').'/uploads/tareas',
+            'root' => storage_path('app/public/tareas'),
+            'url' => env('APP_URL').'/storage/tareas',
             'visibility' => 'public',
             'throw' => false,
         ],
+
+'sedes_media' => [
+    'driver' => 'local',
+    'root' => storage_path('app/public/sedes'),
+    'url' => env('APP_URL') . '/storage/sedes',
+    'visibility' => 'public',
+],
 
         's3' => [
             'driver' => 's3',

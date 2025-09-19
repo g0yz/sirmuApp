@@ -37,5 +37,9 @@
         </div>
 
 
+        <div class="mt-3 text-center">
+            <a href="{{ url()->previous() }}" class="btn btn-secondary">Volver</a>
+        </div>
+
 </div>
 @endsection

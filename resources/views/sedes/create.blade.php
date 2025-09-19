@@ -10,7 +10,7 @@
 <div class="registration-container">
   <div class="registration-form">
     <h2 class="h2">Ingresar Datos De La Sede</h2>
-    <form method="POST" action="{{route('sedes.store')}}">
+    <form method="POST" action="{{route('sedes.store')}}" enctype="multipart/form-data">
       @csrf
       <input type="text" name="nombre" class="form-control mb-2" placeholder="Nombre de la Sede" required>
       <input type="text" name="direccion" class="form-control mb-2" placeholder="Direccion" required>
@@ -30,6 +30,8 @@
       <option value="regional">Regional</option>
       <option value="especial">Especial</option>
       </select>
+      <label for="imagen" class="form-label">Imagen de la Sede:</label>
+      <input type="file" name="imagen" class="form-control mb-2" accept="image/*">
       <button type="submit" class="registration-btn">Registrar</button>
     </form>
   </div>

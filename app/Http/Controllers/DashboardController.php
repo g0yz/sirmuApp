@@ -51,16 +51,8 @@ class DashboardController extends Controller{
             abort(403, 'Acceso denegado');
         }
 
-        $user = Auth::user();
-        // Obtener tareas asignadas a este técnico
-        $tareasAsignadas = Tarea::with('sede')
-                             ->where('tecnico_id', Auth::id())
-                            ->where('estado', Tarea::estado_Pendiente)
-                            ->orderBy('fecha_estimada', 'asc')
-                            ->take(5)
-                            ->get();
-
-        return view('tecnico.dashboard',compact('tareasAsignadas'));
+        return view('tecnico.dashboard');
+        
     }
 
         public function encargado()
