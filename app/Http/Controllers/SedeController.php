@@ -21,7 +21,7 @@ class SedeController extends Controller{
      */
     public function index(){
         $sedes = Sede::with('encargado')->get();
-            return view('sedes.index', compact('sedes'));
+            return view('admin.sedes.index', compact('sedes'));
     }
     /**
      * @OA\Get(
@@ -36,7 +36,7 @@ class SedeController extends Controller{
      */
     public function create(){
         $encargados = User::where('rol', 'encargado')->get();
-            return view('sedes.create', compact('encargados'));
+            return view('admin.sedes.create', compact('encargados'));
     }
     /**
      * @OA\Post(
@@ -84,7 +84,7 @@ class SedeController extends Controller{
                 ->toMediaCollection('imagenes');
 }
 
-            return redirect()->route('sedes.index')->with('success', 'Sede creada correctamente');
+            return redirect()->route('admin.sedes.index')->with('success', 'Sede creada correctamente');
     }
     /**
      * @OA\Get(
@@ -109,7 +109,7 @@ class SedeController extends Controller{
      * )
      */
     public function show(Sede $sede){
-        return view('sedes.show', compact('sede'));
+        return view('admin.sedes.show', compact('sede'));
     }
     /**
      * @OA\Get(
@@ -135,7 +135,7 @@ class SedeController extends Controller{
      */
     public function edit(Sede $sede){
         $encargados = User::where('rol', 'encargado')->get();
-            return view('sedes.edit', compact('sede','encargados'));
+            return view('admin.sedes.edit', compact('sede','encargados'));
     }
     /**
      * @OA\Put(
@@ -188,7 +188,7 @@ class SedeController extends Controller{
             $sede->addMediaFromRequest('imagen')
              ->toMediaCollection('imagenes');
 }
-        return redirect()->route('sedes.index')->with('success', 'Sede actualizada correctamente');
+        return redirect()->route('admin.sedes.index')->with('success', 'Sede actualizada correctamente');
     }
     /**
      * @OA\Delete(
@@ -214,8 +214,25 @@ class SedeController extends Controller{
      */
     public function destroy(Sede $sede){
         $sede->delete();
-        return redirect()->route('sedes.index')->with('success', 'Sede eliminada correctamente');
+        return redirect()->route('admin.sedes.index')->with('success', 'Sede eliminada correctamente');
     }
+
+
+
+
+    public function indexAuditor(){
+        $sedes = Sede::with('encargado')->get();
+            return view('auditor.sedes.listadoSedes', compact('sedes'));
+    }
+
+
+        public function showAuditor(Sede $sede){
+        return view('auditor.sedes.verSede', compact('sede'));
+    }
+
+
+
+
 
     public $timestamps = false;
 

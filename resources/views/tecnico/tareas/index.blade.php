@@ -1,9 +1,18 @@
 @extends('tecnico.dashboard')
 
 @section('content')
-<div class="container mt-4">
-    <h2>Próximas tareas asignadas</h2>
 
+
+<div class="container mt-4">
+    <div class="card shadow-sm mb-4 bg-dark">
+        <div class="card-body text-center p-3">
+            <h3 class="mb-0 text-white">Tareas Asignadas</h3>
+        </div>
+    </div>
+</div>
+
+
+<div class="container mt-4">
     @if($tareasAsignadas->isEmpty())
         <p>No tienes tareas asignadas.</p>
     @else
@@ -25,7 +34,8 @@
                         <td>{{ ucfirst($tarea->prioridad) }}</td>
                         <td>{{ ucfirst($tarea->estado) }}</td>
                         <td>
-                        <a href="{{ route('tecnico.tareas.show', $tarea->id) }}" class="btn btn-primary btn-sm">Ver</a>
+                        <a href="{{ route('tecnico.tareas.show', $tarea->id) }}" class="btn btn-primary btn-sm">Informacion Tarea</a>
+                        <a href="{{ route('tecnico.tareas.resolucion', $tarea->id) }}" class="btn btn-primary btn-sm">Finalizar Tarea</a>
                       </td>
                     </tr>
                 @endforeach

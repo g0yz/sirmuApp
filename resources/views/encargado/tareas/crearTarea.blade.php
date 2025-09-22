@@ -1,5 +1,5 @@
 
-@extends('admin.dashboard')
+@extends('encargado.dashboard')
 
  <link rel="stylesheet" href="{{ asset('css/register.css') }}">
 
@@ -7,27 +7,13 @@
 
   <!-- Formulario centrado -->
 <div class="registration-container">
-  <div class="registration-form">
-    <h2 class="h2">Ingresar Datos De La Tarea</h2>
-    <form method="POST" action="{{route('tareas.store')}}">
+  <div class="registration-form p-4 bg-white rounded shadow-sm">
+    <h2 class="h2">Ingresar Tarea</h2>
+    <form method="POST" action="{{ route('encargado.tareas.guardarTarea') }}" enctype="multipart/form-data">
       @csrf
-      <input type="text" name="titulo" class="form-control mb-2" placeholder="Titulo de la Tarea" required>
-
-      <select name="sede_id" class="form-select mb-2" required>
-      <option value="">Seleccione la Sede</option>
-            @foreach($sedes as $sede)
-      <option value="{{ $sede->id }}">{{ $sede->id }}</option>
-            @endforeach
-      </select>
-
-      <select name="encargado_id" class="form-select mb-2">
-      <option value="">Seleccione al Encargado</option>
-            @foreach($encargados as $encargado)
-      <option value="{{ $encargado->id }}">{{ $encargado->id }}</option>
-            @endforeach
-      </select>
-      
-
+            <label for="text">Titulo:</label>
+      <input type="text" name="titulo" class="form-control mb-2" required>
+  
       <select name="tecnico_id" class="form-select mb-2">
       <option value="">Seleccione al Tecnico</option>
             @foreach($tecnicos as $tecnico)
@@ -53,20 +39,31 @@
       <label>Estado</label>
       <select name="estado" class="form-select form-select-sm-2">
       <option value="pendiente">Pendiente</option>
-      <option value="finalizada">Finalizado</option>
-      <option value="validada">Validado</option>
-      <option value="rechazada">Rechazado</option>
       </select>
 
       <label>Fecha Estimada</label>
       <input type="date" name="fecha_estimada" class="form-control mb-2" required>
+      <label for="text">Descripcion:</label>
+      <input type="text" name="descripcion" class="form-control mb-2" required>
+      <label for="text">Imagenes:</label>
+      <input name="imagenes[]" type='file' class="form-control" id="imagenes" multiple>
+      <label for="text">Documentos:</label>
+      <input name="documentos[]" type='file' class="form-control" id="documentos" multiple>
 
-      <input type="text" name="descripcion" class="form-control mb-2" placeholder="Descripcion" required>
 
+      <input type="hidden" name="sede_id" value="{{ $sede->id }}">
+      <input type="hidden" name="encargado_id" value="{{ auth()->id() }}">
 
       <button type="submit" class="registration-btn">Registrar</button>
     </form>
   </div>
 </div>
+
+
+
+<div class="mt-3 text-center">
+    <a href="{{ url()->previous() }}" class="btn btn-secondary">Volver</a> 
+</div>
+
 
 @endsection

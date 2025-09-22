@@ -34,10 +34,14 @@
           href="{{ route('auditor.dashboard') }}">Inicio</a>
         </li>
 
+        <li class="nav-item navSelect">
+          <a class="nav-link @if(request()->routeIs('auditor.tareas.finalizadas')) active @endif" 
+          href="{{ route('auditor.tareas.finalizadas') }}">Tareas</a>
+        </li>
 
         <li class="nav-item navSelect">
-          <a class="nav-link @if(request()->routeIs('')) active @endif" 
-          href="#">Sedes</a>
+          <a class="nav-link @if(request()->routeIs('auditor.sedes.listadoSedes')) active @endif" 
+          href="{{ route('auditor.sedes.listadoSedes') }}">Sedes</a>
         </li>
 
         <li class="nav-item navSelect">
@@ -63,5 +67,12 @@
 </body>     
 </html>
 
-
-
+@if(request()->routeIs('auditor.dashboard'))
+<div class="container mt-4">
+    <div class="card shadow-sm mb-4 bg-dark">
+        <div class="card-body text-center p-3">
+            <h3 class="mb-0 text-white">Inicio</h3>
+        </div>
+    </div>
+</div>
+@endif

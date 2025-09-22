@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nombre');
             $table->string('direccion');
             $table->string('tipo');
-            $table->foreignId('encargado_id')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('encargado_id')->nullable()->constrained('users')->onDelete('cascade');;
             $table->integer('capacidad_estudiantes');
             $table->string('carreras_ofrecidas');
             //$table->timestamps();

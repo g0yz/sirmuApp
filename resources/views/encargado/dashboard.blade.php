@@ -31,8 +31,8 @@
           href="{{ route('encargado.dashboard') }}">Inicio</a>
         </li>
         <li class="nav-item navSelect">
-          <a class="nav-link @if(request()->routeIs('')) active @endif" 
-          href="#">Tareas</a>
+          <a class="nav-link @if(request()->routeIs('encargado.tareas.listadoTareas')) active @endif" 
+          href="{{ route ('encargado.tareas.listadoTareas') }}">Tareas</a>
         </li>
         <li class="nav-item navSelect">
           <a class="nav-link @if(request()->routeIs('')) active @endif" 
@@ -60,3 +60,12 @@
 </html>
 
 
+@if(request()->routeIs('encargado.dashboard'))
+<div class="container mt-4">
+    <div class="card shadow-sm mb-4 bg-dark">
+        <div class="card-body text-center p-3">
+            <h3 class="mb-0 text-white">Inicio</h3>
+        </div>
+    </div>
+</div>
+@endif

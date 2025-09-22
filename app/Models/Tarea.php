@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Models;
+use Illuminate\Support\Facades\Auth;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -62,6 +64,7 @@ class Tarea extends Model implements HasMedia
             'fecha_creacion',
             'fecha_estimada',
             'fecha_finalizacion',
+            'resolucion_desc', 
     ];
 
 
@@ -73,20 +76,23 @@ class Tarea extends Model implements HasMedia
     }
 
 
-    public function sede()
-    {
+    public function sede(){
         return $this->belongsTo(Sede::class, 'sede_id');
     }
 
-    public function encargado()
-    {
+    public function encargado(){
         return $this->belongsTo(User::class, 'encargado_id');
     }
 
-    public function tecnico()
-    {
+    public function tecnico(){
         return $this->belongsTo(User::class, 'tecnico_id');
     }
+
+    //
+    public function historial(){
+        return $this->hasMany(TareaHistorial::class);
+    }
+
 
     public $timestamps = false;
 
@@ -100,26 +106,26 @@ class Tarea extends Model implements HasMedia
         ->useDisk('tareas_media');
 
          $this->addMediaCollection('documentos')
-        ->acceptsMimeTypes(['application/pdf','application/docx'])
+        ->acceptsMimeTypes(['application/pdf', // .pdf
+            'application/msword', // .doc
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',  // .docx
+            'application/vnd.ms-excel',  // .xls
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'])  // .xlsx
         ->useDisk('tareas_media');
-    }
 
-        // Subir archivo a una colección
-    public function agregarArchivo($archivo, string $coleccion){
-        return $this->addMedia($archivo)
-                    ->toMediaCollection($coleccion, 'tareas_media');
-    }
+        $this->addMediaCollection('resoluciones')
+        ->acceptsMimeTypes(['application/pdf', // .pdf
+            'application/msword', // .doc
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',  // .docx
+            'application/vnd.ms-excel',  // .xls
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'])  // .xlsx
+        ->useDisk('tareas_media');
 
+    }
        // Listar archivos de una colección
     public function listarArchivos(string $coleccion)
     {
         return $this->getMedia($coleccion);
-    }
-
-    // Obtener URLs de los archivos de una colección
-    public function urlsArchivos(string $coleccion)
-    {
-        return $this->getMedia($coleccion)->map(fn($media) => $media->getUrl());
     }
 
     // Eliminar un archivo específico
@@ -131,10 +137,5 @@ class Tarea extends Model implements HasMedia
         return false;
     }
 
-    // Eliminar todos los archivos de una colección
-    public function eliminarArchivosColeccion(string $coleccion)
-    {
-        $this->clearMediaCollection($coleccion);
-    }
 
 }

@@ -24,7 +24,7 @@ class UserController extends Controller{
     {
         //$users = User::where('rol', '!=', User::ROL_ADMIN)->get();
         $users= User::all();
-        return view('usuarios.index', compact('users'));
+        return view('admin.usuarios.index', compact('users'));
     }
      /**
      * @OA\Get(
@@ -36,7 +36,7 @@ class UserController extends Controller{
      */
     public function create()
     {
-        return view('usuarios.create');
+        return view('admin.usuarios.create');
     }
     /**
      * @OA\Post(
@@ -83,7 +83,7 @@ class UserController extends Controller{
             ]);
         }
 
-        return redirect()->route('usuarios.index')->with('success', 'Usuario creado correctamente.');
+        return redirect()->route('admin.usuarios.index')->with('success', 'Usuario creado correctamente.');
     }
     /**
      * @OA\Get(
@@ -104,7 +104,7 @@ class UserController extends Controller{
      */
     public function show(User $user)
     {
-        return view('usuarios.show', compact('user'));
+        return view('admin.usuarios.show', compact('user'));
     }
     /**
      * @OA\Get(
@@ -122,7 +122,7 @@ class UserController extends Controller{
      */
     public function edit(User $user)
     {
-        return view('usuarios.edit', compact('user'));
+        return view('admin.usuarios.edit', compact('user'));
     }
 
     /**
@@ -185,7 +185,7 @@ class UserController extends Controller{
             }
         }
 
-        return redirect()->route('usuarios.index')->with('success', 'Usuario actualizado correctamente.');
+        return redirect()->route('admin.usuarios.index')->with('success', 'Usuario actualizado correctamente.');
     }
 
         /**
@@ -209,6 +209,6 @@ class UserController extends Controller{
     {
 
         $user->delete();
-        return redirect()->route('usuarios.index')->with('success', 'Usuario eliminado correctamente.');
+        return redirect()->route('admin.usuarios.index')->with('success', 'Usuario eliminado correctamente.');
     }
 }

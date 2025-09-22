@@ -34,7 +34,7 @@
 
 
         <li class="nav-item navSelect">
-          <a class="nav-link @if(request()->routeIs('tecnico.tarea.index')) active @endif" 
+          <a class="nav-link @if(request()->routeIs('tecnico.tareas.index')) active @endif" 
           href="{{ route('tecnico.tareas.index') }}">Listado de Tareas</a>
         </li>
 
@@ -63,4 +63,13 @@
 </html>
 
 
+@if(request()->routeIs('tecnico.dashboard'))
+<div class="container mt-4">
+    <div class="card shadow-sm mb-4 bg-dark">
+        <div class="card-body text-center p-3">
+            <h3 class="mb-0 text-white">Inicio</h3>
+        </div>
+    </div>
+</div>
+@endif
 

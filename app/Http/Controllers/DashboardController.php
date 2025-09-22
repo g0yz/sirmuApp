@@ -60,8 +60,10 @@ class DashboardController extends Controller{
         if (Auth::user()->rol !== 'encargado') {
             abort(403, 'Acceso denegado');
         }
+         $user = Auth::user();
+        $sede = $user->sede;
 
-        return view('encargado.dashboard');
+        return view('encargado.dashboard',compact('user','sede'));
     }
 
     public function auditor()

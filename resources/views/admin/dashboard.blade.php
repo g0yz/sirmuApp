@@ -33,16 +33,16 @@
                   href="{{ route('admin.dashboard') }}">Inicio</a>
                 </li>
                 <li class="nav-item navSelect">
-                  <a class="nav-link @if(request()->routeIs('sedes.index')) active @endif" 
-                  href="{{ route('sedes.index')}}">Sedes</a>
+                  <a class="nav-link @if(request()->routeIs('admin.sedes.index')) active @endif" 
+                  href="{{ route('admin.sedes.index')}}">Sedes</a>
                 </li>
                 <li class="nav-item navSelect">
-                  <a class="nav-link @if(request()->routeIs('tareas.index')) active @endif" 
-                  href="{{ route('tareas.index')}}">Tareas</a>
+                  <a class="nav-link @if(request()->routeIs('admin.tareas.index')) active @endif" 
+                  href="{{ route('admin.tareas.index')}}">Tareas</a>
                 </li>
                 <li class="nav-item navSelect">
-                  <a class="nav-link @if(request()->routeIs('usuarios.index')) active @endif" 
-                  href="{{ route('usuarios.index') }}">Usuarios</a>
+                  <a class="nav-link @if(request()->routeIs('admin.usuarios.index')) active @endif" 
+                  href="{{ route('admin.usuarios.index') }}">Usuarios</a>
                 </li>
                 <li class="nav-item navSelect">
                   <a class="nav-link @if(request()->routeIs('admin.configuracion')) active @endif" 
@@ -67,9 +67,15 @@
 
 @if(request()->routeIs('admin.dashboard'))
 <div class="container mt-4">
+    <div class="card shadow-sm mb-4 bg-dark">
+        <div class="card-body text-center p-3">
+            <h3 class="mb-0 text-white">Inicio</h3>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-4">
     <div class="row">
-
-
         <div class="col-md-4">
             <div class="card text-white bg-dark mb-3">
                 <div class="card-body">
@@ -108,8 +114,6 @@
         </div>
     </div>
 </div>
-
-
 
     </div>
 </div>

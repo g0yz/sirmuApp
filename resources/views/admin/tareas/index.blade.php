@@ -1,18 +1,26 @@
 @extends('admin.dashboard')
 
 @section('content')
-<div class="container mt-4">
-    <h1>Tareas del Sistema</h1>
 
+<div class="container mt-4">
+    <div class="card shadow-sm mb-4 bg-dark">
+        <div class="card-body text-center p-3">
+            <h3 class="mb-0 text-white">Tareas del Sistema</h3>
+        </div>
+    </div>
+</div>
+
+
+<div class="container mt-4">
     <!-- Mensajes de éxito -->
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
-    <a href="{{ route('tareas.create') }}" class="btn btn-primary mb-3">Nueva Tarea</a>
+    <a href="{{ route('admin.tareas.create') }}" class="btn btn-primary mb-3">Nueva Tarea</a>
 
-    <table class="table table-bordered table-striped">
-        <thead>
+    <table class="table table-bordered table-responsive table-striped">
+        <thead class="table-dark">
             <tr>
                 <th>ID</th>
                 <th>Sede</th>
@@ -35,9 +43,9 @@
                 <td>{{ ucfirst($tarea->prioridad) }}</td>
                 <td>{{ ucfirst($tarea->estado) }}</td>
                 <td>
-                    <a href="{{ route('tareas.show', $tarea) }}" class="btn btn-info btn-sm">Ver</a>
-                    <a href="{{ route('tareas.edit', $tarea) }}" class="btn btn-warning btn-sm">Editar</a>
-                    <form action="{{ route('tareas.destroy', $tarea) }}" method="POST" style="display:inline;">
+                    <a href="{{ route('admin.tareas.show', $tarea) }}" class="btn btn-info btn-sm">Ver</a>
+                    <a href="{{ route('admin.tareas.edit', $tarea) }}" class="btn btn-warning btn-sm">Editar</a>
+                    <form action="{{ route('admin.tareas.destroy', $tarea) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
                         <button class="btn btn-danger btn-sm" onclick="return confirm('¿Eliminar Tarea?')">Eliminar</button>

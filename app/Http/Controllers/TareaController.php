@@ -27,7 +27,7 @@ class TareaController extends Controller{
 
     public function index() {
     $tareas = Tarea::with(['sede', 'encargado', 'tecnico'])->get();
-    return view('tareas.index', compact('tareas'));
+    return view('admin.tareas.index', compact('tareas'));
     }
 
     /**
@@ -46,7 +46,7 @@ class TareaController extends Controller{
         $encargados = User::where('rol','encargado')->get();
         $tecnicos = User::where('rol','tecnico')->get();
         $sedes = Sede::all();
-        return view('tareas.create',compact('encargados','tecnicos','sedes'));
+        return view('admin.tareas.create',compact('encargados','tecnicos','sedes'));
     }
 
 
@@ -111,40 +111,99 @@ class TareaController extends Controller{
             'fecha_estimada' => 'required|date',
             'fecha_finalizacion' => 'nullable|date|after_or_equal:fecha_estimada',
             'imagenes.*' => 'nullable|image|mimes:jpeg,png',
-            'documentos.*' => 'nullable|mimes:pdf,doc,docx',
+            'documentos.*' => 'nullable|mimes:pdf,doc,docx,xls,xlsx',
         ]);
 
-        $tarea = Tarea::create($request->all());
+
+        
+        $tarea = Tarea::create([
+            'sede_id' => $request->sede_id,
+            'encargado_id' => $request->encargado_id,
+            'tecnico_id' => $request->tecnico_id,
+            'titulo' => $request->titulo,
+            'prioridad' => $request->prioridad,
+            'tipo' => $request->tipo,
+            'estado' => $request->estado,
+            'descripcion' => $request->descripcion,
+            'fecha_estimada' => $request->fecha_estimada,
+            'fecha_finalizacion' => $request->fecha_finalizacion ?? null,
+        ]);
 
                 // Subir imágenes
         if ($request->hasFile('imagenes')) {
             foreach ($request->file('imagenes') as $imagen) {
-                $tarea->agregarArchivo($imagen, 'imagenes');
+                $tarea->addMedia($imagen)->toMediaCollection('imagenes');
             }
         }
 
         // Subir documentos
         if ($request->hasFile('documentos')) {
             foreach ($request->file('documentos') as $documento) {
-                $tarea->agregarArchivo($documento, 'documentos');
+                $tarea->addMedia($documento)->toMediaCollection('documentos');
             }
         }
 
-            return redirect()->route('tareas.index')->with('success', 'Tarea creada correctamente');
+            return redirect()->route('admin.tareas.index')->with('success', 'Tarea creada correctamente');
     }
 
 
-        public function show(Tarea $tarea){
-        return view('tareas.show', compact('tarea'));
+    public function show(Tarea $tarea){
+        return view('admin.tareas.show', compact('tarea'));
     }
-        public function destroy(Tarea $tarea)
-    {
+        
 
+    public function edit(Tarea $tarea){
+        $encargados = User::where('rol','encargado')->get();
+        $tecnicos = User::where('rol','tecnico')->get();
+        $sedes = Sede::all();
+
+        return view('admin.tareas.edit', compact('tarea', 'encargados', 'tecnicos', 'sedes'));
+    }
+
+public function update(Request $request, Tarea $tarea)
+{
+    $request->validate([
+        'sede_id' => 'exists:sedes,id',
+        'encargado_id' => 'exists:users,id',
+        'tecnico_id' => 'nullable|exists:users,id',
+        'titulo' => 'required|string|max:50',
+        'prioridad' => 'required|in:' . implode(',', Tarea::$prioridades),
+        'tipo' => 'required|in:' . implode(',', Tarea::$tipos),
+        'estado' => 'required|in:' . implode(',', Tarea::$estados),
+        'descripcion' => 'required|string|max:250',
+        'fecha_estimada' => 'required|date',
+        'fecha_finalizacion' => 'nullable|date|after_or_equal:fecha_estimada',
+        'imagenes.*' => 'nullable|image|mimes:jpeg,png',
+        'documentos.*' => 'nullable|mimes:pdf,doc,docx,xls,xlsx',
+    ]);
+
+    $tarea->update($request->all());
+
+    // Subir imágenes nuevas
+    if ($request->hasFile('imagenes')) {
+        foreach ($request->file('imagenes') as $imagen) {
+            $tarea->addMedia($imagen)->toMediaCollection('imagenes');
+        }
+    }
+
+    // Subir documentos nuevos
+    if ($request->hasFile('documentos')) {
+        foreach ($request->file('documentos') as $documento) {
+            $tarea->addMedia($documento)->toMediaCollection('documentos');
+        }
+    }
+
+    return redirect()->route('admin.tareas.index')->with('success', 'Tarea actualizada correctamente');
+}
+
+
+    public function destroy(Tarea $tarea){
         $tarea->delete();
-        return redirect()->route('tecnico.tareas.index')->with('success', 'tarea eliminada correctamente.');
+        return redirect()->route('admin.tareas.index')->with('succes','Tarea eliminada correctamente');
     }
 
-    
+
+
 
 public function verTarea(Tarea $tarea)
 {
@@ -158,10 +217,8 @@ public function verTarea(Tarea $tarea)
     // Cargar la relación con la sede
     $tarea->load('sede');
 
-    return view('tareas.show', compact('tarea'));
+    return view('tecnico.tareas.show', compact('tarea'));
 }
-
-
 
 public function indexTecnico() {
     $user = Auth::user();
@@ -173,6 +230,191 @@ public function indexTecnico() {
 
     return view('tecnico.tareas.index', compact('tareasAsignadas'));
 }
+
+
+public function indexEncargado(){
+    $user = Auth::user();
+    $tareas = Tarea::with(['sede', 'tecnico'])
+                    ->where('encargado_id', $user->id)
+                    ->get();
+
+    return view('encargado.tareas.listadoTareas', compact('tareas'));
+
+}
+
+
+public function crearTareaEncargado() {
+
+    $encargado_id = auth()->id();
+
+    $sede = Sede::where('encargado_id', $encargado_id)->first();
+
+    $tecnicos = User::where('rol', 'tecnico')->get();
+
+    return view('encargado.tareas.crearTarea', compact('sede', 'tecnicos'));
+
+}
+
+
+public function storeEncargado(Request $request) {
+    $user = Auth::user(); // Encargado actual
+
+    $request->validate([
+        'tecnico_id' => 'nullable|exists:users,id',
+        'titulo' => 'required|string|max:50',
+        'prioridad' => 'required|in:' . implode(',', Tarea::$prioridades),
+        'tipo' => 'required|in:' . implode(',', Tarea::$tipos),
+        'estado' => 'required|in:' . implode(',', Tarea::$estados),
+        'descripcion' => 'required|string|max:250',
+        'fecha_estimada' => 'required|date',
+        'fecha_finalizacion' => 'nullable|date|after_or_equal:fecha_estimada',
+        'imagenes.*' => 'nullable|image|mimes:jpeg,png',
+        'documentos.*' => 'nullable|mimes:pdf,doc,docx,xls,xlsx',
+    ]);
+
+
+        $sede = $user->sede;
+
+        if (!$sede) {
+            return redirect()->back()->with('error', 'No tienes una sede asignada.');
+        }
+
+    // Crear la tarea usando la sede del encargado
+    $tarea = Tarea::create([
+        'sede_id' => $user->sede->id, // sede del encargado
+        'encargado_id' => $user->id,
+        'tecnico_id' => $request->tecnico_id,
+        'titulo' => $request->titulo,
+        'prioridad' => $request->prioridad,
+        'tipo' => $request->tipo,
+        'estado' => $request->estado,
+        'descripcion' => $request->descripcion,
+        'fecha_estimada' => $request->fecha_estimada,
+        'fecha_finalizacion' => $request->fecha_finalizacion ?? null,
+    ]);
+
+    // Subir imágenes
+    if ($request->hasFile('imagenes')) {
+        foreach ($request->file('imagenes') as $imagen) {
+            $tarea->addMedia($imagen)->toMediaCollection('imagenes');
+        }
+    }
+
+    // Subir documentos
+    if ($request->hasFile('documentos')) {
+        foreach ($request->file('documentos') as $documento) {
+            $tarea->addMedia($documento)->toMediaCollection('documentos');
+        }
+    }
+
+    return redirect()->route('encargado.tareas.listadoTareas')
+                     ->with('success', 'Tarea creada correctamente');
+}
+
+
+
+    public function showEncargado(Tarea $tarea){
+        return view('encargado.tareas.verTarea', compact('tarea'));
+    }
+
+
+    public function editEncargado(Tarea $tarea){
+        $tecnicos = User::where('rol','tecnico')->get();
+        return view('encargado.tareas.editarTarea', compact('tarea', 'tecnicos'));
+    }
+
+
+
+
+    public function updateEncargado(Request $request, Tarea $tarea){
+    $request->validate([
+        'tecnico_id' => 'nullable|exists:users,id',
+        'titulo' => 'required|string|max:50',
+        'prioridad' => 'required|in:' . implode(',', Tarea::$prioridades),
+        'tipo' => 'required|in:' . implode(',', Tarea::$tipos),
+        'estado' => 'required|in:' . implode(',', Tarea::$estados),
+        'descripcion' => 'required|string|max:250',
+        'fecha_estimada' => 'required|date',
+        'fecha_finalizacion' => 'nullable|date|after_or_equal:fecha_estimada',
+        'imagenes.*' => 'nullable|image|mimes:jpeg,png',
+        'documentos.*' => 'nullable|mimes:pdf,doc,docx,xls,xlsx',
+    ]);
+
+    $tarea->update($request->all());
+
+    // Subir imágenes nuevas
+    if ($request->hasFile('imagenes')) {
+        foreach ($request->file('imagenes') as $imagen) {
+            $tarea->addMedia($imagen)->toMediaCollection('imagenes');
+        }
+    }
+
+    // Subir documentos nuevos
+    if ($request->hasFile('documentos')) {
+        foreach ($request->file('documentos') as $documento) {
+            $tarea->addMedia($documento)->toMediaCollection('documentos');
+        }
+    }
+
+    return redirect()->route('encargado.tareas.listadoTareas')->with('success', 'Tarea actualizada correctamente');
+}
+
+
+    public function destroyEncargado(Tarea $tarea){
+        $tarea->delete();
+        return redirect()->route('encargado.tareas.listadoTareas')->with('succes','Tarea eliminada correctamente');
+    }
+
+
+    public function indexFinalizadasAuditor(){
+    $tareasFinalizadas = Tarea::with(['sede', 'encargado', 'tecnico'])
+                                ->where('estado', 'finalizada')
+                                ->get();
+
+    return view('auditor.tareas.finalizadas', compact('tareasFinalizadas'));
+
+    }
+
+
+
+public function formularioResolucion(Tarea $tarea)
+{
+    $user = Auth::user();
+
+    // Verificar que la tarea esté asignada a este técnico
+    if ($tarea->tecnico_id !== $user->id) {
+        abort(403, 'Acceso denegado');
+    }
+
+    // Cargar archivos previos de resolución
+    $archivos = $tarea->listarArchivos('resoluciones');
+
+    return view('tecnico.tareas.resolucion', compact('tarea', 'archivos'));
+}
+
+
+
+public function subirResolucion(Request $request, Tarea $tarea)
+{
+    $request->validate([
+        'resolucion_desc' => 'required|string',
+        'resolucion' => 'required|file|mimes:pdf,doc,docx,xls,xlsx', // max 5MB
+    ]);
+
+    // Guardar texto de resolución y fecha de finalización
+    $tarea->resolucion_desc = $request->resolucion_desc;
+    $tarea->fecha_finalizacion = now()->toDateString();
+    $tarea->save();
+
+    // Guardar archivo en la colección 'resoluciones'
+    if ($request->hasFile('resolucion')) {
+        $tarea->addMediaFromRequest('resolucion')
+              ->toMediaCollection('resoluciones');
+    }
+
+    return redirect()->back()->with('success', 'Resolución guardada correctamente.');
+}
+
 
 
 

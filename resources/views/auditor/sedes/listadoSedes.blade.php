@@ -1,20 +1,26 @@
-@extends('admin.dashboard')
+@extends('auditor.dashboard')
 
 @section('content')
+
+<div class="container mt-4 responsive">
+    <div class="card shadow-sm mb-4 bg-dark">
+        <div class="card-body text-center p-3">
+            <h3 class="mb-0 text-white">Sedes del Sistema</h3>
+        </div>
+    </div>
+</div>
+
+
 <div class="container mt-4">
-    <h1>Sedes del Sistema</h1>
 
     <!-- Mensajes de éxito -->
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
-    <a href="{{ route('sedes.create') }}" class="btn btn-primary mb-3">Nueva Sede</a>
-
-    <table class="table table-bordered table-striped">
-        <thead>
+    <table class="table table-bordered table-responsive table-striped">
+        <thead class="table-dark">
             <tr>
-                <th>ID</th>
                 <th>Nombre</th>
                 <th>Direccion</th>
                 <th>Tipo</th>
@@ -25,19 +31,12 @@
         <tbody>
             @forelse($sedes as $sede)
             <tr>
-                <td>{{ $sede->id }}</td>
                 <td>{{ $sede->nombre ?? '-' }}</td>
                 <td>{{ $sede->direccion ?? '-' }}</td>
                 <td>{{ $sede->tipo }}</td>
                 <td>{{ $sede->encargado_id }}</td>
                 <td>
-                    <a href="{{ route('sedes.show', $sede) }}" class="btn btn-info btn-sm">Ver</a>
-                    <a href="{{ route('sedes.edit', $sede) }}" class="btn btn-warning btn-sm">Editar</a>
-                        <form action="{{ route('sedes.destroy', $sede) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button class="btn btn-danger btn-sm" onclick="return confirm('¿Eliminar Sede?')">Eliminar</button>
-                        </form>
+                    <a href="{{ route('auditor.sedes.verSede', $sede) }}" class="btn btn-info btn-sm">Ver</a>
                 </td>
             </tr>
             @empty

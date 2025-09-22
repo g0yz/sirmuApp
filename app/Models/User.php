@@ -40,5 +40,11 @@ class User extends Authenticatable
         return $this->hasOne(Persona::class, 'user_id');
     }
 
+    public function sede(){
+        return $this->hasOne(Sede::class, 'encargado_id');
+    }
+
+
+
 
 }

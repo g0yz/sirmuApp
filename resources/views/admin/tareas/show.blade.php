@@ -1,5 +1,4 @@
-
-@extends('tecnico.dashboard')
+@extends('admin.dashboard')
 
 @section('content')
 
@@ -7,7 +6,7 @@
 <div class="container mt-4">
     <div class="card shadow-sm mb-4 bg-dark">
         <div class="card-body text-center p-3">
-            <h3 class="mb-0 text-white">Detalle de la Tarea</h2>
+            <h3 class="mb-0 text-white">Detalle de la Tarea</h3>
         </div>
     </div>
 </div>
@@ -15,20 +14,53 @@
 <div class="container mt-4">
     <div class="card shadow-sm">
         <div class="card-body">
-            <p><strong>Titulo:</strong> {{ $tarea->titulo ?? 'Sin Titulo' }}</p>
-            <p><strong>Sede:</strong> {{ $tarea->sede->nombre ?? 'Sin sede' }}</p>
-            <p><strong>Tipo:</strong> {{ ucfirst($tarea->tipo) }}</p>
-            <p><strong>Prioridad:</strong> {{ ucfirst($tarea->prioridad) }}</p>
-            <p><strong>Estado:</strong> {{ ucfirst($tarea->estado) }}</p>
-            <p><strong>Encargado:</strong> {{ $tarea->encargado->name ?? 'No asignado' }}</p>
-            <p><strong>Fecha estimada:</strong> {{ $tarea->fecha_estimada }}</p>
-            <p><strong>Fecha creación:</strong> {{ $tarea->fecha_creacion }}</p>
-            <p><strong>Fecha finalización:</strong> {{ $tarea->fecha_finalizacion ?? 'Pendiente' }}</p>
-            <p><strong>Descripción:</strong> {{ $tarea->descripcion }}</p>
+
+            <div class="row mb-2">
+                <div class="col-12 col-md-6"><strong>Titulo:</strong> {{ $tarea->titulo ?? 'Sin nombre' }}</div>
+            </div>
+            
+            <div class="row mb-2">
+                <div class="col-12 col-md-6"><strong>Sede:</strong> {{ $tarea->sede->nombre ?? 'Sin sede' }}</div>
+            </div>
+
+             <div class="row mb-2">
+                <div class="col-12 col-md-6"><strong>Tipo:</strong> {{ ucfirst($tarea->tipo) }}</div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-12 col-md-6"><strong>Prioridad:</strong> {{ ucfirst($tarea->prioridad) }}</div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-12 col-md-6"><strong>Estado:</strong> {{ ucfirst($tarea->estado) }}</div>
+            </div>
+            
+            <div class="row mb-2">
+                <div class="col-12 col-md-6"><strong>Encargado:</strong> {{ $tarea->encargado->id ?? 'No asignado' }}</div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-12 col-md-6"><strong>Tencnico Asignado:</strong> {{ $tarea->tecnico->id ?? 'No asignado' }}</div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-12 col-md-6"><strong>Fecha estimada:</strong> {{ $tarea->fecha_estimada }}</div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-12 col-md-6"><strong>Fecha creación:</strong> {{ $tarea->fecha_creacion }}</div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-12 col-md-6"><strong>Fecha finalización:</strong> {{ $tarea->fecha_finalizacion ?? 'Pendiente' }}</div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-12"><strong>Descripción:</strong> {{ $tarea->descripcion }}</div>
+            </div>
         </div>
     </div>
 </div>
-
 
 <div class="container mt-4">
     {{-- Card para Imágenes --}}
@@ -82,9 +114,7 @@
         </div>
     </div>
 </div>
-
-
-<div class="text-center mt-3">
-    <a href="{{ url()->previous() }}" class="btn btn-secondary">Volver</a>
+<div class="mt-3 text-center">
+    <a href="{{ url()->previous() }}" class="btn btn-secondary">Volver</a> 
 </div>
 @endsection

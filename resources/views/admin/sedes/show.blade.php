@@ -1,11 +1,19 @@
 @extends('admin.dashboard')
 
 @section('content')
+
 <div class="container mt-4">
-    <h2 class="mb-4 text-center">Detalles de la Sede</h2>
+    <div class="card shadow-sm mb-4 bg-dark">
+        <div class="card-body text-center p-3">
+            <h3 class="mb-0 text-white">Detalle de la Sede</h3>
+        </div>
+    </div>
+</div>
 
+
+<div class="container mt-4">
     <div class="card shadow-sm">
-
+        <div class="card-body">
         <div class="row mb-2">
                 <div class="col-12 col-md-6">
                     <strong>Nombre:</strong> {{ $sede->nombre}}
@@ -41,16 +49,33 @@
                     <strong>Carreras:</strong> {{ $sede->carreras_ofrecidas}}
                 </div>
         </div>
-        
-        <img src="{{ $sede->getFirstMediaUrl('imagenes') }}" 
-         alt="Imagen de la sede" 
-         class="img-fluid rounded" 
-         style="max-width: 300px;">
+</div>
+</div>
+</div>
 
-             <div class="mt-3 text-center">
-                <a href="{{ url()->previous() }}" class="btn btn-secondary">Volver</a>
-            </div>
+<div class="container mt-4">
+    {{-- Card para Imágen --}}
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-dark text-white">
+            Imagen de la Sede
+        </div>
+        <div class="card-body text-center">
+            @if($sede->getFirstMedia('imagenes'))
+                <img src="{{ $sede->getFirstMediaUrl('imagenes') }}" 
+                     alt="Imagen de la sede" 
+                     class="img-fluid rounded shadow-sm" 
+                     style="max-height: 250px; object-fit: cover;">
+            @else
+                <p>No hay imagen cargada.</p>
+            @endif
+        </div>
+    </div>
+</div>
 
+
+
+<div class="mt-3 text-center">
+    <a href="{{ url()->previous() }}" class="btn btn-secondary">Volver</a>
 </div>
 
 @endsection
