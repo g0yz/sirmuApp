@@ -1,6 +1,7 @@
 @extends('auditor.dashboard')
 
 @section('content')
+ <link rel="stylesheet" href="{{ asset('css/index.css') }}">
 
 <div class="container mt-4">
     <div class="card shadow-sm mb-4 bg-dark">
@@ -35,7 +36,7 @@
                 <td>{{ $tarea->tecnico ? $tarea->tecnico->email : '-' }}</td>
                 <td>{{ ucfirst($tarea->tipo) }}</td>
                 <td>
-                    <a href="#" class="btn btn-info btn-sm">Ver</a>
+                    <a href="#" class="btn btn-info btn-sm">Visualizar</a>
                 </td>
             </tr>
             @empty

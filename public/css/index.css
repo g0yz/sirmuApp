@@ -1,0 +1,101 @@
+/* Contenedor */
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 10px;
+}
+
+h3 {
+    font-weight: 600;
+    font-size: 1.6rem;
+    letter-spacing: 0.5px;
+}
+
+/* Tarjeta de encabezado */
+.card {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Título */
+
+
+/* Tabla normal en escritorio */
+.table {
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 0;
+    background: #fff;
+}
+
+/* Cabecera */
+.table thead th {
+    text-align: center;
+    vertical-align: middle;
+    font-size: 0.95rem;
+    white-space: nowrap;
+}
+
+/* Celdas */
+.table td {
+    vertical-align: middle;
+    text-align: center;
+    font-size: 0.9rem;
+    padding: 10px;
+}
+
+/* Botones */
+.btn {
+    border-radius: 12px;      /* bordes redondeados */
+    font-size: 0.95rem;       /* un poco más grande */
+    display: inline-block;
+    vertical-align: middle;   /* no empuja otras filas */
+}
+
+/* ====== RESPONSIVO ====== */
+@media (max-width: 768px) {
+    /* Ocultamos cabecera */
+    .table thead {
+        display: none;
+    }
+
+    /* Convertimos filas en tarjetas */
+    .table,
+    .table tbody,
+    .table tr,
+    .table td {
+        display: block;
+        width: 100%;
+    }
+
+    .table tr {
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        background: #fff;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        padding: 10px;
+    }
+
+    .table td {
+        text-align: left;
+        padding: 8px 5px;
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+    }
+
+    .table td:last-child {
+        border-bottom: none;
+    }
+
+    /* Etiquetas (antes del valor) */
+    .table td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        display: block;
+        margin-bottom: 3px;
+        color: #333;
+    }
+}

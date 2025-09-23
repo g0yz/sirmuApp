@@ -51,12 +51,6 @@ Route::get('/encargado/configuracion', [ConfiguracionController::class, 'index']
 Route::get('/auditor/configuracion', [ConfiguracionController::class, 'index'])->name('auditor.configuracion')->middleware('rol:auditor');
 
 
-
-
-
-
-
-
 //Rutas Administrador//
 //Listar todos los usuarios
 Route::get('/admin/gestionar-usuarios', [UserController::class, 'index'])->name('admin.usuarios.index')->middleware('rol:administrador');

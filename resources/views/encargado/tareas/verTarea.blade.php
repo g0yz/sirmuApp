@@ -1,6 +1,7 @@
 @extends('encargado.dashboard')
 
 @section('content')
+  <link rel="stylesheet" href="{{ asset('css/detalle.css') }}">
 
 
 <div class="container mt-4">

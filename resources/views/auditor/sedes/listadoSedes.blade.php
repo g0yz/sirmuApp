@@ -1,6 +1,7 @@
 @extends('auditor.dashboard')
 
 @section('content')
+ <link rel="stylesheet" href="{{ asset('css/index.css') }}">
 
 <div class="container mt-4 responsive">
     <div class="card shadow-sm mb-4 bg-dark">

@@ -30,3 +30,21 @@ body {
   display: flex;
   justify-content: center;
 }
+
+/* Tarjeta de encabezado */
+.card {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 10px;
+}
+
+h3 {
+    font-weight: 600;
+    font-size: 1.6rem;
+    letter-spacing: 0.5px;
+}

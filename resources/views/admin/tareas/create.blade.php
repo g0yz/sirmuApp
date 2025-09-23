@@ -1,7 +1,7 @@
 
 @extends('admin.dashboard')
 
- <link rel="stylesheet" href="{{ asset('css/register.css') }}">
+ <link rel="stylesheet" href="{{ asset('css/formulario.css') }}">
 
 @section('content')
 

@@ -2,6 +2,8 @@
 
 @section('content')
 
+ <link rel="stylesheet" href="{{ asset('css/index.css') }}">
+
 
 <div class="container mt-4">
     <div class="card shadow-sm mb-4 bg-dark">

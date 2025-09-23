@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <!-- Estilos personalizados -->
   <link rel="stylesheet" href="{{ asset('css\dashboard.css') }}">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -24,7 +25,7 @@
     </button>
 
     <!-- Contenido horizontal -->
-    <div class="collapse navbar-collapse" id="navbarContent">
+    <div class="collapse navbar-collapse" id="navbarContent">@yield('nav')
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
         <li class="nav-item navSelect">
@@ -59,8 +60,6 @@
   </div>
 </nav>
 @yield('content')
-</body>     
-</html>
 
 
 @if(request()->routeIs('tecnico.dashboard'))
@@ -72,4 +71,3 @@
     </div>
 </div>
 @endif
-
