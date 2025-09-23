@@ -111,3 +111,6 @@ php artisan migrate
 
 # Levantar servidor de desarrollo
 php artisan serve
+
+# restablecer migraciones
+ php artisan migrate:fresh
