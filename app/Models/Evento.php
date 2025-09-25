@@ -16,6 +16,14 @@ class Evento extends Model
         'end' => 'required|date|after_or_equal:start',
     ];
 
-    protected $fillable = ['title', 'descripcion', 'start', 'end'];
+    protected $fillable = ['title', 'descripcion', 'start', 'end','user_id'];
+
+
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 
 }
