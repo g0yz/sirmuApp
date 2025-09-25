@@ -8,6 +8,7 @@ use App\Http\Controllers\ConfiguracionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SedeController;
 use App\Http\Controllers\TareaController;
+use App\Http\Controllers\EventoController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -136,3 +137,11 @@ Route::get('/auditor/sedes/listado-sedes', [SedeController::class, 'indexAuditor
 Route::get('/auditor/detallar-sede/{sede}', [SedeController::class, 'showAuditor'])->name('auditor.sedes.verSede')->middleware('rol:auditor');
 //Visualizar Tareas Finalizadas
 Route::get('/auditor/tareas/visualizar-tareas', [TareaController::class, 'indexFinalizadasAuditor'])->name('auditor.tareas.finalizadas')->middleware('rol:auditor');
+
+//ruta calendario
+Route::get('/encargado/calendario', [EventoController::class, 'index'])->name('encargado.calendario.index')->middleware('rol:encargado');
+Route::post('/encargado/calendario/agregar-evento', [EventoController::class, 'store'])->middleware('rol:encargado');
+Route::post('/encargado/calendario/mostrar', [EventoController::class, 'show'])->middleware('rol:encargado');
+Route::post('/encargado/calendario/editar-evento/{id}', [EventoController::class, 'edit'])->middleware('rol:encargado');
+Route::post('/encargado/calendario/actualizar-evento/{evento}', [EventoController::class, 'update'])->middleware('rol:encargado');
+Route::post('/encargado/calendario/eliminar-evento/{id}', [EventoController::class, 'destroy'])->middleware('rol:encargado');

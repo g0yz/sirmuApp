@@ -11,6 +11,21 @@
   <!-- Estilos personalizados -->
   <link rel="stylesheet" href="{{ asset('css\dashboard.css') }}">
 
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+
+
+<script src="{{ asset('js\app.js')}}" defer ></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.6.0/main.css">
+
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.6.0/main.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.6.0/locales-all.js"></script>
+
+
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
@@ -35,8 +50,8 @@
           href="{{ route ('encargado.tareas.listadoTareas') }}">Tareas</a>
         </li>
         <li class="nav-item navSelect">
-          <a class="nav-link @if(request()->routeIs('')) active @endif" 
-          href="#">Calendario</a>
+          <a class="nav-link @if(request()->routeIs('encargado.calendario.index')) active @endif" 
+          href="{{ route('encargado.calendario.index') }}">Calendario</a>
         </li>
         <li class="nav-item navSelect">
           <a class="nav-link @if(request()->routeIs('encargado.configuracion')) active @endif" 
@@ -56,6 +71,7 @@
   </div>
 </nav>
 @yield('content')
+<script src="{{ asset('js\calendario\agenda.js')}}" defer ></script>
 </body>     
 </html>
 

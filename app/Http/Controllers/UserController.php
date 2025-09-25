@@ -65,6 +65,7 @@ class UserController extends Controller{
         $request->validate([
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6|confirmed',
+            //usuarios de tipo admin no se pueden crear
             'rol' => 'required|in:tecnico,encargado,auditor',
             'nombre' => 'nullable|string|max:255',
             'apellido' => 'nullable|string|max:255',
@@ -159,6 +160,7 @@ class UserController extends Controller{
         $request->validate([
             'email' => 'required|email|unique:users,email,' . $user->id,
             'password' => 'nullable|min:6|confirmed',
+            //Usuarios de Tipo Admin no pueden ser editados
             'rol' => 'required|in:tecnico,encargado,auditor',
             'nombre' => 'nullable|string|max:255',
             'apellido' => 'nullable|string|max:255',
