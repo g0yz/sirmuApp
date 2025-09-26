@@ -19,7 +19,7 @@
       <select name="encargado_id" class="form-select mb-2">
       <option value="">Seleccione al encargado</option>
             @foreach($encargados as $encargado)
-      <option value="{{ $encargado->id }}">{{ $encargado->id }}</option>
+      <option value="{{ $encargado->id }}">{{ $encargado->persona->nombre }} {{ $encargado->persona->apellido }}</option>
             @endforeach
       </select>
       <label for="text">Capacidad de Estudiantes:</label>

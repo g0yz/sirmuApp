@@ -42,11 +42,12 @@ class TareaController extends Controller{
      * )
      */
 
-    public function create() {
-        $encargados = User::where('rol','encargado')->get();
-        $tecnicos = User::where('rol','tecnico')->get();
-        $sedes = Sede::all();
-        return view('admin.tareas.create',compact('encargados','tecnicos','sedes'));
+    public function create(){
+    $encargados = User::where('rol', 'encargado')->with('persona')->get();
+    $tecnicos = User::where('rol', 'tecnico')->with('persona')->get();
+    $sedes = Sede::all();
+
+    return view('admin.tareas.create', compact('encargados', 'tecnicos', 'sedes'));
     }
 
 

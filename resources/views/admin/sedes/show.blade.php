@@ -35,7 +35,7 @@
 
         <div class="row mb-2">
                 <div class="col-12 col-md-6">
-                    <strong>Encargado:</strong> {{ $sede->encargado_id ?? 'Sin encargado'}}
+                    <strong>Encargado:</strong> {{ $sede->encargado && $sede->encargado->persona ? $sede->encargado->persona->nombre . ' ' . $sede->encargado->persona->apellido : 'Sin encargado'}}
                 </div>
         </div>
 

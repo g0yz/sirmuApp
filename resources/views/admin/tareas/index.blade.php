@@ -40,8 +40,8 @@
             <tr>
                 <td>{{ $tarea->id }}</td>
                 <td>{{ $tarea->sede ? $tarea->sede->nombre : '-' }}</td>
-                <td>{{ $tarea->encargado ? $tarea->encargado->email : '-' }}</td>
-                <td>{{ $tarea->tecnico ? $tarea->tecnico->email : '-' }}</td>
+                <td>{{ $tarea->encargado && $tarea->encargado->persona ? $tarea->encargado->persona->nombre . ' ' . $tarea->encargado->persona->apellido : 'Sin encargado'}}</td>
+                <td>{{ $tarea->tecnico && $tarea->tecnico->persona ? $tarea->tecnico->persona->nombre . ' ' . $tarea->tecnico->persona->apellido : 'Sin tecnico'}}</td>
                 <td>{{ ucfirst($tarea->tipo) }}</td>
                 <td>{{ ucfirst($tarea->prioridad) }}</td>
                 <td>{{ ucfirst($tarea->estado) }}</td>

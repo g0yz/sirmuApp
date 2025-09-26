@@ -37,11 +37,11 @@
             </div>
             
             <div class="row mb-2">
-                <div class="col-12 col-md-6"><strong>Encargado:</strong> {{ $tarea->encargado->id ?? 'No asignado' }}</div>
+                <div class="col-12 col-md-6"><strong>Encargado asignado:</strong> {{ $tarea->encargado && $tarea->encargado->persona ? $tarea->encargado->persona->nombre . ' ' . $tarea->encargado->persona->apellido : 'No asignado' }}</div>
             </div>
 
             <div class="row mb-2">
-                <div class="col-12 col-md-6"><strong>Tencnico Asignado:</strong> {{ $tarea->tecnico->id ?? 'No asignado' }}</div>
+                <div class="col-12 col-md-6"><strong>Tencnico Asignado:</strong> {{ $tarea->tecnico && $tarea->tecnico->persona ? $tarea->tecnico->persona->nombre . ' ' . $tarea->tecnico->persona->apellido : 'No asignado' }}</div>
             </div>
 
             <div class="row mb-2">

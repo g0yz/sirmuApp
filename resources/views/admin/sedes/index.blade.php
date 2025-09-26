@@ -39,7 +39,7 @@
                 <td>{{ $sede->nombre ?? '-' }}</td>
                 <td>{{ $sede->direccion ?? '-' }}</td>
                 <td>{{ $sede->tipo }}</td>
-                <td>{{ $sede->encargado_id }}</td>
+                <td>{{ $sede->encargado && $sede->encargado->persona ? $sede->encargado->persona->nombre . ' ' . $sede->encargado->persona->apellido : 'Sin encargado'}}</td>
                 <td>
                     <a href="{{ route('admin.sedes.show', $sede) }}" class="btn btn-info btn-sm">Ver</a>
                     <a href="{{ route('admin.sedes.edit', $sede) }}" class="btn btn-warning btn-sm">Editar</a>

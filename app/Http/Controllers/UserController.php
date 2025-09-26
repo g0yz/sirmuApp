@@ -62,6 +62,13 @@ class UserController extends Controller{
      */
     public function store(Request $request)
     {
+        // Chequear si se intenta crear un administrador
+        if($request->rol === 'administrador') {
+            $existeAdmin = User::where('rol', 'administrador')->first();
+            if($existeAdmin){
+                return redirect()->back()->with('error', 'Ya existe un administrador en el sistema.');
+            }
+        }   
         $request->validate([
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6|confirmed',
