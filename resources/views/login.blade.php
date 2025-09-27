@@ -25,8 +25,8 @@
     <div class="login-form">
       <form method="POST" action="{{ route('login') }}">
         @csrf
-        <input type="email" class="form-control" placeholder="Correo Electronico" required name="email">
-        <input type="password" class="form-control" placeholder="Contraseña" required name="password">
+        <input type="email" id="email" class="form-control" placeholder="Correo Electronico" required name="email">
+        <input type="password" id="password" class="form-control" placeholder="Contraseña" required name="password">
         <label>
         <input type="checkbox" name="remember"> Recordarme
         </label>

@@ -26,13 +26,13 @@
     <h2 class="h2">Ingresar Datos</h2>
     <form method="POST" action="{{route('register')}}">
       @csrf
-      <input type="email" name="email" class="form-control mb-2" placeholder="Correo electrónico" required>
-      <input type="password" name="password" class="form-control mb-2" placeholder="Contraseña" required>
-      <input type="password" name="password_confirmation" class="form-control mb-2" placeholder="Confirmar Contraseña" required>
-      <input type="text" name="nombre" class="form-control mb-2" placeholder="Nombre" required>
-      <input type="text" name="apellido" class="form-control mb-2" placeholder="Apellido" required>
+      <input type="email" name="email" id="email" class="form-control mb-2" placeholder="Correo electrónico" required>
+      <input type="password" name="password" id="password" class="form-control mb-2" placeholder="Contraseña" required>
+      <input type="password" name="password_confirmation" id="password_confirmation" class="form-control mb-2" placeholder="Confirmar Contraseña" required>
+      <input type="text" name="nombre" id="nombre" class="form-control mb-2" placeholder="Nombre" required>
+      <input type="text" name="apellido" id="apellido" class="form-control mb-2" placeholder="Apellido" required>
       <label for="opciones">Rol del Usuario:</label>
-      <select name="rol" class="form-select form-select-sm-2">
+      <select name="rol" id="rol" class="form-select form-select-sm-2">
       <option value="administrador">Administrador</option>
       <option value="tecnico">Tecnico</option>
       <option value="encargado">Encargado</option>
