@@ -4,18 +4,17 @@
 <div class="container mt-4">
   <!-- Formulario centrado -->
 <div class="registration-container">
-    
   <div class="registration-form p-4 bg-white rounded shadow-sm">
         <h2 class="h2">Ingresar Datos Resolucion:</h2>
 
-     <form method="POST" action="{{route('admin.tareas.store')}}"  enctype="multipart/form-data">
+     <form method="POST" action="{{route('tecnico.tareas.subirResolucion', $tarea->id)}}"  enctype="multipart/form-data">
         @csrf
         <label>Fecha de finalización:</label>
-        <input type="text" id="fecha" name="fecha" class="form-control form-control-sm w-auto"
+        <input type="text" id="fecha_finalizacion" name="fecha_finalizacion" class="form-control form-control-sm w-auto"
             value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" readonly>
 
-      <label for="text">Descripcion:</label>
-      <input type="text" name="descripcion" class="form-control mb-2"required>
+      <label for="resolucion_desc">Descripcion:</label>
+      <input type="text" name="resolucion_desc" class="form-control mb-2"required>
       <label for="text">Imagenes:</label>
       <input name="imagenes[]" type='file' class="form-control" id="imagenes" multiple>
       <label for="text">Documentos:</label>

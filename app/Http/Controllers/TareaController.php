@@ -399,23 +399,72 @@ public function subirResolucion(Request $request, Tarea $tarea)
 {
     $request->validate([
         'resolucion_desc' => 'required|string',
-        'resolucion' => 'required|file|mimes:pdf,doc,docx,xls,xlsx', // max 5MB
+        'imagenes.*' => 'nullable|file|mimes:jpeg,png',
+        'documentos.*' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx',
     ]);
 
     // Guardar texto de resolución y fecha de finalización
     $tarea->resolucion_desc = $request->resolucion_desc;
-    $tarea->fecha_finalizacion = now()->toDateString();
+    $tarea->fecha_finalizacion = $request->fecha_finalizacion;
+    $tarea->estado = Tarea::estado_Finalizado; // Actualizar estado a 'finalizado'
     $tarea->save();
 
     // Guardar archivo en la colección 'resoluciones'
-    if ($request->hasFile('resolucion')) {
-        $tarea->addMediaFromRequest('resolucion')
-              ->toMediaCollection('resoluciones');
+    if ($request->hasFile('imagenes')) {
+        foreach ($request->file('imagenes') as $imagen) {
+            $tarea->addMedia($imagen)->toMediaCollection('imagenes-resoluciones');
+        }
     }
-
-    return redirect()->back()->with('success', 'Resolución guardada correctamente.');
+    if ($request->hasFile('documentos')) {
+        foreach ($request->file('documentos') as $documento) {
+            $tarea->addMedia($documento)->toMediaCollection('documentos-resoluciones');
+        }
+    }
+    return redirect()->route('tecnico.tareas.index',$tarea->id)->with('success', 'Resolución guardada correctamente.');
 }
 
+
+public function visualizarResolucion(Tarea $tarea)
+{
+    // Verificar que el usuario sea auditor
+    if (Auth::user()->rol !== 'auditor') {
+        abort(403, 'Acceso denegado');
+    }
+    $user = Auth::user();
+    // Cargar la relación con la sede
+    $tarea->load('sede');
+
+    return view('auditor.tareas.visualizar', compact('tarea'));
+
+}
+
+
+public function procesarResolucion(Request $request, Tarea $tarea)
+{
+    // Verificar que el usuario sea auditor
+    if (Auth::user()->rol !== 'auditor') {
+        abort(403, 'Acceso denegado');
+    }
+
+    $request->validate([
+        'observacion' => 'required|string',
+        'accion' => 'required|in:validar,rechazar',
+    ]);
+
+    if ($request->accion === 'validar') {
+        $tarea->estado = Tarea::estado_Validado;
+        $tarea->observacion = $request->observacion;
+    } elseif ($request->accion === 'rechazar') {
+        $tarea->estado = Tarea::estado_Rechazado;
+        $tarea->observacion = $request->observacion;
+    }
+
+    $tarea->save();
+
+    return redirect()->route('auditor.tareas.finalizadas')->with('success', 'Acción realizada correctamente.');
+
+
+}
 
 
 
