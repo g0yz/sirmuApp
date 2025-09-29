@@ -105,10 +105,10 @@ Route::delete('/admin/eliminar-tarea/{tarea}', [TareaController::class, 'destroy
 // Visualizar tarea asignadas
 Route::get('/tecnico/gestionar-tareas', [TareaController::class, 'indexTecnico'])->name('tecnico.tareas.index')->middleware('rol:tecnico');
 Route::get('/tecnico/visualizar-tarea/{tarea}', [TareaController::class,'verTarea'])->name('tecnico.tareas.show') ->middleware('rol:tecnico');
-// Mostrar el formulario
-Route::get('/tecnico/resolucion-tarea/{tarea}', [TareaController::class, 'formularioResolucion'])->name('tecnico.tareas.resolucion');
+// Formulario de resolución
+Route::get('/tecnico/resolucion/{tarea}', [TareaController::class, 'formularioResolucion'])->name('tecnico.tareas.resolucion')->middleware('rol:tecnico');
 // Procesar el formulario (subir resolución)
-Route::post('/tecnico/guardar-resolucion/{tarea}', [TareaController::class, 'subirResolucion'])->name('tecnico.tareas.guardarResolucion');
+Route::post('/tecnico/guardar-resolucion/{tarea}', [TareaController::class, 'subirResolucion'])->name('tecnico.tareas.subirResolucion')->middleware('rol:tecnico');
 
 
 
@@ -129,15 +129,6 @@ Route::put('/encargado/actualizar-tarea/{tarea}', [TareaController::class, 'upda
 // Eliminar una tarea
 Route::delete('/encargado/borrar-tarea/{tarea}', [TareaController::class, 'destroyEncargado'])->name('encargado.tareas.destroy')->middleware('rol:encargado');
 
-
-//Rutas Sedes
-//Listado de Sedes
-Route::get('/auditor/sedes/listado-sedes', [SedeController::class, 'indexAuditor'])->name('auditor.sedes.listadoSedes')->middleware('rol:auditor');
-//Visualizar Sede
-Route::get('/auditor/detallar-sede/{sede}', [SedeController::class, 'showAuditor'])->name('auditor.sedes.verSede')->middleware('rol:auditor');
-//Visualizar Tareas Finalizadas
-Route::get('/auditor/tareas/visualizar-tareas', [TareaController::class, 'indexFinalizadasAuditor'])->name('auditor.tareas.finalizadas')->middleware('rol:auditor');
-
 //ruta calendario
 Route::get('/encargado/calendario', [EventoController::class, 'index'])->name('encargado.calendario.index')->middleware('rol:encargado');
 Route::post('/encargado/calendario/agregar-evento', [EventoController::class, 'store'])->middleware('rol:encargado');
@@ -145,3 +136,19 @@ Route::post('/encargado/calendario/mostrar', [EventoController::class, 'show'])-
 Route::post('/encargado/calendario/editar-evento/{id}', [EventoController::class, 'edit'])->middleware('rol:encargado');
 Route::post('/encargado/calendario/actualizar-evento/{evento}', [EventoController::class, 'update'])->middleware('rol:encargado');
 Route::post('/encargado/calendario/eliminar-evento/{id}', [EventoController::class, 'destroy'])->middleware('rol:encargado');
+
+
+
+
+//Auditor
+//Rutas Sedes
+//Listado de Sedes
+Route::get('/auditor/sedes/listado-sedes', [SedeController::class, 'indexAuditor'])->name('auditor.sedes.listadoSedes')->middleware('rol:auditor');
+//Visualizar Sede
+Route::get('/auditor/detallar-sede/{sede}', [SedeController::class, 'showAuditor'])->name('auditor.sedes.verSede')->middleware('rol:auditor');
+//Visualizar Tareas Finalizadas
+Route::get('/auditor/tareas/visualizar-tareas', [TareaController::class, 'indexFinalizadasAuditor'])->name('auditor.tareas.finalizadas')->middleware('rol:auditor');
+//Mostrar detalles de una tarea finalizada y formulario de validación
+Route::get('/auditor/visualizar-tarea-resolucion/{tarea}', [TareaController::class,'visualizarResolucion'])->name('auditor.tareas.visualizar') ->middleware('rol:auditor');
+// Procesar el formulario de validación/rechazo
+Route::post('/auditor/procesar-resolucion/{tarea}', [TareaController::class, 'procesarResolucion'])->name('auditor.tareas.procesarResolucion')->middleware('rol:auditor');

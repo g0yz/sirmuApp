@@ -15,6 +15,12 @@
 
 
 <div class="container mt-4">
+
+      <!-- Mensajes de éxito -->
+    @if(session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
+    
     @if($tareasAsignadas->isEmpty())
         <p>No tienes tareas asignadas.</p>
     @else

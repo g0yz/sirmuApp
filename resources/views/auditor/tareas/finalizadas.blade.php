@@ -22,6 +22,7 @@
         <thead class="table-dark">
             <tr>
                 <th>Titulo</th>
+                <th>Sede</th>
                 <th>Encargado</th>
                 <th>Técnico</th>
                 <th>Tipo</th>
@@ -32,11 +33,12 @@
             @forelse($tareasFinalizadas as $tarea)
             <tr>
                 <td>{{ $tarea->titulo ? : '-' }}</td>
+                <td>{{ $tarea->sede ? $tarea->sede->nombre : '-' }}</td>
                 <td>{{ $tarea->encargado ? $tarea->encargado->email : '-' }}</td>
                 <td>{{ $tarea->tecnico ? $tarea->tecnico->email : '-' }}</td>
                 <td>{{ ucfirst($tarea->tipo) }}</td>
                 <td>
-                    <a href="#" class="btn btn-info btn-sm">Visualizar</a>
+                    <a href="{{route('auditor.tareas.visualizar' , $tarea->id)}}" class="btn btn-info btn-sm">Visualizar</a>
                 </td>
             </tr>
             @empty

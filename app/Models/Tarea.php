@@ -87,13 +87,7 @@ class Tarea extends Model implements HasMedia
     public function tecnico(){
         return $this->belongsTo(User::class, 'tecnico_id');
     }
-
-    //
-    public function historial(){
-        return $this->hasMany(TareaHistorial::class);
-    }
-
-
+    
     public $timestamps = false;
 
 
@@ -113,12 +107,16 @@ class Tarea extends Model implements HasMedia
             'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'])  // .xlsx
         ->useDisk('tareas_media');
 
-        $this->addMediaCollection('resoluciones')
+        $this->addMediaCollection('documentos-resoluciones')
         ->acceptsMimeTypes(['application/pdf', // .pdf
             'application/msword', // .doc
             'application/vnd.openxmlformats-officedocument.wordprocessingml.document',  // .docx
             'application/vnd.ms-excel',  // .xls
             'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'])  // .xlsx
+        ->useDisk('tareas_media');
+
+        $this->addMediaCollection('imagenes-resoluciones')
+        ->acceptsMimeTypes(['image/jpeg','image/png'])
         ->useDisk('tareas_media');
 
     }
