@@ -25,24 +25,23 @@
   <div class="registration-form">
     <h2 class="h2">Ingresar Datos</h2>
 
-    <!-- Mostrar errores generales -->
-    @if ($errors->any())
-      <div class="alert alert-danger">
-        <ul class="mb-0">
-          @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-          @endforeach
-        </ul>
-      </div>
-    @endif
-
     <form method="POST" action="{{ route('register') }}">
       @csrf
-      <input type="email" name="email" id="email" class="form-control mb-2" placeholder="Correo electrónico" required>
 
-      <input type="password" name="password" id="password" class="form-control mb-2" placeholder="Contraseña (mínimo 8 caracteres)" required>
+      <input type="email" name="email" id="email" 
+             class="form-control mb-2" 
+             placeholder="Correo electrónico" 
+             value="{{ old('email') }}" required>
+      @error('email')
+        <div class="text-danger small">{{ $message }}</div>
+      @enderror
+
+      <input type="password" name="password" id="password" 
+             class="form-control mb-2" 
+             placeholder="Contraseña" 
+             required>
       @error('password')
-        <span class="text-danger small">{{ $message }}</span>
+        <div class="text-danger small">{{ $message }}</div>
       @enderror
 
       <input type="password" name="password_confirmation" id="password_confirmation" class="form-control mb-2" placeholder="Confirmar Contraseña" required>
@@ -57,6 +56,10 @@
         <option value="encargado">Encargado</option>
         <option value="auditor">Auditor</option>
       </select>
+
+      @error('rol')
+        <div class="text-danger small">{{ $message }}</div>
+      @enderror
 
       <button type="submit" class="registration-btn">Registrarse</button>
     </form>

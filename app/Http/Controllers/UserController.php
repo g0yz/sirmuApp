@@ -63,12 +63,14 @@ class UserController extends Controller{
     public function store(Request $request)
     {
         // Chequear si se intenta crear un administrador
-        if($request->rol === 'administrador') {
-            $existeAdmin = User::where('rol', 'administrador')->first();
-            if($existeAdmin){
-                return redirect()->back()->with('error', 'Ya existe un administrador en el sistema.');
+        if ($request->rol === User::ROL_ADMIN) {
+            $existeAdmin = User::where('rol', User::ROL_ADMIN)->exists();
+            if ($existeAdmin) {
+                return back()
+                    ->withErrors(['rol' => 'Ya existe un administrador en el sistema.'])
+                    ->withInput();
             }
-        }   
+        }
         $request->validate([
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6|confirmed',
@@ -76,6 +78,27 @@ class UserController extends Controller{
             'rol' => 'required|in:tecnico,encargado,auditor',
             'nombre' => 'nullable|string|max:255',
             'apellido' => 'nullable|string|max:255',
+        ]);
+
+        $request->validate([
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:8|confirmed',
+            'nombre' => 'required|string|max:255',
+            'apellido' => 'required|string|max:255',
+        ], [
+            // Validaciones email
+            'email.required' => 'El correo electrónico es obligatorio.',
+            'email.email' => 'Debes ingresar un correo electrónico válido.',
+            'email.unique' => 'Este correo ya está registrado en el sistema.',
+
+            // Validaciones password
+            'password.required' => 'La contraseña es obligatoria.',
+            'password.min' => 'La contraseña debe tener al menos 8 caracteres.',
+            'password.confirmed' => 'Las contraseñas no coinciden.',
+
+            // Validaciones nombre y apellido
+            'nombre.required' => 'El nombre es obligatorio.',
+            'apellido.required' => 'El apellido es obligatorio.',
         ]);
 
         $user = User::create([

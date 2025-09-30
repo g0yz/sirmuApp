@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 use App\Models\User;
 use App\Models\Persona;
 use Illuminate\Validation\ValidationException;
@@ -97,11 +98,22 @@ class AuthController extends Controller{
     public function register(Request $request){
         $request->validate([
             'email' => 'required|string|email|max:255|unique:users,email',
-            'rol' => 'required',
+            'rol' => ['required', Rule::in([
+                User::ROL_ADMIN,
+                User::ROL_TECNICO,
+                User::ROL_ENCARGADO,
+                User::ROL_AUDITOR,
+        ])],
             'password' => 'required|string|min:8|confirmed',
             'nombre' => 'required',
             'apellido' => 'required',
         ]);
+
+        if ($request->rol === User::ROL_ADMIN && User::where('rol', User::ROL_ADMIN)->exists()) {
+            return back()
+                ->withErrors(['rol' => 'Ya existe un administrador en el sistema.'])
+                ->withInput();
+        }
 
         $user = User::create([
             'email' => $request->email,
