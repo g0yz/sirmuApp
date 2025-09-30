@@ -25,6 +25,11 @@
                 <option value="encargado" @if($user->rol == 'encargado') selected @endif>Encargado</option>
                 <option value="auditor" @if($user->rol == 'auditor') selected @endif>Auditor</option>
             </select>
+
+            @error('rol')
+                <div class="text-danger small">{{ "Ya existe un Administrador en el sistema" }}</div>
+            @enderror
+
             <button type="submit" class="registration-btn">Actualizar</button>
         </form>
     </div>

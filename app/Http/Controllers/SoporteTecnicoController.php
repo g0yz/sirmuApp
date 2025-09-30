@@ -36,4 +36,18 @@ class SoporteTecnicoController extends Controller{
         return view('soporteTecnico', compact('layout'));
     }
 
+    /**
+     * Procesa el formulario de soporte técnico
+     */
+    public function enviar(Request $request)
+    {
+        $request->validate([
+            'asunto' => 'required|string|max:255',
+            'descripcion' => 'required|string',
+        ]);
+
+        // Acá podrías enviar un correo o guardar el ticket en la base de datos
+        // Por ahora simplemente devolvemos un mensaje de confirmación
+        return back()->with('success', 'Tu consulta fue enviada correctamente. El equipo de soporte se pondrá en contacto.');
+    }
 }
