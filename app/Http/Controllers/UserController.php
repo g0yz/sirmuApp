@@ -186,39 +186,53 @@ class UserController extends Controller{
      */
     public function update(Request $request, User $user)
     {
-
+        
         $request->validate([
-            'email' => 'required|email|unique:users,email,' . $user->id,
+            'email'    => 'required|email|unique:users,email,' . $user->id,
             'password' => 'nullable|min:6|confirmed',
-            //Usuarios de Tipo Admin no pueden ser editados
-            'rol' => 'required|in:tecnico,encargado,auditor',
-            'nombre' => 'nullable|string|max:255',
+            'rol'      => 'required|in:administrador,tecnico,encargado,auditor',
+            'nombre'   => 'nullable|string|max:255',
             'apellido' => 'nullable|string|max:255',
         ]);
 
-        $user->email = $request->email;
-        $user->rol = $request->rol;
-        if ($request->filled('password')) {
-            $user->password = Hash::make($request->password);
-        }
-        $user->save();
-
-        if ($request->filled('nombre') || $request->filled('apellido')) {
-            if ($user->persona) {
-                $user->persona->update([
-                    'nombre' => $request->nombre,
-                    'apellido' => $request->apellido,
-                ]);
-            } else {
-                $user->persona()->create([
-                    'nombre' => $request->nombre,
-                    'apellido' => $request->apellido,
-                ]);
+        // Bloquear que otro usuario se convierta en administrador si ya existe uno
+        if ($request->rol === 'administrador' && $user->rol !== 'administrador') {
+         $existeAdmin = User::where('rol', 'administrador')->exists();
+             if ($existeAdmin) {
+                return back()
+                ->withErrors(['rol' => 'Ya existe un administrador en el sistema. No se pueden tener dos.'])
+                ->withInput();
             }
         }
 
-        return redirect()->route('admin.usuarios.index')->with('success', 'Usuario actualizado correctamente.');
+         // Actualizar email
+        $user->email = $request->email;
+
+        // Mantener administrador si ya lo es
+        if ($user->rol === 'administrador') {
+            $user->rol = 'administrador';
+        } else {
+            $user->rol = $request->rol;
+        } 
+
+        // Actualizar password si vino
+        if ($request->filled('password')) {
+         $user->password = Hash::make($request->password);
+        }
+
+        $user->save();
+
+        // Actualizar o crear persona asociada
+        $user->persona()->updateOrCreate(
+            ['user_id' => $user->id],
+            ['nombre'   => $request->input('nombre', ''),
+             'apellido' => $request->input('apellido', ''),]
+        );
+
+        return redirect()->route('admin.usuarios.index')
+         ->with('success', 'Usuario actualizado correctamente.');
     }
+
 
         /**
      * @OA\Delete(
