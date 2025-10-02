@@ -49,8 +49,8 @@
                   href="{{ route('admin.configuracion') }}">Configuracion</a>
                 </li>
                 <li class="nav-item navSelect">
-                  <a class="nav-link @if(request()->routeIs('admin.soporteTecnico')) active @endif" 
-                  href="{{ route('admin.soporteTecnico') }}">Soporte Tecnico</a>
+                  <a class="nav-link @if(request()->routeIs('soporteTecnico.enviar')) active @endif" 
+                  href="{{ route('soporteTecnico.enviar') }}">Soporte Tecnico</a>
                 </li>
               </ul>
       <!-- Botón de logout a la derecha -->

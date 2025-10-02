@@ -34,7 +34,7 @@ Route::get('/auditor/inicio', [DashboardController::class, 'auditor'])->name('au
 //ROLES SoporteTecnico
 //Administrador
 Route::get('/admin/soporte-tecnico', [SoporteTecnicoController::class, 'index'])->name('admin.soporteTecnico')->middleware('rol:administrador');
-Route::post('/admin/soporte-tecnico', [SoporteTecnicoController::class, 'enviar'])->name('admin.soporteTecnico');
+Route::post('/admin/soporte-tecnico', [SoporteTecnicoController::class, 'enviar'])->name('soporteTecnico.enviar');
 //Tecnico
 Route::get('/tecnico/soporte-tecnico', [SoporteTecnicoController::class, 'index'])->name('tecnico.soporteTecnico')->middleware('rol:tecnico');
 //Encargado

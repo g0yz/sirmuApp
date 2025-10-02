@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Sede;
 use App\Models\User;
+use App\Models\Tarea;
 
 
 class SedeController extends Controller{
@@ -182,12 +183,19 @@ class SedeController extends Controller{
             'imagen' => 'nullable|mimes:jpg,jpeg,png',
         ]);
 
+        $encargadoAnterior = $sede->encargado_id;
+
         $sede->update($request->all());
-        
+
+        if ($encargadoAnterior != $sede->encargado_id) {
+            Tarea::where('sede_id', $sede->id)
+                ->update(['encargado_id' => $sede->encargado_id]);
+        }
+
         if ($request->hasFile('imagen')) {
-            $sede->addMediaFromRequest('imagen')
-             ->toMediaCollection('imagenes');
-}
+            $sede->addMediaFromRequest('imagen')->toMediaCollection('imagenes');
+        }
+
         return redirect()->route('admin.sedes.index')->with('success', 'Sede actualizada correctamente');
     }
     /**

@@ -29,6 +29,20 @@
             <label for="tipo">Carreras Ofrecidas:</label>
             <input type="text" name="carreras_ofrecidas" class="form-control mb-2" placeholder="Carreras ofrecidas" required value="{{ $sede->carreras_ofrecidas }}">
 
+            <label for="encargado_id">Encargado de la Sede:</label>
+            <select name="encargado_id" id="encargado_id" class="form-select mb-2">
+                <option value="">— Sin encargado —</option>
+                @foreach($encargados as $encargado)
+                    <option value="{{ $encargado->id }}"
+                        {{ old('encargado_id', $sede->encargado_id) == $encargado->id ? 'selected' : '' }}>
+                        {{ $encargado->persona->nombre }} {{ $encargado->persona->apellido }}
+                    </option>
+                @endforeach
+            </select>
+            @error('encargado_id')
+                <div class="text-danger small">{{ $message }}</div>
+            @enderror            
+
             <label for="imagen">Imagen de la Sede:</label>
             <input type="file" name="imagen" class="form-control mb-2" accept="image/*">
 

@@ -20,12 +20,28 @@
             @endforeach
             </select>
 
-            <select name="encargado_id" class="form-select mb-2">
-            <option value="">Seleccione al Encargado</option>
-            @foreach($encargados as $encargado)
-            <option value="{{ $encargado->id }}">{{ $encargado->persona->nombre }} {{ $encargado->persona->apellido }}</option>
-            @endforeach
-            </select>
+            <label for="encargado_nombre">Encargado de la sede:</label>
+            <input type="text" id="encargado_nombre" class="form-control mb-2"
+                value="{{ optional(optional($tarea->sede->encargado)->persona)->nombre }} {{ optional(optional($tarea->sede->encargado)->persona)->apellido }}"
+                disabled>
+
+            <script>
+                const sedeEncargados = @json(
+                    $sedes->mapWithKeys(fn($s) => [
+                    $s->id => optional(optional($s->encargado)->persona)->nombre . ' ' . optional(optional($s->encargado)->persona)->apellido
+                    ])
+                );
+
+                const sedeSelect = document.querySelector('select[name="sede_id"]');
+                const encargadoNombre = document.getElementById('encargado_nombre');
+
+                function actualizarEncargado() {
+                    const sid = sedeSelect.value;
+                    encargadoNombre.value = sedeEncargados[sid] || '—';
+                }
+
+                sedeSelect.addEventListener('change', actualizarEncargado);
+            </script>
 
             <select name="tecnico_id" class="form-select mb-2">
             <option value="">Seleccione al Tecnico</option>

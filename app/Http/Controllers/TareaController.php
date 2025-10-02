@@ -43,11 +43,10 @@ class TareaController extends Controller{
      */
 
     public function create(){
-    $encargados = User::where('rol', 'encargado')->with('persona')->get();
-    $tecnicos = User::where('rol', 'tecnico')->with('persona')->get();
-    $sedes = Sede::all();
+        $tecnicos = User::where('rol', 'tecnico')->with('persona')->get();
+        $sedes = Sede::with('encargado.persona')->get();
 
-    return view('admin.tareas.create', compact('encargados', 'tecnicos', 'sedes'));
+        return view('admin.tareas.create', compact('tecnicos', 'sedes'));
     }
 
 
@@ -101,7 +100,6 @@ class TareaController extends Controller{
     public function store(Request $request){
         $request->validate([
             'sede_id' => 'exists:sedes,id',
-            'encargado_id' => 'exists:users,id',
             'tecnico_id' => 'nullable|exists:users,id',
             'titulo' => 'required|string|max:50',
             'prioridad' => 'required|in:' . implode(',', Tarea::$prioridades),
@@ -117,17 +115,22 @@ class TareaController extends Controller{
 
 
         
+        $sede = Sede::with('encargado')->findOrFail($request->sede_id);
+        if (!$sede->encargado_id) {
+            return back()->withErrors(['sede_id' => 'La sede seleccionada no tiene encargado asignado.'])->withInput();
+        }
+
         $tarea = Tarea::create([
-            'sede_id' => $request->sede_id,
-            'encargado_id' => $request->encargado_id,
-            'tecnico_id' => $request->tecnico_id,
-            'titulo' => $request->titulo,
-            'prioridad' => $request->prioridad,
-            'tipo' => $request->tipo,
-            'estado' => $request->estado,
-            'descripcion' => $request->descripcion,
-            'fecha_estimada' => $request->fecha_estimada,
-            'fecha_finalizacion' => $request->fecha_finalizacion ?? null,
+            'sede_id'           => $request->sede_id,
+            'encargado_id'      => $sede->encargado_id,
+            'tecnico_id'        => $request->tecnico_id,
+            'titulo'            => $request->titulo,
+            'prioridad'         => $request->prioridad,
+            'tipo'              => $request->tipo,
+            'estado'            => $request->estado,
+            'descripcion'       => $request->descripcion,
+            'fecha_estimada'    => $request->fecha_estimada,
+            'fecha_finalizacion'=> $request->fecha_finalizacion ?? null,
         ]);
 
                 // Subir imágenes
@@ -154,18 +157,16 @@ class TareaController extends Controller{
         
 
     public function edit(Tarea $tarea){
-        $encargados = User::where('rol','encargado')->get();
-        $tecnicos = User::where('rol','tecnico')->get();
-        $sedes = Sede::all();
+        $tecnicos = User::where('rol','tecnico')->with('persona')->get();
+        $sedes = Sede::with('encargado.persona')->get();
 
-        return view('admin.tareas.edit', compact('tarea', 'encargados', 'tecnicos', 'sedes'));
+        return view('admin.tareas.edit', compact('tarea', 'tecnicos', 'sedes'));
     }
 
 public function update(Request $request, Tarea $tarea)
 {
     $request->validate([
         'sede_id' => 'exists:sedes,id',
-        'encargado_id' => 'exists:users,id',
         'tecnico_id' => 'nullable|exists:users,id',
         'titulo' => 'required|string|max:50',
         'prioridad' => 'required|in:' . implode(',', Tarea::$prioridades),
@@ -178,7 +179,15 @@ public function update(Request $request, Tarea $tarea)
         'documentos.*' => 'nullable|mimes:pdf,doc,docx,xls,xlsx',
     ]);
 
-    $tarea->update($request->all());
+    $data = $request->except(['imagenes', 'documentos', 'encargado_id']);
+    $sedeId = $data['sede_id'] ?? $tarea->sede_id;
+    $sede = Sede::with('encargado')->findOrFail($sedeId);
+
+    if (!$sede->encargado_id) {
+        return back()->withErrors(['sede_id' => 'La sede seleccionada no tiene encargado asignado.'])->withInput();
+    }
+    $data['encargado_id'] = $sede->encargado_id;
+    $tarea->update($data);
 
     // Subir imágenes nuevas
     if ($request->hasFile('imagenes')) {

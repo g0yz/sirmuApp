@@ -48,6 +48,6 @@ class SoporteTecnicoController extends Controller{
 
         // Acá podrías enviar un correo o guardar el ticket en la base de datos
         // Por ahora simplemente devolvemos un mensaje de confirmación
-        return back()->with('success', 'Tu consulta fue enviada correctamente. El equipo de soporte se pondrá en contacto.');
+        return back()->with('success', 'Tu consulta fue enviada correctamente. El equipo de soporte se pondrá en contacto a la brevedad.');
     }
 }
