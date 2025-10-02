@@ -27,7 +27,7 @@
             <tr>
                 <th>ID</th>
                 <th>Sede</th>
-                <th>Encargado</th>
+                <th>Título</th>
                 <th>Técnico</th>
                 <th>Prioridad</th>
                 <th>Tipo</th>
@@ -40,7 +40,7 @@
             <tr>
                 <td>{{ $tarea->id }}</td>
                 <td>{{ $tarea->sede ? $tarea->sede->nombre : '-' }}</td>
-                <td>{{ $tarea->encargado && $tarea->encargado->persona ? $tarea->encargado->persona->nombre . ' ' . $tarea->encargado->persona->apellido : 'Sin encargado'}}</td>
+                <td>{{ ucfirst($tarea->titulo) }}</td>
                 <td>{{ $tarea->tecnico && $tarea->tecnico->persona ? $tarea->tecnico->persona->nombre . ' ' . $tarea->tecnico->persona->apellido : 'Sin tecnico'}}</td>
                 <td>{{ ucfirst($tarea->tipo) }}</td>
                 <td>{{ ucfirst($tarea->prioridad) }}</td>

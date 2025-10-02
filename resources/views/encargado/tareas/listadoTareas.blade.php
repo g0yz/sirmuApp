@@ -38,7 +38,7 @@
         <tbody>
             @forelse($tareas as $tarea)
                 <tr>
-                    <td>{{ $tarea->titulo }}</td>
+                    <td>{{ ucfirst($tarea->titulo) }}</td>
                     <td>{{ $tarea->tecnico->persona->nombre ?? $tarea->tecnico->name ?? '-' }}</td>
                     <td>{{ ucfirst($tarea->prioridad) }}</td>
                     <td>{{ ucfirst($tarea->tipo) }}</td>

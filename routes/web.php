@@ -51,7 +51,10 @@ Route::get('/tecnico/configuracion', [ConfiguracionController::class, 'index'])-
 Route::get('/encargado/configuracion', [ConfiguracionController::class, 'index'])->name('encargado.configuracion')->middleware('rol:encargado');
 //Auditor
 Route::get('/auditor/configuracion', [ConfiguracionController::class, 'index'])->name('auditor.configuracion')->middleware('rol:auditor');
-
+Route::middleware([])->group(function () {
+    Route::put('/configuracion/perfil', [ConfiguracionController::class, 'updatePerfil'])->name('config.update.profile');
+    Route::put('/configuracion/password', [ConfiguracionController::class, 'updatePassword'])->name('config.update.password');
+});
 
 //Rutas Administrador//
 //Listar todos los usuarios
