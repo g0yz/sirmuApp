@@ -36,8 +36,18 @@ class SedeController extends Controller{
      * )
      */
     public function create(){
-        $encargados = User::where('rol', 'encargado')->get();
-            return view('admin.sedes.create', compact('encargados'));
+        $encargados = User::where('rol', 'encargado')
+            ->whereDoesntHave('sede')
+            ->with('persona')
+            ->get();
+
+        if ($encargados->isEmpty()) {
+            return redirect()
+                ->route('admin.sedes.index')
+                ->withErrors(['encargado_id' => 'No hay encargados disponibles. Cree un usuario con rol "encargado" o libere alguno antes de crear una sede.']);
+        }
+
+        return view('admin.sedes.create', compact('encargados'));
     }
     /**
      * @OA\Post(
@@ -71,21 +81,29 @@ class SedeController extends Controller{
             'nombre' => 'required|string|max:255',
             'direccion' => 'required|string|max:255',
             'tipo' => 'required|in:' . implode(',', Sede::$tipos),
-            'encargado_id' => 'nullable|exists:users,id',
+            'encargado_id' => 'required|exists:users,id',
             'capacidad_estudiantes' => 'required|integer|min:1',
             'carreras_ofrecidas' => 'required|string',
             'imagen' => 'nullable|mimes:jpg,jpeg,png',
-
         ]);
 
-        $sede=Sede::create($request->except('imagen'));
+        // Encargado no puede estar asignado a otra sede
+        $yaAsignado = Sede::where('encargado_id', $request->encargado_id)->exists();
+        if ($yaAsignado) {
+            return back()
+                ->withErrors(['encargado_id' => 'Este encargado ya está asignado a otra sede.'])
+                ->withInput();
+        }
 
-            if ($request->hasFile('imagen')) {
-                $sede->addMediaFromRequest('imagen')
-                ->toMediaCollection('imagenes');
-}
+        // Crear sede
+        $sede = Sede::create($request->except('imagen'));
 
-            return redirect()->route('admin.sedes.index')->with('success', 'Sede creada correctamente');
+        // Imagen (opcional)
+        if ($request->hasFile('imagen')) {
+            $sede->addMediaFromRequest('imagen')->toMediaCollection('imagenes');
+        }
+
+        return redirect()->route('admin.sedes.index')->with('success', 'Sede creada correctamente');
     }
     /**
      * @OA\Get(
@@ -135,8 +153,13 @@ class SedeController extends Controller{
      * )
      */
     public function edit(Sede $sede){
-        $encargados = User::where('rol', 'encargado')->get();
-            return view('admin.sedes.edit', compact('sede','encargados'));
+        $encargados = User::where('rol', 'encargado')
+            ->whereDoesntHave('sede')
+            ->orWhere('id', $sede->encargado_id) // incluir al actual
+            ->with('persona')
+            ->get();
+
+        return view('admin.sedes.edit', compact('sede','encargados'));
     }
     /**
      * @OA\Put(
@@ -177,20 +200,23 @@ class SedeController extends Controller{
             'nombre' => 'required|string|max:255',
             'direccion' => 'required|string|max:255',
             'tipo' => 'required|in:' . implode(',', Sede::$tipos),
-            'encargado_id' => 'nullable|exists:users,id',
+            'encargado_id' => 'required|exists:users,id',
             'capacidad_estudiantes' => 'required|integer|min:1',
             'carreras_ofrecidas' => 'required|string',
             'imagen' => 'nullable|mimes:jpg,jpeg,png',
         ]);
 
-        $encargadoAnterior = $sede->encargado_id;
-
-        $sede->update($request->all());
-
-        if ($encargadoAnterior != $sede->encargado_id) {
-            Tarea::where('sede_id', $sede->id)
-                ->update(['encargado_id' => $sede->encargado_id]);
+        // No permitir asignar encargado que ya está en otra sede
+        $yaAsignado = Sede::where('encargado_id', $request->encargado_id)
+            ->where('id', '<>', $sede->id)
+            ->exists();
+        if ($yaAsignado) {
+            return back()
+                ->withErrors(['encargado_id' => 'Este encargado ya está asignado a otra sede.'])
+                ->withInput();
         }
+
+        $sede->update($request->except('imagen'));
 
         if ($request->hasFile('imagen')) {
             $sede->addMediaFromRequest('imagen')->toMediaCollection('imagenes');

@@ -21,6 +21,16 @@
 
     <a href="{{ route('admin.sedes.create') }}" class="btn btn-primary mb-3">Nueva Sede</a>
 
+    @if($errors->any())
+    <div class="alert alert-danger">
+        <ul class="mb-0">
+        @foreach($errors->all() as $error)
+            <li>{{ $error }}</li>
+        @endforeach
+        </ul>
+    </div>
+    @endif
+
     <table class="table table-bordered table-responsive table-striped">
         <thead class="table-dark">
             <tr>
