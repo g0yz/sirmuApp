@@ -25,5 +25,10 @@ class Evento extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function tarea()
+{
+    return $this->belongsTo(Tarea::class, 'tarea_id');
+}
+
 
 }

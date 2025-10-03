@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
+use App\Models\Evento;
+
 
 
 class Tarea extends Model implements HasMedia
@@ -67,13 +69,46 @@ class Tarea extends Model implements HasMedia
             'resolucion_desc', 
     ];
 
-
     protected static function booted()
     {
         static::creating(function ($tarea) {
             $tarea->fecha_creacion = now()->toDateString(); // YYYY-MM-DD
         });
+
+//logica de los eventos junto a tareas
+        static::created(function ($tarea) {
+        // Cuando se cree la tarea, se crea un evento
+            $tarea->evento()->create([
+            'title' => $tarea->titulo,
+            'descripcion' => $tarea->descripcion ?? 'Sin descripción',
+            'start' => $tarea->fecha_creacion,
+            'end' => $tarea->fecha_estimada,
+            'user_id' => $tarea->encargado_id,
+        ]);
+    });
+
+         static::updated(function ($tarea) {
+        if ($tarea->evento) {
+            $tarea->evento->update([
+            'title' => $tarea->titulo,
+            'descripcion' => $tarea->descripcion ?? 'Sin descripción',
+            'start' => $tarea->fecha_creacion,
+            'end' => $tarea->fecha_estimada,
+            'user_id' => $tarea->encargado_id,
+        ]);
     }
+});
+
+ static::deleting(function ($tarea) {
+        // Opcional: eliminar evento al borrar tarea
+        if ($tarea->evento) {
+            $tarea->evento->delete();
+        }
+    });
+
+
+
+}
 
 
     public function sede(){
@@ -86,6 +121,10 @@ class Tarea extends Model implements HasMedia
 
     public function tecnico(){
         return $this->belongsTo(User::class, 'tecnico_id');
+    }
+
+    public function evento(){
+        return $this->hasOne(Evento::class, 'tarea_id');
     }
     
     public $timestamps = false;
