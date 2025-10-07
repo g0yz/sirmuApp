@@ -8,6 +8,9 @@ use App\Models\Tarea;
 use App\Models\Sede;
 use Illuminate\Support\Facades\Auth;
 
+use Illuminate\Support\Facades\Mail;
+
+use App\Mail\TareaAsignadaMail;
 
 
 class TareaController extends Controller{
@@ -316,6 +319,13 @@ public function storeEncargado(Request $request) {
             $tarea->addMedia($documento)->toMediaCollection('documentos');
         }
     }
+
+        if ($request->tecnico_id) {
+            $tecnico = User::with('persona')->find($request->tecnico_id);
+            Mail::mailer('notificaciones')
+                ->to($tecnico->email)
+                ->send(new TareaAsignadaMail($tarea, $tecnico, $user));
+        }
 
     return redirect()->route('encargado.tareas.listadoTareas')
                      ->with('success', 'Tarea creada correctamente');

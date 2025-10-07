@@ -82,14 +82,15 @@ REDIS_HOST=127.0.0.1
 REDIS_PASSWORD=null
 REDIS_PORT=6379
 
-MAIL_MAILER=log
-MAIL_SCHEME=null
+# Mailer por defecto (usa smtp para que funcione con Mailpit)
+MAIL_MAILER=smtp
+
+# Configuración SMTP general
 MAIL_HOST=127.0.0.1
-MAIL_PORT=2525
+MAIL_PORT=1025
 MAIL_USERNAME=null
 MAIL_PASSWORD=null
-MAIL_FROM_ADDRESS="hello@example.com"
-MAIL_FROM_NAME="${APP_NAME}"
+MAIL_ENCRYPTION=null
 
 AWS_ACCESS_KEY_ID=
 AWS_SECRET_ACCESS_KEY=

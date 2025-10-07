@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Mail;
+
+use App\Mail\SoporteTecnicoMail;
+
 class SoporteTecnicoController extends Controller{
     /**
      * @OA\Get(
@@ -45,6 +49,20 @@ class SoporteTecnicoController extends Controller{
             'asunto' => 'required|string|max:255',
             'descripcion' => 'required|string',
         ]);
+
+        //
+        $emailUsuario = Auth()->user()->email;
+        $nombreUsuario = Auth()->user()->persona->nombre;
+        // Enviar correo al soporte
+        Mail::mailer('soporte')->send(
+            new SoporteTecnicoMail(
+                $nombreUsuario,
+                $emailUsuario,
+                $request->asunto,
+                $request->descripcion
+            )
+        );
+
 
         // Acá podrías enviar un correo o guardar el ticket en la base de datos
         // Por ahora simplemente devolvemos un mensaje de confirmación
