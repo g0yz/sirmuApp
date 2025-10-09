@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
 use App\Mail\TareaAsignadaMail;
+use App\Mail\TareaFinalizadaMail;
+use App\Mail\TareaEstadoMail;
 
 
 class TareaController extends Controller{
@@ -254,7 +256,16 @@ public function indexEncargado(){
     return view('encargado.tareas.listadoTareas', compact('tareas'));
 
 }
+//Listado de Tareas Conclusas
+public function indexEncargadoConclusas(){
+    $user = Auth::user();
+   $tareasConclusas = Tarea::whereIn('estado', ['validada', 'rechazada'])
+                             ->where('encargado_id', $user->id)
+                             ->orderBy('fecha_finalizacion', 'desc')
+                             ->get();
 
+    return view('encargado.tareas.listadoTareasConclusas', compact('tareasConclusas'));
+}
 
 public function crearTareaEncargado() {
 
@@ -428,6 +439,14 @@ public function subirResolucion(Request $request, Tarea $tarea)
     $tarea->estado = Tarea::estado_Finalizado; // Actualizar estado a 'finalizado'
     $tarea->save();
 
+    $encargado = $tarea->encargado;
+    $tecnico = Auth::user();
+        if ($encargado) {
+        Mail::mailer('notificaciones')
+            ->to($encargado->email)
+            ->send(new TareaEstadoMail($tarea, $tecnico,$encargado,$tarea->estado));
+        }
+
     // Guardar archivo en la colección 'resoluciones'
     if ($request->hasFile('imagenes')) {
         foreach ($request->file('imagenes') as $imagen) {
@@ -439,6 +458,7 @@ public function subirResolucion(Request $request, Tarea $tarea)
             $tarea->addMedia($documento)->toMediaCollection('documentos-resoluciones');
         }
     }
+
     return redirect()->route('tecnico.tareas.index',$tarea->id)->with('success', 'Resolución guardada correctamente.');
 }
 
@@ -470,12 +490,24 @@ public function procesarResolucion(Request $request, Tarea $tarea)
         'accion' => 'required|in:validar,rechazar',
     ]);
 
+    $encargado = $tarea->encargado;
+    $tecnico = $tarea->tecnico;
+
     if ($request->accion === 'validar') {
         $tarea->estado = Tarea::estado_Validado;
         $tarea->observacion = $request->observacion;
+            Mail::mailer('notificaciones')
+            ->to($encargado->email)
+            ->send(new TareaEstadoMail($tarea, $tecnico,$encargado,$tarea->estado));
+
     } elseif ($request->accion === 'rechazar') {
         $tarea->estado = Tarea::estado_Rechazado;
         $tarea->observacion = $request->observacion;
+            Mail::mailer('notificaciones')
+            ->to($encargado->email)
+            ->send(new TareaEstadoMail($tarea, $tecnico,$encargado,$tarea->estado));
+
+        
     }
 
     $tarea->save();

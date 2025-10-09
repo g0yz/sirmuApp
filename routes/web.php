@@ -132,6 +132,9 @@ Route::get('/encargado/ver-tarea/{tarea}', [TareaController::class,'showEncargad
 Route::put('/encargado/actualizar-tarea/{tarea}', [TareaController::class, 'updateEncargado'])->name('encargado.tareas.updateTarea')->middleware('rol:encargado');
 // Eliminar una tarea
 Route::delete('/encargado/borrar-tarea/{tarea}', [TareaController::class, 'destroyEncargado'])->name('encargado.tareas.destroy')->middleware('rol:encargado');
+//Listado de tareas concluidas
+Route::get('/encargado/tareas/visualizar-tareas-concluidas', [TareaController::class, 'indexEncargadoConclusas'])->name('encargado.tareas.listadoTareasConclusas')->middleware('rol:encargado');
+
 
 //ruta calendario
 Route::get('/encargado/calendario', [EventoController::class, 'index'])->name('encargado.calendario.index')->middleware('rol:encargado');

@@ -57,11 +57,11 @@ return [
             'password' => null,
             'timeout' => null,
             'from' => [ 
-                'address' => 'notificaciones@sirmu.com',
-                'name' => 'Notificaciones Sirmu',],
+                'address' => env('MAIL_NOTIFICACIONES_ADDRESS'),
+                'name' => env('MAIL_NOTIFICACIONES_NAME')],
         ],
 
-            'soporte' => [
+        'soporte' => [
         'transport' => 'smtp',
         'host' => '127.0.0.1',
         'port' => 1025,
@@ -69,8 +69,8 @@ return [
         'password' => null,
         'timeout' => null,
         'from' => [ 
-                'address' => 'soporte@sirmu.com',
-                'name' => 'Soporte Tecnico Sirmu',],
+                'address' => env('MAIL_SOPORTE_ADDRESS'),
+                'name' => env('MAIL_SOPORTE_NAME'),],
     ],
 
         'ses' => [

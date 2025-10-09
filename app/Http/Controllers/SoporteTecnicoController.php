@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Mail;
 
 use App\Mail\SoporteTecnicoMail;
 
+
 class SoporteTecnicoController extends Controller{
     /**
      * @OA\Get(
@@ -54,7 +55,7 @@ class SoporteTecnicoController extends Controller{
         $emailUsuario = Auth()->user()->email;
         $nombreUsuario = Auth()->user()->persona->nombre;
         // Enviar correo al soporte
-        Mail::mailer('soporte')->send(
+        Mail::mailer('soporte')->to(env('MAIL_SOPORTE_ADDRESS'))->send(
             new SoporteTecnicoMail(
                 $nombreUsuario,
                 $emailUsuario,
