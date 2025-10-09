@@ -159,3 +159,5 @@ Route::get('/auditor/tareas/visualizar-tareas', [TareaController::class, 'indexF
 Route::get('/auditor/visualizar-tarea-resolucion/{tarea}', [TareaController::class,'visualizarResolucion'])->name('auditor.tareas.visualizar') ->middleware('rol:auditor');
 // Procesar el formulario de validación/rechazo
 Route::post('/auditor/procesar-resolucion/{tarea}', [TareaController::class, 'procesarResolucion'])->name('auditor.tareas.procesarResolucion')->middleware('rol:auditor');
+//Listado de tareas concluidas global
+Route::get('/auditor/tareas/visualizar-tareas-resueltas-global', [TareaController::class, 'indexConclusasResueltasGlobal'])->name('auditor.tareas.listadoTareasResueltasGlobal')->middleware('rol:auditor');

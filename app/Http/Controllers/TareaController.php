@@ -406,6 +406,14 @@ public function storeEncargado(Request $request) {
 
     }
 
+    public function indexConclusasResueltasGlobal() {
+    $tareasResueltasGlobales = Tarea::with(['sede', 'encargado', 'tecnico'])
+                    ->where('estado','validada','rechazada')
+                    ->orderBy('fecha_finalizacion', 'desc')
+                    ->get();
+    return view('auditor.tareas.listadoTareasResueltasGlobal', compact('tareasResueltasGlobales'));
+    }
+
 
 
 public function formularioResolucion(Tarea $tarea)

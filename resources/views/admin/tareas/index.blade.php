@@ -8,7 +8,7 @@
 <div class="container mt-4">
     <div class="card shadow-sm mb-4 bg-dark">
         <div class="card-body text-center p-3">
-            <h3 class="mb-0 text-white">Tareas del Sistema</h3>
+            <h3 class="mb-0 text-white">Tareas del Sistema (En Curso)</h3>
         </div>
     </div>
 </div>
@@ -21,7 +21,7 @@
     @endif
 
     <a href="{{ route('admin.tareas.create') }}" class="btn btn-primary mb-3">Nueva Tarea</a>
-
+    
     <table class="table table-bordered table-responsive table-striped">
         <thead class="table-dark">
             <tr>
