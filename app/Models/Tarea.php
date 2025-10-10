@@ -66,7 +66,9 @@ class Tarea extends Model implements HasMedia
             'fecha_creacion',
             'fecha_estimada',
             'fecha_finalizacion',
-            'resolucion_desc', 
+            'resolucion_desc',
+            'fecha_observacion',
+            'observacion',
     ];
 
     protected static function booted()

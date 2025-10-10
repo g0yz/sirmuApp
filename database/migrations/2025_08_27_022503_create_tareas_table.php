@@ -25,6 +25,8 @@ return new class extends Migration
             $table->foreignId('tecnico_id')->nullable()->constrained('users')->nullOnDelete();
             $table->text('resolucion_desc')->nullable();
             $table->text('observacion')->nullable();
+            $table->date('fecha_observacion')->nullable();
+
         });
     }
 

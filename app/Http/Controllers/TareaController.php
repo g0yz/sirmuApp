@@ -251,6 +251,7 @@ public function indexEncargado(){
     $user = Auth::user();
     $tareas = Tarea::with(['sede', 'tecnico'])
                     ->where('encargado_id', $user->id)
+                    ->whereIn('estado', [Tarea::estado_Pendiente, Tarea::estado_Finalizado])
                     ->get();
 
     return view('encargado.tareas.listadoTareas', compact('tareas'));
@@ -503,6 +504,7 @@ public function procesarResolucion(Request $request, Tarea $tarea)
 
     if ($request->accion === 'validar') {
         $tarea->estado = Tarea::estado_Validado;
+        $tarea->fecha_observacion = $request->fecha_observacion;
         $tarea->observacion = $request->observacion;
             Mail::mailer('notificaciones')
             ->to($encargado->email)
@@ -510,6 +512,7 @@ public function procesarResolucion(Request $request, Tarea $tarea)
 
     } elseif ($request->accion === 'rechazar') {
         $tarea->estado = Tarea::estado_Rechazado;
+        $tarea->fecha_observacion = $request->fecha_observacion;
         $tarea->observacion = $request->observacion;
             Mail::mailer('notificaciones')
             ->to($encargado->email)

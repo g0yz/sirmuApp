@@ -1,4 +1,4 @@
-@extends('encargado.dashboard')
+@extends('auditor.dashboard')
 
 @section('content')
  <link rel="stylesheet" href="{{ asset('css/index.css') }}">

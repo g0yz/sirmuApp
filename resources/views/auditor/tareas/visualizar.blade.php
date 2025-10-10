@@ -157,6 +157,11 @@
 
 <form method="POST" action="{{route('auditor.tareas.procesarResolucion' , $tarea->id)}}" enctype="multipart/form-data">
     @csrf
+
+    <label>Fecha de Observacion:</label>
+    <input type="text" id="fecha_observacion" name="fecha_observacion" class="form-control form-control-sm w-auto"
+    value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" readonly>
+
     <label for="observacion">Observación:</label>
     <input type="text" name="observacion" class="form-control mb-2" required>
 

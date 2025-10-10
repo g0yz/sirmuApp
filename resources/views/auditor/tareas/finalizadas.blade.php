@@ -45,7 +45,7 @@
             </tr>
             @empty
             <tr>
-                <td colspan="10" class="text-center">No hay tareas registradas en el Sistema</td>
+                <td colspan="10" class="text-center">No hay tareas registradas como finalizadas en el Sistema</td>
             </tr>
             @endforelse
         </tbody>

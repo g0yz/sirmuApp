@@ -40,6 +40,11 @@
         </li>
 
         <li class="nav-item navSelect">
+          <a class="nav-link @if(request()->routeIs('auditor.metricas.proyeccion')) active @endif" 
+          href="{{ route('auditor.metricas.proyeccion') }}">Metricas</a>
+        </li>
+
+        <li class="nav-item navSelect">
           <a class="nav-link @if(request()->routeIs('auditor.sedes.listadoSedes')) active @endif" 
           href="{{ route('auditor.sedes.listadoSedes') }}">Sedes</a>
         </li>

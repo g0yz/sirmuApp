@@ -9,6 +9,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\SedeController;
 use App\Http\Controllers\TareaController;
 use App\Http\Controllers\EventoController;
+use App\Http\Controllers\MetricasController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -161,3 +163,5 @@ Route::get('/auditor/visualizar-tarea-resolucion/{tarea}', [TareaController::cla
 Route::post('/auditor/procesar-resolucion/{tarea}', [TareaController::class, 'procesarResolucion'])->name('auditor.tareas.procesarResolucion')->middleware('rol:auditor');
 //Listado de tareas concluidas global
 Route::get('/auditor/tareas/visualizar-tareas-resueltas-global', [TareaController::class, 'indexConclusasResueltasGlobal'])->name('auditor.tareas.listadoTareasResueltasGlobal')->middleware('rol:auditor');
+//Metricas proyeccion
+Route::get('/auditor/metricas/visualizar-proyeccion', [MetricasController::class, 'metricasDelMes'])->name('auditor.metricas.proyeccion')->middleware('rol:auditor');
