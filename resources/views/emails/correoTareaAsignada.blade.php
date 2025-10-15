@@ -5,7 +5,7 @@
 </head>
 <body>
     <h2>Nueva Tarea Asignada</h2>
-    <p><strong>Estimado/a. Se le ha asignado una nueva tarea para realizar</p>
+    <p><strong>Estimado/a {{$tecnico->persona->nombre}}, se le ha asignado una nueva tarea para realizar</p>
     <p><strong>Sede Correspondiente: </strong> {{$encargado->sede->nombre}}</p>
     <p><strong>Título:</strong> {{ $tarea->titulo }}</p>
     <p><strong>Descripción:</strong> {{ $tarea->descripcion }}</p>

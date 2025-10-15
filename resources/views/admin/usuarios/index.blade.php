@@ -1,60 +1,64 @@
 @extends('admin.dashboard')
 
 @section('content')
+  <link rel="stylesheet" href="{{ asset('css/filtro-tabla.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/index.css') }}">
 
- <link rel="stylesheet" href="{{ asset('css/index.css') }}">
-
-<div class="container mt-4">
+  <div class="container mt-4">
     <div class="card shadow-sm mb-4 bg-dark">
-        <div class="card-body text-center p-3">
-            <h3 class="mb-0 text-white">Usuarios Del Sistema</h3>
-        </div>
+      <div class="card-body text-center p-3">
+        <h3 class="mb-0 text-white">Usuarios del Sistema</h3>
+      </div>
     </div>
-</div>
+  </div>
 
-<div class="container mt-4">
+  <div class="container mt-4">
     <!-- Mensajes de éxito -->
     @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
+      <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
     <a href="{{ route('admin.usuarios.create') }}" class="btn btn-primary mb-3">Nuevo Usuario</a>
 
-    <table class="table table-bordered table-responsive table-striped">
-        <thead class="table-dark">
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Rol</th>
-                <th>Email</th>
-                <th>Acciones</th>
-            </tr>
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>ID <i class="bi bi-funnel filter-icon" data-col="0"></i></th>
+            <th>Nombre <i class="bi bi-funnel filter-icon" data-col="1"></i></th>
+            <th>Apellido <i class="bi bi-funnel filter-icon" data-col="2"></i></th>
+            <th>Rol <i class="bi bi-funnel filter-icon" data-col="3"></i></th>
+            <th>Email <i class="bi bi-funnel filter-icon" data-col="4"></i></th>
+            <th>Acciones</th>
+          </tr>
         </thead>
         <tbody>
-            @forelse($users as $user)
-            <tr>
-                <td>{{ $user->id }}</td>
-                <td>{{ $user->persona->nombre ?? '-' }}</td>
-                <td>{{ $user->persona->apellido ?? '-' }}</td>
-                <td>{{ $user->rol }}</td>
-                <td>{{ $user->email }}</td>
-                <td>
-                    <a href="{{ route('admin.usuarios.show', $user) }}" class="btn btn-info btn-sm">Ver</a>
-                    <a href="{{ route('admin.usuarios.edit', $user) }}" class="btn btn-warning btn-sm">Editar</a>
-                    <form action="{{ route('admin.usuarios.destroy', $user) }}" method="POST" style="display:inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button class="btn btn-danger btn-sm" onclick="return confirm('¿Eliminar usuario?')">Eliminar</button>
-                    </form>
-                </td>
-            </tr>
-            @empty
-            <tr>
-                <td colspan="6" class="text-center">No hay usuarios registrados</td>
-            </tr>
-            @endforelse
+          @forelse($users as $user)
+          <tr>
+            <td>{{ $user->id }}</td>
+            <td>{{ $user->persona->nombre ?? '-' }}</td>
+            <td>{{ $user->persona->apellido ?? '-' }}</td>
+            <td>{{ $user->rol }}</td>
+            <td>{{ $user->email }}</td>
+            <td>
+              <a href="{{ route('admin.usuarios.show', $user) }}" class="btn btn-info btn-sm">Ver</a>
+              <a href="{{ route('admin.usuarios.edit', $user) }}" class="btn btn-warning btn-sm">Editar</a>
+              <form action="{{ route('admin.usuarios.destroy', $user) }}" method="POST" style="display:inline;">
+                @csrf
+                @method('DELETE')
+                <button class="btn btn-danger btn-sm" onclick="return confirm('¿Eliminar usuario?')">Eliminar</button>
+              </form>
+            </td>
+          </tr>
+          @empty
+          <tr>
+            <td colspan="6" class="text-center">No hay usuarios registrados</td>
+          </tr>
+          @endforelse
         </tbody>
-    </table>
-</div>
+      </table>
+    </div>
+  </div>
+
+  <script src="{{ asset('js/filtro-tabla.js') }}"></script>
 @endsection

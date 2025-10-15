@@ -241,6 +241,7 @@ public function indexTecnico() {
     // Obtener solo las tareas asignadas a este técnico
     $tareasAsignadas = Tarea::with('sede')
                             ->where('tecnico_id', $user->id)
+                            ->where('estado', '<>', 'finalizada')
                             ->get();
 
     return view('tecnico.tareas.index', compact('tareasAsignadas'));

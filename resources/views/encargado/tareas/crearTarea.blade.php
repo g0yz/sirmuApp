@@ -17,7 +17,7 @@
       <select name="tecnico_id" class="form-select mb-2">
       <option value="">Seleccione al Tecnico</option>
             @foreach($tecnicos as $tecnico)
-      <option value="{{ $tecnico->id }}">{{ $tecnico->id }}</option>
+      <option value="{{ $tecnico->id }}">{{ $tecnico->persona->nombre }} {{ $tecnico->persona->apellido }}</option>
             @endforeach
       </select>
 
