@@ -137,6 +137,10 @@ Route::delete('/encargado/borrar-tarea/{tarea}', [TareaController::class, 'destr
 //Listado de tareas concluidas
 Route::get('/encargado/tareas/visualizar-tareas-concluidas', [TareaController::class, 'indexEncargadoConclusas'])->name('encargado.tareas.listadoTareasConclusas')->middleware('rol:encargado');
 
+Route::get('/encargado/tareas/visualizar-tareas-concluidas/exportar', [App\Http\Controllers\TareaController::class, 'exportarTareasConclusasEncargado'])
+    ->name('encargado.tareas.exportarConclusas');
+
+
 
 //ruta calendario
 Route::get('/encargado/calendario', [EventoController::class, 'index'])->name('encargado.calendario.index')->middleware('rol:encargado');
@@ -165,3 +169,8 @@ Route::post('/auditor/procesar-resolucion/{tarea}', [TareaController::class, 'pr
 Route::get('/auditor/tareas/visualizar-tareas-resueltas-global', [TareaController::class, 'indexConclusasResueltasGlobal'])->name('auditor.tareas.listadoTareasResueltasGlobal')->middleware('rol:auditor');
 //Metricas proyeccion
 Route::get('/auditor/metricas/visualizar-proyeccion', [MetricasController::class, 'metricasDelMes'])->name('auditor.metricas.proyeccion')->middleware('rol:auditor');
+
+
+
+Route::get('/auditor/tareas/finalizadas/tareas/visualizar-tareas-resueltas-global/exportar', [App\Http\Controllers\TareaController::class, 'exportarTareasResueltasGlobalAuditor'])
+    ->name('auditor.tareas.exportarFinalizadas');

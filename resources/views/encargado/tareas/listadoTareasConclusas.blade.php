@@ -19,6 +19,9 @@
       <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
+    <a href="{{route ('encargado.tareas.exportarConclusas')}}" class="btn btn-primary mb-3">Exportar a Excel</a>
+
+
     <div class="table-responsive">
       <table class="table table-bordered table-striped table-responsive">
         <thead class="table-dark">

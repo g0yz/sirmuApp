@@ -1,6 +1,7 @@
 @extends('auditor.dashboard')
 
 @section('content')
+  <link rel="stylesheet" href="{{ asset('css/filtro-tabla.css') }}">
  <link rel="stylesheet" href="{{ asset('css/index.css') }}">
 
 
@@ -12,12 +13,14 @@
     </div>
 </div>
 
-
 <div class="container mt-4">
     <!-- Mensajes de éxito -->
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
+
+    <a href="{{route ('auditor.tareas.exportarFinalizadas')}}" class="btn btn-primary mb-3">Exportar a Excel</a>
+
 
     <table class="table table-bordered table-striped table-responsive">
         <thead class="table-dark">
@@ -54,4 +57,8 @@
 <div class="mt-3 text-center">
     <a href="{{ url()->previous() }}" class="btn btn-secondary">Volver</a> 
 </div>
+
+
+  <!-- Script del filtro -->
+  <script src="{{ asset('js/filtro-tabla.js') }}"></script>
 @endsection

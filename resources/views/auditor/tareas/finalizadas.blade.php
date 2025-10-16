@@ -18,6 +18,8 @@
     @if(session('success'))
       <div class="alert alert-success">{{ session('success') }}</div>
     @endif
+    
+    <a href="{{ route ('auditor.tareas.listadoTareasResueltasGlobal') }}" class="btn btn-primary mb-3">Historial de Tareas</a>
 
     <div class="table-responsive">
       <table class="table table-bordered table-striped">

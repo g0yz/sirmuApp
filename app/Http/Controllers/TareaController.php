@@ -14,6 +14,12 @@ use App\Mail\TareaAsignadaMail;
 use App\Mail\TareaFinalizadaMail;
 use App\Mail\TareaEstadoMail;
 
+use Maatwebsite\Excel\Facades\Excel;
+
+use App\Exports\TareasConclusasExport;
+use App\Exports\TareasResueltasGlobalExport;
+
+
 
 class TareaController extends Controller{
     
@@ -241,7 +247,7 @@ public function indexTecnico() {
     // Obtener solo las tareas asignadas a este técnico
     $tareasAsignadas = Tarea::with('sede')
                             ->where('tecnico_id', $user->id)
-                            ->where('estado', '<>', 'finalizada')
+                            ->where('estado', 'pendiente')              
                             ->get();
 
     return view('tecnico.tareas.index', compact('tareasAsignadas'));
@@ -410,7 +416,7 @@ public function storeEncargado(Request $request) {
 
     public function indexConclusasResueltasGlobal() {
     $tareasResueltasGlobales = Tarea::with(['sede', 'encargado', 'tecnico'])
-                    ->where('estado','validada','rechazada')
+                    ->whereIn('estado', ['validada', 'rechazada'])
                     ->orderBy('fecha_finalizacion', 'desc')
                     ->get();
     return view('auditor.tareas.listadoTareasResueltasGlobal', compact('tareasResueltasGlobales'));
@@ -525,10 +531,22 @@ public function procesarResolucion(Request $request, Tarea $tarea)
     $tarea->save();
 
     return redirect()->route('auditor.tareas.finalizadas')->with('success', 'Acción realizada correctamente.');
-
-
 }
 
+
+
+//excels
+
+public function exportarTareasResueltasGlobalAuditor(){
+
+    return Excel::download(new TareasResueltasGlobalExport, 'tareas_ConcluidasGlobal.xlsx');
+}
+
+
+public function exportarTareasConclusasEncargado(){
+
+    return Excel::download(new TareasConclusasExport, 'tareas_ConclusasSede.xlsx');
+}
 
 
 }
