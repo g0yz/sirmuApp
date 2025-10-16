@@ -3,13 +3,12 @@
 @section('content')
 <link rel="stylesheet" href="{{ asset('css/formulario.css') }}">
 
-<div class="container mt-4">
-  <div class="card shadow-sm mb-4 {{ (isset($userTheme) && $userTheme==='dark') ? 'bg-dark text-white' : '' }}">
-    <div class="card-body text-center p-3">
-      <h3 class="mb-0">Configuración</h3>
-      <small class="text-muted">Ajustes personales del usuario</small>
+  <div class="container mt-4">
+    <div class="card shadow-sm mb-4 bg-dark">
+      <div class="card-body text-center p-3">
+        <h3 class="mb-0 text-white">Tareas Asignadas</h3>
+      </div>
     </div>
-  </div>
 
   {{-- Alertas de éxito --}}
   @if(session('success_perfil'))

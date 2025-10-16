@@ -50,6 +50,10 @@
           href="{{ route ('encargado.tareas.listadoTareas') }}">Tareas</a>
         </li>
         <li class="nav-item navSelect">
+          <a class="nav-link @if(request()->routeIs('encargado.metricas.proyeccion')) active @endif" 
+          href="{{ route ('encargado.metricas.proyeccion') }}">Metricas</a>
+        </li>
+        <li class="nav-item navSelect">
           <a class="nav-link @if(request()->routeIs('encargado.calendario.index')) active @endif" 
           href="{{ route('encargado.calendario.index') }}">Calendario</a>
         </li>

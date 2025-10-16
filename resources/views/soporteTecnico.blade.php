@@ -1,8 +1,14 @@
 @extends($layout)
 
 @section('content')
-<div class="container mt-4">
-    <h2 class="mb-4">Soporte Técnico</h2>
+
+      <div class="container mt-4">
+        <div class="card shadow-sm mb-4 bg-dark">
+        <div class="card-body text-center p-3">
+        <h3 class="mb-0 text-white">Soporte Tecnico</h3>
+      </div>
+    </div>
+
 
     <!-- Contacto rápido -->
     <div class="card mb-4">

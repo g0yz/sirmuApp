@@ -1,8 +1,13 @@
-@extends('auditor.dashboard')
+@extends('encargado.dashboard')
 
 @section('content')
-<div class="container mt-5">
-    <h2 class="mb-4 text-center">Métricas de las tareas del Mes</h2>
+  <div class="container mt-4">
+    <div class="card shadow-sm mb-4 bg-dark">
+      <div class="card-body text-center p-3">
+        <h3 class="mb-0 text-white">Metricas de las Tareas del Mes</h3>
+      </div>
+    </div>
+  </div>
 
     <div class="row">
         <div class="col-md-6 offset-md-3">
@@ -22,21 +27,24 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     const ctx = document.getElementById('tareasChart').getContext('2d');
-
-    const tareasChart = new Chart(ctx, {
+    new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['Pendientes','Finalizadas','Validadas', 'Rechazadas', 'Totales'],
+            labels: ['Pendientes','Finalizadas','Validadas','Rechazadas','Totales'],
             datasets: [{
                 label: 'Cantidad de tareas',
-                data: [{{$pendientes}},{{$finalizadas}},{{ $validadas }}, {{ $rechazadas }}, {{ $totales }}],
+                data: [{{ $pendientes }}, {{ $finalizadas }}, {{ $validadas }}, {{ $rechazadas }}, {{ $totales }}],
                 backgroundColor: [
+                    'rgba(255, 205, 86, 0.7)',
                     'rgba(75, 192, 192, 0.7)',
+                    'rgba(153, 102, 255, 0.7)',
                     'rgba(255, 99, 132, 0.7)',
                     'rgba(54, 162, 235, 0.7)'
                 ],
                 borderColor: [
+                    'rgba(255, 205, 86, 1)',
                     'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
                     'rgba(255, 99, 132, 1)',
                     'rgba(54, 162, 235, 1)'
                 ],
@@ -50,7 +58,7 @@
                 legend: { display: false },
                 title: {
                     display: true,
-                    text: 'Tareas concluidas actualmente en el mes {{ $mesActual }}'
+                    text: 'Tareas Acutales de la sede en el mes {{ $mesActual }}'
                 }
             },
             scales: {
